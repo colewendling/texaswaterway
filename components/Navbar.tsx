@@ -10,8 +10,9 @@ const Navbar = () => {
   return (
     <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
       <nav className="flex justify-between items-center">
-        <Link href="/">
-          <Image src="/logo.png" alt="logo" width={144} height={30} />
+        <Link href="/" className="flex flex-row">
+          <Image src="/logo-black.svg" alt="logo" width={80} height={30} />
+          <Image src="/text-black.svg" alt="logo" width={240} height={30} />
         </Link>
         <div className="flex items-center gap-5 text-black">
           {session && session?.user ? (
@@ -21,7 +22,7 @@ const Navbar = () => {
               </Link>
               <button
                 onClick={
-                  () => signOut({ callbackUrl: '/' }) // Redirect to home page after logout
+                  () => signOut({ callbackUrl: '/' })
                 }
               >
                 <span>Logout</span>

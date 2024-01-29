@@ -8,13 +8,12 @@ export default async function Home({
   const query = (await searchParams).query;
   return (
     <>
-      <section className="pink_container">
+      <section className="orange_container">
         <h1 className="heading">
-          Pitch Your Startup, <br /> Connect With Entrepreneurs{' '}
+          Howdy!, <br /> Connect With Texas Lake goers{' '}
         </h1>
         <p className="sub-heading !max-w-3xl">
-          Submit Ideas, Vote on Pitches, and Get Noticed in Virtual
-          Competitions.
+          Explore and Share Local Events, News Stories and Enjoy Live Lake Data .
         </p>
         <SearchForm query={query} />
       </section>
