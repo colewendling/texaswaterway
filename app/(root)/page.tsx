@@ -1,5 +1,7 @@
 import EventCard from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
+import { client } from '@/sanity/lib/client';
+import { EVENTS_QUERY } from '@/sanity/lib/queries';
 
 export default async function Home({
   searchParams,
@@ -8,15 +10,7 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
 
-  const posts = [{
-    _createdAt: new Date(),
-    views: 55,
-    author: {_id: 1, name: 'Cole'},
-    description: 'This is a description',
-    image: "https://t3.ftcdn.net/jpg/02/36/99/22/360_F_236992283_sNOxCVQeFLd5pdqaKGh8DRGMZy7P4XKm.jpg",
-    category: 'Robots',
-    title: 'We Robots',
-  }]
+  const posts = await client.fetch(EVENTS_QUERY);
 
   return (
     <>
@@ -40,7 +34,7 @@ export default async function Home({
         </p>
         <ul className='mt-7 card_grid'>
           { posts?.length > 0 ? (
-            posts.map((post: EventCardType, index: number) => (
+            posts.map((post: EventTypeCard, index: number) => (
               <EventCard key={post?._id} post={post}/>
             ))
           ) : (
