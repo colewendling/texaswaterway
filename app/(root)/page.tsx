@@ -1,4 +1,4 @@
-import EventCard from '@/components/EventCard';
+import EventCard, { EventTypeCard } from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
 import { client } from '@/sanity/lib/client';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
@@ -34,7 +34,7 @@ export default async function Home({
         </p>
         <ul className='mt-7 card_grid'>
           { posts?.length > 0 ? (
-            posts.map((post: EventTypeCard, index: number) => (
+            posts.map((post: EventTypeCard) => (
               <EventCard key={post?._id} post={post}/>
             ))
           ) : (
