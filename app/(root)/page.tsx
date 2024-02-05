@@ -2,6 +2,7 @@ import EventCard, { EventTypeCard } from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
 import { client } from '@/sanity/lib/client';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
+import { sanityFetch } from '@/sanity/lib/live';
 
 export default async function Home({
   searchParams,
@@ -9,8 +10,7 @@ export default async function Home({
   searchParams: Promise<{ query?: string }>;
 }) {
   const query = (await searchParams).query;
-
-  const posts = await client.fetch(EVENTS_QUERY);
+  const { data: posts } = await sanityFetch({ query: EVENTS_QUERY});
 
   return (
     <>
