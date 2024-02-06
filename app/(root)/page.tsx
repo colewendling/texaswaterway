@@ -1,7 +1,7 @@
 import EventCard, { EventTypeCard } from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
-import { sanityFetch } from '@/sanity/lib/live';
+import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 
 export default async function Home({
   searchParams,
@@ -41,6 +41,7 @@ export default async function Home({
           )}
         </ul>
       </section>
+      <SanityLive />
     </>
   );
 }
