@@ -1,7 +1,7 @@
 import { defineQuery } from 'next-sanity';
 
 export const EVENTS_QUERY = defineQuery(
-  `*[_type == 'event' && defined(slug.current)] | order(_createdAt desc) {
+  `*[_type == 'event' && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search ] | order(_createdAt desc) {
     _id, 
     title, 
     slug,
