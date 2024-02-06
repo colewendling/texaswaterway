@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className="flex items-center gap-5 text-black">
           {session && session?.user ? (
             <>
-              <Link href="/startup/create">
+              <Link href="/event/create">
                 <span>Create</span>
               </Link>
               <button
