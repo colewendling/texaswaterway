@@ -8,7 +8,8 @@ export const EVENTS_QUERY = defineQuery(
     _createdAt,
     author -> {
       _id, 
-      name, 
+      name,
+      username, 
       image, 
       bio
     }, 
@@ -25,7 +26,7 @@ export const EVENT_BY_ID_QUERY = defineQuery(`*[_type == 'event' && _id == $id][
     slug,
     _createdAt,
     author -> {
-      _id, name, image, bio
+      _id, name, username, image, bio
     }, 
     views, 
     description,
