@@ -34,3 +34,9 @@ export const EVENT_BY_ID_QUERY = defineQuery(`*[_type == 'event' && _id == $id][
     image,
     pitch
 }`);
+
+export const EVENT_VIEWS_QUERY = defineQuery(`
+    *[_type == 'event' && _id == $id][0]{
+      _id, views
+    }
+  `)
