@@ -16,8 +16,6 @@ export default async function Home({
   const session = await getServerSession(authOptions);
   const { data: posts } = await sanityFetch({ query: EVENTS_QUERY, params});
 
-  console.log(session?.id)
-
   return (
     <>
       <section className="orange_container space-y-6">
