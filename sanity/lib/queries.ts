@@ -20,7 +20,8 @@ export const EVENTS_QUERY = defineQuery(
 }`,
 );
 
-export const EVENT_BY_ID_QUERY = defineQuery(`*[_type == 'event' && _id == $id][0]{
+export const EVENT_BY_ID_QUERY = defineQuery(`
+  *[_type == 'event' && _id == $id][0]{
     _id, 
     title, 
     slug,
@@ -33,10 +34,24 @@ export const EVENT_BY_ID_QUERY = defineQuery(`*[_type == 'event' && _id == $id][
     category,
     image,
     pitch
-}`);
+}`
+);
 
 export const EVENT_VIEWS_QUERY = defineQuery(`
     *[_type == 'event' && _id == $id][0]{
       _id, views
     }
-  `)
+  `
+);
+
+export const AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
+    *[_type == 'author' && id == $id][0]{
+    _id,
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio
+}`
+);
