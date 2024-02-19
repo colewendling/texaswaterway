@@ -6,11 +6,13 @@ import React from 'react';
 
 const Page = async () => {
   const session = await getServerSession(authOptions);
-    
+
+  if (!session) redirect('/');
+  
   return (
     <>
-      <section className='orange_container !min-h-[230px]'>
-        <h1 className='heading'>Submit your Event</h1>
+      <section className="orange_container !min-h-[230px]">
+        <h1 className="heading">Submit your Event</h1>
       </section>
       <EventForm />
     </>
