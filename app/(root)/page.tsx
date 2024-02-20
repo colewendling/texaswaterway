@@ -2,6 +2,8 @@ import EventCard, { EventTypeCard } from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
 import { EVENTS_QUERY } from '@/sanity/lib/queries';
 import { sanityFetch, SanityLive } from '@/sanity/lib/live';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
 
 export default async function Home({
   searchParams,
@@ -10,7 +12,11 @@ export default async function Home({
 }) {
   const query = (await searchParams).query;
   const params = { search: query || null};
+
+  const session = await getServerSession(authOptions);
   const { data: posts } = await sanityFetch({ query: EVENTS_QUERY, params});
+
+  console.log(session?.id)
 
   return (
     <>
