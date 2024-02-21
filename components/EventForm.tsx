@@ -1,8 +1,67 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
 
 const EventForm = () => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
   return (
-    <div>EventForm</div>
+    <form action={() => {}} className="event-form">
+      <div>
+        <label htmlFor="title" className="event-form_label">
+          Title
+        </label>
+        <Input
+          id="title"
+          name="title"
+          className="event-form_input"
+          required
+          placeholder="Event Title"
+        />
+        {errors.title && <p className="event-form_error">{errors.title}</p>}
+      </div>
+      <div>
+        <label htmlFor="description" className="event-form_label">
+          Description
+        </label>
+        <Textarea
+          id="description"
+          name="description"
+          className="event-form_textarea"
+          required
+          placeholder="Event Description"
+        />
+        {errors.description && <p className="event-form_error">{errors.description}</p>}
+      </div>
+      <div>
+        <label htmlFor="category" className="event-form_label">
+          Category
+        </label>
+        <Input
+          id="category"
+          name="category"
+          className="event-form_input"
+          required
+          placeholder="Event Category (Fishing, Trade, Meetup...)"
+        />
+        {errors.category && <p className="event-form_error">{errors.category}</p>}
+      </div>
+      <div>
+        <label htmlFor="link" className="event-form_label">
+          Image URL
+        </label>
+        <Input
+          id="link"
+          name="link"
+          className="event-form_input"
+          required
+          placeholder="Event Image URL"
+        />
+        {errors.link && <p className="event-form_error">{errors.link}</p>}
+      </div>
+    </form>
   );
 };
 
