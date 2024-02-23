@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import MDEditor from '@uiw/react-md-editor';
 
 const EventForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [pitch, setPitch] = useState('**Hello world!**')
 
   return (
     <form action={() => {}} className="event-form">
@@ -33,7 +35,9 @@ const EventForm = () => {
           required
           placeholder="Event Description"
         />
-        {errors.description && <p className="event-form_error">{errors.description}</p>}
+        {errors.description && (
+          <p className="event-form_error">{errors.description}</p>
+        )}
       </div>
       <div>
         <label htmlFor="category" className="event-form_label">
@@ -46,7 +50,9 @@ const EventForm = () => {
           required
           placeholder="Event Category (Fishing, Trade, Meetup...)"
         />
-        {errors.category && <p className="event-form_error">{errors.category}</p>}
+        {errors.category && (
+          <p className="event-form_error">{errors.category}</p>
+        )}
       </div>
       <div>
         <label htmlFor="link" className="event-form_label">
@@ -60,6 +66,16 @@ const EventForm = () => {
           placeholder="Event Image URL"
         />
         {errors.link && <p className="event-form_error">{errors.link}</p>}
+      </div>
+      <div data-color-mode='light'>
+        <label htmlFor="pitch" className="event-form_label">
+          Event Pitch
+        </label>
+        <MDEditor 
+          value={pitch}
+          onChange={(value) => setPitch(value as string)}
+        />
+        {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
       </div>
     </form>
   );
