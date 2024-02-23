@@ -7,7 +7,7 @@ import MDEditor from '@uiw/react-md-editor';
 
 const EventForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [pitch, setPitch] = useState('**Hello world!**')
+  const [pitch, setPitch] = useState('**Hello world!**');
 
   return (
     <form action={() => {}} className="event-form">
@@ -67,13 +67,23 @@ const EventForm = () => {
         />
         {errors.link && <p className="event-form_error">{errors.link}</p>}
       </div>
-      <div data-color-mode='light'>
+      <div data-color-mode="light">
         <label htmlFor="pitch" className="event-form_label">
           Event Pitch
         </label>
-        <MDEditor 
+        <MDEditor
           value={pitch}
           onChange={(value) => setPitch(value as string)}
+          id="pitch"
+          preview="edit"
+          height={300}
+          style={{ borderRadius: 20, overflow: 'hidden' }}
+          textareaProps={{
+            placeholder: 'Briefly describe your event and add relevant details',
+          }}
+          previewOptions={{
+            disallowedElements: ['style'],
+          }}
         />
         {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
       </div>
