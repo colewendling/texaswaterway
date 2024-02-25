@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useActionState, useState } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
@@ -11,7 +11,13 @@ const EventForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState('');
 
-  const isPending = false;
+  const handleFormSubmit = () => {};
+  
+  const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+    error: '',
+    status: 'INITIAL',
+  });
+
 
   return (
     <form action={() => {}} className="event-form">
@@ -91,9 +97,13 @@ const EventForm = () => {
         />
         {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
       </div>
-      <Button type='submit' className='event-form_btn text-white' disabled={isPending}>
-          {isPending ? 'Submitting...' : 'Submit Your Event'}
-          <Send className='size-6 ml-2' />
+      <Button
+        type="submit"
+        className="event-form_btn text-white"
+        disabled={isPending}
+      >
+        {isPending ? 'Submitting...' : 'Submit Your Event'}
+        <Send className="size-6 ml-2" />
       </Button>
     </form>
   );
