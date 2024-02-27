@@ -11,6 +11,7 @@ import { useActionState } from 'react';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
+import { createEvent } from '@/lib/actions';
 
 const EventForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -18,7 +19,6 @@ const EventForm = () => {
   const { toast } = useToast();
   const router = useRouter();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
       const formValues = {
@@ -31,17 +31,17 @@ const EventForm = () => {
 
       await formSchema.parseAsync(formValues);
 
-      // const result = await createIdea(prevState, formData, pitch);
+      const result = await createEvent(prevState, formData, pitch);
 
-      // if (result.status === 'SUCCESS') {
-      //   toast({
-      //     title: 'Success',
-      //     description: 'Your event has been created successfully',
-      //   });
-      //   router.push(`/event/${result.id}`)
-      // }
+      if (result.status === 'SUCCESS') {
+        toast({
+          title: 'Success',
+          description: 'Your event has been created successfully',
+        });
+        router.push(`/event/${result._id}`)
+      }
 
-      // return result;
+      return result;
     } catch (error) {
       if (error instanceof z.ZodError) {
         const fieldErrors = error.flatten().fieldErrors;
