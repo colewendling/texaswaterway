@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -14,13 +14,15 @@
   "packageManager": "pnpm@9.13.2",
   "overrides": {
     "react": "$react",
-    "react-dom": "$react-dom"
+    "react-dom": "$react-dom",
+    "next": "$next"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
     "@sanity/image-url": "1",
     "@sanity/vision": "3",
+    "@sentry/nextjs": "^8",
     "@tailwindcss/typography": "^0.5.15",
     "@uiw/react-md-editor": "^4.0.4",
     "class-variance-authority": "^0.7.0",
