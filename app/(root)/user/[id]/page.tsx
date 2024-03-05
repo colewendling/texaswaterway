@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { client } from '@/sanity/lib/client';
@@ -38,11 +38,13 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
         </div>
         <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
-          <p className='text-30-bold'>
+          <p className="text-30-bold">
             {session?.id === id ? 'Your' : 'All'} Events
           </p>
-          <ul className='card_grid-sm'>
-            <UserEvents />
+          <ul className="card_grid-sm">
+            <Suspense fallback={<p>Loading ...</p>}>
+              <UserEvents id={id} />
+            </Suspense>
           </ul>
         </div>
       </section>

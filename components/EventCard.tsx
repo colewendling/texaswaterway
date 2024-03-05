@@ -6,9 +6,9 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 import { Author, Event } from '@/sanity/types';
 
-export type EventTypeCard = Omit<Event, "author"> & { author?: Author};
+export type EventCardType = Omit<Event, "author"> & { author?: Author};
 
-const EventCard = ({ post }: { post: EventTypeCard }) => {
+const EventCard = ({ post }: { post: EventCardType }) => {
   const {
     _createdAt,
     views,
