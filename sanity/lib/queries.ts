@@ -65,7 +65,7 @@ export const AUTHOR_BY_ID_QUERY = defineQuery(`
 }`);
 
 export const EVENTS_BY_AUTHOR_QUERY = defineQuery(
-  `*[_type == 'event' && author._ref == $id | order(_createdAt desc) {
+  `*[_type == 'event' && author._ref == $id] | order(_createdAt desc) {
     _id, 
     title, 
     slug,
