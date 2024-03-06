@@ -1,10 +1,11 @@
-import { formatDate } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 import { EyeIcon } from 'lucide-react';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { Author, Event } from '@/sanity/types';
+import { Skeleton } from './ui/skeleton';
 
 export type EventCardType = Omit<Event, "author"> & { author?: Author};
 
@@ -39,8 +40,8 @@ const EventCard = ({ post }: { post: EventCardType }) => {
         </div>
         <Link href={`/user${author?._id}`}>
           <Image
-            src="https://placehold.co/48x48"
-            alt="placeholder"
+            src={author?.image || '/default-avatar.png'}
+            alt={author?.name || 'Author'}
             width={48}
             height={48}
             className="rounded-full"
@@ -64,5 +65,15 @@ const EventCard = ({ post }: { post: EventCardType }) => {
     </li>
   );
 };
+
+export const EventCardSkeleton = () => (
+  <>
+  {[0, 1, 2, 3, 4].map((index: number) => (
+    <li key={cn('skeleton', index)}>
+      <Skeleton className='event-card_skeleton'/>
+    </li>
+  ))}
+  </>
+);
 
 export default EventCard;

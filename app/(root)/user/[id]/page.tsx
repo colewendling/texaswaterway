@@ -6,6 +6,7 @@ import { AUTHOR_BY_ID_QUERY } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import UserEvents from '@/components/UserEvents';
+import { EventCardSkeleton } from '@/components/EventCard';
 
 export const experimental_ppr = true;
 
@@ -42,7 +43,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             {session?.id === id ? 'Your' : 'All'} Events
           </p>
           <ul className="card_grid-sm">
-            <Suspense fallback={<p>Loading ...</p>}>
+            <Suspense fallback={<EventCardSkeleton />}>
               <UserEvents id={id} />
             </Suspense>
           </ul>
