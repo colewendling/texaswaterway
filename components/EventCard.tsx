@@ -38,10 +38,10 @@ const EventCard = ({ post }: { post: EventCardType }) => {
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
-        <Link href={`/user${author?._id}`}>
+        <Link href={`/user/${author?._id}`}>
           <Image
-            src={author?.image || '/default-avatar.png'}
-            alt={author?.name || 'Author'}
+            src={author?.image || ''}
+            alt={author?.name || ''}
             width={48}
             height={48}
             className="rounded-full"
