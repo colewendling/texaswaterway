@@ -18,7 +18,7 @@ const EventForm = () => {
   const [pitch, setPitch] = useState('');
   const { toast } = useToast();
   const router = useRouter();
-
+  
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
       const formValues = {
@@ -38,7 +38,7 @@ const EventForm = () => {
           title: 'Success',
           description: 'Your event has been created successfully',
         });
-        router.push(`/event/${result._id}`)
+        router.push(`/event/${result._id}`);
       }
 
       return result;
