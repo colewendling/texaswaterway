@@ -51,7 +51,7 @@ const workSans = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Texas Waterways",
+  title: "Texas Waterway",
   description: "Lake Data Application",
 };
 
