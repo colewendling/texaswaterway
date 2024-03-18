@@ -50,8 +50,8 @@ const EventCard = ({ post }: { post: EventCardType }) => {
       </div>
 
       <Link href={`/event/${_id}`}>
-        <p className="event-card-desc">{description}</p>
-        <img src={image} alt="placeholder" className="event-card-img" />
+        <p className="event-card_desc">{description}</p>
+        <img src={image} alt="placeholder" className="event-card_img" />
       </Link>
 
       <div className="flex-between gap-3 mt-5">
