@@ -20,6 +20,7 @@ const config: Config = {
           '100': '#FFE8F0',
           '200': '#EBFFFE',
           '300': '#D0704A',
+          '400': '#fff8e6',
           DEFAULT: '#EE2B69',
         },
         secondary: '#FBE843',
