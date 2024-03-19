@@ -58,3 +58,55 @@ export const createEvent = async (
     });
   }
 };
+
+export const updateEvent = async (
+  eventId: string,
+  form: FormData,
+  pitch: string,
+) => {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return parseServerActionResponse({
+      error: 'Not signed in',
+      status: 'ERROR',
+    });
+  }
+
+  const { title, description, category, link } = Object.fromEntries(
+    Array.from(form).filter(([key]) => key !== 'pitch'),
+  );
+
+  const slug = slugify(title as string, { lower: true, strict: true });
+
+  try {
+    const updatedEvent = {
+      title,
+      description,
+      category,
+      image: link,
+      slug: {
+        _type: 'slug',
+        current: slug,
+      },
+      pitch,
+    };
+
+    const result = await writeClient
+      .patch(eventId) // Target the event by ID
+      .set(updatedEvent) // Update fields
+      .commit(); // Commit the changes
+
+    return parseServerActionResponse({
+      ...result,
+      error: '',
+      status: 'SUCCESS',
+    });
+  } catch (error) {
+    console.log(error);
+    return parseServerActionResponse({
+      error: JSON.stringify(error),
+      status: 'ERROR',
+    });
+  }
+};

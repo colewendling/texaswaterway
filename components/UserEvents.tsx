@@ -3,16 +3,16 @@ import { EVENTS_BY_AUTHOR_QUERY } from '@/sanity/lib/queries';
 import React from 'react';
 import EventCard, { EventCardType } from './EventCard';
 
-const UserEvents = async ({ id }: { id: string }) => {
+const UserEvents = async ({ id, editMode }: { id: string; editMode: boolean }) => {
   const events = await client.fetch(EVENTS_BY_AUTHOR_QUERY, { id });
   return (
     <>
       {events.length > 0 ? (
         events.map((event: EventCardType) => (
-          <EventCard key={event._id} post={event} />
+          <EventCard key={event._id} post={event} editMode={editMode} />
         ))
       ) : (
-        <p className='no-result'>No posts yet</p>
+        <p className="no-result">No posts yet</p>
       )}
     </>
   );

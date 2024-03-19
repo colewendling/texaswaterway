@@ -84,6 +84,12 @@ export const EVENTS_BY_AUTHOR_QUERY = defineQuery(
 }`,
 );
 
+export const PITCH_BY_EVENT_ID_QUERY = defineQuery(`
+  *[_type == 'event' && _id == $id][0]{
+    pitch
+  }
+`);
+
 export const PLAYLIST_BY_SLUG_QUERY =
   defineQuery(`*[_type == "playlist" && slug.current == $slug][0]{
   _id,
@@ -108,3 +114,4 @@ export const PLAYLIST_BY_SLUG_QUERY =
     pitch
   }
 }`);
+

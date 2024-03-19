@@ -1,5 +1,11 @@
+'use client';
+
+import { useState } from 'react';
+import Modal from './Modal';
+import EventForm from './EventForm';
+
 import { cn, formatDate } from '@/lib/utils';
-import { EyeIcon } from 'lucide-react';
+import { EyeIcon, Edit } from 'lucide-react';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -7,9 +13,18 @@ import { Button } from './ui/button';
 import { Author, Event } from '@/sanity/types';
 import { Skeleton } from './ui/skeleton';
 
-export type EventCardType = Omit<Event, "author"> & { author?: Author};
+import { client } from '@/sanity/lib/client';
+import { PITCH_BY_EVENT_ID_QUERY } from '@/sanity/lib/queries';
 
-const EventCard = ({ post }: { post: EventCardType }) => {
+export type EventCardType = Omit<Event, 'author'> & { author?: Author };
+
+const EventCard = ({
+  post,
+  editMode,
+}: {
+  post: EventCardType;
+  editMode?: boolean;
+}) => {
   const {
     _createdAt,
     views,
@@ -20,8 +35,33 @@ const EventCard = ({ post }: { post: EventCardType }) => {
     image,
     description,
   } = post;
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [pitch, setPitch] = useState<string | null>(null);
+
+  const handleEditClick = async () => {
+    setModalOpen(true);
+
+    // Fetch the pitch for this event when the modal opens
+    try {
+      const data = await client.fetch(PITCH_BY_EVENT_ID_QUERY, { id: _id });
+      setPitch(data?.pitch || ''); // Set the fetched pitch or an empty string
+    } catch (error) {
+      console.error('Failed to fetch pitch:', error);
+    }
+  };
+
   return (
-    <li className="event-card group">
+    <li className="event-card group relative">
+      {editMode && (
+        <button
+          onClick={handleEditClick}
+          className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-primary-300 border-2 border-black rounded-full shadow-md"
+          aria-label="Edit"
+        >
+          <Edit className="w-5 h-5 text-black" />
+        </button>
+      )}
       <div className="flex-between">
         <p className="event-card-date">{formatDate(_createdAt)}</p>
         <div className="flex gap-1.5">
@@ -62,17 +102,20 @@ const EventCard = ({ post }: { post: EventCardType }) => {
           <Link href={`/event/${_id}`}>Details</Link>
         </Button>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+        <EventForm existingEvent={{...post, pitch}} />
+      </Modal>
     </li>
   );
 };
 
 export const EventCardSkeleton = () => (
   <>
-  {[0, 1, 2, 3, 4].map((index: number) => (
-    <li key={cn('skeleton', index)}>
-      <Skeleton className='event-card_skeleton'/>
-    </li>
-  ))}
+    {[0, 1, 2, 3, 4].map((index: number) => (
+      <li key={cn('skeleton', index)}>
+        <Skeleton className="event-card_skeleton" />
+      </li>
+    ))}
   </>
 );
 

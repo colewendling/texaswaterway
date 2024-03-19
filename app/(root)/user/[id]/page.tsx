@@ -7,15 +7,24 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import UserEvents from '@/components/UserEvents';
 import { EventCardSkeleton } from '@/components/EventCard';
+import EditButton from '@/components/EditButton';
 
 export const experimental_ppr = true;
 
-const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+const Page = async ({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { edit?: string };
+}) => {
   const id = (await params).id;
   const session = await getServerSession(authOptions);
 
   const user = await client.fetch(AUTHOR_BY_ID_QUERY, { id });
   if (!user) return notFound();
+
+  const editMode = searchParams.edit === 'true';
 
   return (
     <>
@@ -39,12 +48,17 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
         </div>
         <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
-          <p className="text-30-bold">
-            {session?.id === id ? 'Your' : 'All'} Events
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-30-bold">
+              {session?.id === id ? 'Your' : 'All'} Events
+            </p>
+            {session?.id === id && (
+                <EditButton editMode={editMode}/>
+              )}
+          </div>
           <ul className="card_grid-sm">
             <Suspense fallback={<EventCardSkeleton />}>
-              <UserEvents id={id} />
+              <UserEvents id={id} editMode={editMode} />
             </Suspense>
           </ul>
         </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
@@ -11,14 +11,21 @@ import { useActionState } from 'react';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { createEvent } from '@/lib/actions';
+import { createEvent, updateEvent } from '@/lib/actions';
 
-const EventForm = () => {
+const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [pitch, setPitch] = useState('');
+  const [pitch, setPitch] = useState(existingEvent?.pitch || '');
+
   const { toast } = useToast();
   const router = useRouter();
-  
+
+  useEffect(() => {
+    if (existingEvent?.pitch) {
+      setPitch(existingEvent.pitch);
+    }
+  }, [existingEvent]);
+
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
       const formValues = {
@@ -31,12 +38,21 @@ const EventForm = () => {
 
       await formSchema.parseAsync(formValues);
 
-      const result = await createEvent(prevState, formData, pitch);
+      // const result = await createEvent(prevState, formData, pitch);
+
+      let result;
+      if (existingEvent) {
+        // Update the event if it exists
+        result = await updateEvent(existingEvent._id, formData, pitch);
+      } else {
+        // Create a new event
+        result = await createEvent(prevState, formData, pitch);
+      }
 
       if (result.status === 'SUCCESS') {
         toast({
           title: 'Success',
-          description: 'Your event has been created successfully',
+          description: `Your event has been ${existingEvent ? 'updated' : 'created'} successfully`,
         });
         router.push(`/event/${result._id}`);
       }
@@ -85,6 +101,7 @@ const EventForm = () => {
         <Input
           id="title"
           name="title"
+          defaultValue={existingEvent?.title || ''}
           className="event-form_input"
           required
           placeholder="Event Title"
@@ -98,6 +115,7 @@ const EventForm = () => {
         <Textarea
           id="description"
           name="description"
+          defaultValue={existingEvent?.description || ''}
           className="event-form_textarea"
           required
           placeholder="Event Description"
@@ -113,6 +131,7 @@ const EventForm = () => {
         <Input
           id="category"
           name="category"
+          defaultValue={existingEvent?.category || ''}
           className="event-form_input"
           required
           placeholder="Event Category (Fishing, Trade, Meetup...)"
@@ -128,6 +147,7 @@ const EventForm = () => {
         <Input
           id="link"
           name="link"
+          defaultValue={existingEvent?.image || ''}
           className="event-form_input"
           required
           placeholder="Event Image URL"
@@ -159,7 +179,13 @@ const EventForm = () => {
         className="event-form_btn text-white"
         disabled={isPending}
       >
-        {isPending ? 'Submitting...' : 'Submit Your Event'}
+        {isPending
+          ? existingEvent
+            ? 'Saving...'
+            : 'Submitting...'
+          : existingEvent
+            ? 'Save'
+            : 'Submit'}
         <Send className="size-6 ml-2" />
       </Button>
     </form>
