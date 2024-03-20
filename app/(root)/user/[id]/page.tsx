@@ -16,7 +16,7 @@ const Page = async ({
   searchParams,
 }: {
   params: { id: string };
-  searchParams: { edit?: string };
+  searchParams: Promise<{ edit?: string }>;
 }) => {
   const id = (await params).id;
   const session = await getServerSession(authOptions);
@@ -24,7 +24,7 @@ const Page = async ({
   const user = await client.fetch(AUTHOR_BY_ID_QUERY, { id });
   if (!user) return notFound();
 
-  const editMode = searchParams.edit === 'true';
+  const editMode = (await searchParams).edit === 'true';
 
   return (
     <>
@@ -52,9 +52,7 @@ const Page = async ({
             <p className="text-30-bold">
               {session?.id === id ? 'Your' : 'All'} Events
             </p>
-            {session?.id === id && (
-                <EditButton editMode={editMode}/>
-              )}
+            {session?.id === id && <EditButton editMode={editMode} />}
           </div>
           <ul className="card_grid-sm">
             <Suspense fallback={<EventCardSkeleton />}>
