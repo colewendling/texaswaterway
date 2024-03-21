@@ -21,6 +21,7 @@ const config: Config = {
           '200': '#EBFFFE',
           '300': '#D0704A',
           '400': '#fff8e6',
+          '500': '#f2d3c7',
           DEFAULT: '#EE2B69',
         },
         secondary: '#FBE843',

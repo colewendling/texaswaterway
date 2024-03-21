@@ -56,14 +56,14 @@ const EventCard = ({
       {editMode && (
         <button
           onClick={handleEditClick}
-          className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-primary-300 border-2 border-black rounded-full shadow-md"
+          className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-white hover:bg-primary-300 border-2 border-black rounded-full shadow-md"
           aria-label="Edit"
         >
           <Edit className="w-5 h-5 text-black" />
         </button>
       )}
       <div className="flex-between">
-        <p className="event-card-date">{formatDate(_createdAt)}</p>
+        <p className="event-card_date">{formatDate(_createdAt)}</p>
         <div className="flex gap-1.5">
           <EyeIcon className="size-6 text-primary" />
           <span className="text-16-medium">{views}</span>
@@ -72,7 +72,9 @@ const EventCard = ({
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
           <Link href={`/user/${author?._id}`}>
-            <p className="text-16-medium line-clamp-1">{author?.name}</p>
+            <p className="text-16-medium line-clamp-1 hover:text-primary">
+              {author?.name}
+            </p>
           </Link>
           <Link href={`/event/${_id}`}>
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
@@ -84,7 +86,7 @@ const EventCard = ({
             alt={author?.name || ''}
             width={48}
             height={48}
-            className="rounded-full"
+            className="event-card_avatar"
           />
         </Link>
       </div>
@@ -96,14 +98,14 @@ const EventCard = ({
 
       <div className="flex-between gap-3 mt-5">
         <Link href={`/?query=${category?.toLowerCase()}`}>
-          <p className="text-16-medium">{category}</p>
+          <p className="text-16-medium hover:text-primary">{category}</p>
         </Link>
         <Button className="event-card_btn" asChild>
           <Link href={`/event/${_id}`}>Details</Link>
         </Button>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-        <EventForm existingEvent={{...post, pitch}} />
+        <EventForm existingEvent={{ ...post, pitch }} />
       </Modal>
     </li>
   );

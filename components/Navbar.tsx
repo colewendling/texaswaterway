@@ -7,10 +7,10 @@ import { BadgePlus, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 const Navbar = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   return (
-    <header className="px-5 py-3 bg-400 shadow-sm font-work-sans">
+    <header className="px-5 py-3 shadow-sm font-work-sans bg-white">
       <nav className="flex justify-between items-center">
         <Link href="/" className="flex flex-row">
           <Image src="/logo-black.svg" alt="logo" width={80} height={80} />
