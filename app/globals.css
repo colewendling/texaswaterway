@@ -14,10 +14,19 @@ body {
   @apply bg-primary-400;
 }
 
-
 @layer utilities {
   .flex-between {
     @apply flex justify-between items-center;
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
   .text-30-extrabold {
@@ -194,8 +203,16 @@ body {
     @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 !important;
   }
 
-  .event-form_btn {
-    @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
+  .event-form_btn_submit {
+    @apply border-black p-6 font-bold text-[18px]
+    flex items-center justify-center bg-gray-400 text-white rounded-full hover:bg-primary transition ml-4
+    shadow-md hover:shadow-lg
+    !important;
+  }
+
+  .event-form_btn_delete {
+    @apply border-black w-12 h-12 flex items-center justify-center bg-red-400 text-white rounded-full hover:bg-red-600 transition font-bold text-[18px]
+    shadow-md hover:shadow-lg !important;
   }
 
   /* view */
