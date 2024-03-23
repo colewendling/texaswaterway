@@ -115,3 +115,9 @@ export const PLAYLIST_BY_SLUG_QUERY =
   }
 }`);
 
+export const DELETE_EVENT_BY_ID_QUERY = `
+  *[_type == "event" && _id == $id][0]{
+    _id
+  }
+`;
+

@@ -11,9 +11,8 @@ export const createEvent = async (
   form: FormData,
   pitch: string,
 ) => {
-
   const session = await getServerSession(authOptions);
-  
+
   if (!session)
     return parseServerActionResponse({
       error: 'Not signed in',
@@ -44,7 +43,7 @@ export const createEvent = async (
     };
 
     const result = await writeClient.create({ _type: 'event', ...event });
-    
+
     return parseServerActionResponse({
       ...result,
       error: '',
@@ -108,5 +107,16 @@ export const updateEvent = async (
       error: JSON.stringify(error),
       status: 'ERROR',
     });
+  }
+};
+
+export const deleteEvent = async (eventId: string) => {
+  try {
+    const result = await writeClient.delete(eventId);
+    console.log('Event deleted successfully:', result);
+    return { status: 'SUCCESS', _id: eventId };
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    throw new Error('Failed to delete event');
   }
 };

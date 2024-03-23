@@ -5,13 +5,13 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
 import { Button } from './ui/button';
-import { Send } from 'lucide-react';
+import { Send, Save, Trash } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
 import { useActionState } from 'react';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { createEvent, updateEvent } from '@/lib/actions';
+import { createEvent, updateEvent, deleteEvent } from '@/lib/actions';
 
 const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -86,6 +86,20 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
       };
     }
   };
+
+  const handleDelete = async () => {
+    if (confirm('Are you sure you want to delete this event?')) {
+      try {
+        await deleteEvent(existingEvent._id);
+        alert('Event deleted successfully');
+        router.push('/'); // Redirect to homepage or relevant page
+      } catch (error) {
+        alert('Failed to delete the event.');
+      }
+    }
+  };
+
+  const isEditMode = !!existingEvent;
 
   const [state, formAction, isPending] = useActionState(handleFormSubmit, {
     error: '',
@@ -174,20 +188,57 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         />
         {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
       </div>
-      <Button
+      {/* <Button
         type="submit"
         className="event-form_btn text-white"
         disabled={isPending}
       >
         {isPending
-          ? existingEvent
+          ? isEditMode
             ? 'Saving...'
             : 'Submitting...'
-          : existingEvent
+          : isEditMode
             ? 'Save'
             : 'Submit'}
-        <Send className="size-6 ml-2" />
-      </Button>
+        {isEditMode ? (
+          <Save className="size-6" />
+        ) : (
+          <Send className="size-6" />
+        )}{' '}
+      </Button> */}
+      {/* Footer Buttons */}
+      <div
+        className={`flex items-center ${
+          isEditMode ? 'justify-between' : 'justify-center'
+        } mt-6 w-full`}
+      >
+        {/* Delete Button */}
+        {isEditMode && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="w-12 h-12 flex items-center justify-center bg-red-400 text-white rounded-full hover:bg-red-600 transition"
+          >
+            <Trash className="w-5 h-5" />
+          </button>
+        )}
+
+        {/* Save Button */}
+        <Button
+          type="submit"
+          className="event-form_btn_submit"
+        >
+          {isEditMode ? (
+            <>
+              Save <Save className="w-4 h-4 ml-2" />
+            </>
+          ) : (
+            <>
+              Submit <Send className="w-4 h-4 ml-2" />
+            </>
+          )}
+        </Button>
+      </div>
     </form>
   );
 };
