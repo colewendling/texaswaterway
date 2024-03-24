@@ -160,6 +160,7 @@ body {
 
   .event-card_desc {
     @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-all;
+    min-height: 3rem;
   }
 
   .event-card_img {
