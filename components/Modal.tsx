@@ -19,6 +19,7 @@ const Modal = ({
       className="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto overscroll-contain"
     >
       <div
+        onClick={(e) => e.stopPropagation()}
         className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl bg-white rounded-3xl lg:rounded-xl shadow-lg p-6 mx-auto mt-10 mb-10 max-h-screen overflow-y-auto no-scrollbar"
         style={{
           minHeight: '20rem',

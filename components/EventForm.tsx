@@ -188,31 +188,11 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         />
         {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
       </div>
-      {/* <Button
-        type="submit"
-        className="event-form_btn text-white"
-        disabled={isPending}
-      >
-        {isPending
-          ? isEditMode
-            ? 'Saving...'
-            : 'Submitting...'
-          : isEditMode
-            ? 'Save'
-            : 'Submit'}
-        {isEditMode ? (
-          <Save className="size-6" />
-        ) : (
-          <Send className="size-6" />
-        )}{' '}
-      </Button> */}
-      {/* Footer Buttons */}
       <div
         className={`flex items-center ${
           isEditMode ? 'justify-between' : 'justify-center'
         } mt-6 w-full`}
       >
-        {/* Delete Button */}
         {isEditMode && (
           <button
             type="button"
@@ -222,8 +202,6 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
             <Trash className="w-5 h-5" />
           </button>
         )}
-
-        {/* Save Button */}
         <Button
           type="submit"
           className="event-form_btn_submit"

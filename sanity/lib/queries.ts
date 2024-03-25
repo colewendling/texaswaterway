@@ -121,3 +121,16 @@ export const DELETE_EVENT_BY_ID_QUERY = `
   }
 `;
 
+export const AUTHOR_BY_EMAIL_QUERY = `
+  *[_type == 'author' && email == $email][0]{
+    _id,
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio,
+    password
+  }
+`;
+

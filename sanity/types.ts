@@ -179,6 +179,7 @@ export type Author = {
   name?: string;
   username?: string;
   email?: string;
+  password?: string;
   image?: string;
   bio?: string;
 };
