@@ -14,6 +14,7 @@ const config: Config = {
     extend: {
       screens: {
         xs: '475px',
+        '850': '850px',
       },
       colors: {
         primary: {

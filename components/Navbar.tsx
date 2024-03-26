@@ -43,7 +43,7 @@ useEffect(() => {
             alt="logo"
             width={240}
             height={30}
-            className="max-sm:hidden"
+            className="hidden 850:block"
           />
         </Link>
 
@@ -70,25 +70,27 @@ useEffect(() => {
               </Link>
             </>
           ) : (
-            <div className="flex gap-4">
+            <div className="flex flex-nowrap items-center gap-2 sm:gap-5 overflow-auto">
               <button
                 onClick={() => signIn('github')}
-                className="flex items-center gap-2 px-4 py-2 bg-black text-white rounded"
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-black text-white rounded sm:px-4 sm:py-2 sm:text-base"
               >
-                <Github className="w-4 h-4" />
-                Sign in with GitHub
+                <Github className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline">Sign in with GitHub</span>
               </button>
               <button
                 onClick={() => openModalHandler('login')}
-                className="px-4 py-2 bg-gray-200 rounded"
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-200 rounded sm:px-4 sm:py-2 sm:text-base"
               >
-                Login
+                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline">Login</span>
               </button>
               <button
                 onClick={() => openModalHandler('signUp')}
-                className="px-4 py-2 bg-blue-500 rounded text-white"
+                className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-500 text-white rounded sm:px-4 sm:py-2 sm:text-base"
               >
-                Sign Up
+                <BadgePlus className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="hidden sm:inline">Sign Up</span>
               </button>
             </div>
           )}
