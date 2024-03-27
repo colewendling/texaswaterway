@@ -29,18 +29,8 @@ export const signUpSchema = z
     username: z
       .string()
       .min(3, 'Username must be at least 3 characters long')
-      .max(30)
-      .refine(async (username) => {
-        const isTaken = await checkIfUsernameExists(username);
-        return !isTaken;
-      }, 'Username is already taken'),
-    email: z
-      .string()
-      .email('Invalid email address')
-      .refine(async (email) => {
-        const isTaken = await checkIfEmailExists(email);
-        return !isTaken;
-      }, 'Email is already in use'),
+      .max(30),
+    email: z.string().email('Invalid email address'),
     password: z
       .string()
       .min(8, 'Password must be at least 8 characters long')
@@ -69,17 +59,3 @@ export const signUpSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'], // Specify which field the error belongs to
   });
-
-async function checkIfUsernameExists(username: string): Promise<boolean> {
-  const res = await fetch(
-    `/api/auth/check-existing?type=username&value=${username}`,
-  );
-  const data = await res.json();
-  return data.exists;
-}
-
-async function checkIfEmailExists(email: string): Promise<boolean> {
-  const res = await fetch(`/api/auth/check-existing?type=email&value=${email}`);
-  const data = await res.json();
-  return data.exists;
-}

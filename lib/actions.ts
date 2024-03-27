@@ -120,3 +120,41 @@ export const deleteEvent = async (eventId: string) => {
     throw new Error('Failed to delete event');
   }
 };
+
+const API_BASE_URL = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+
+export async function checkIfUsernameExists(
+  username: string,
+): Promise<boolean> {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/auth/check-existing?type=username&value=${encodeURIComponent(username)}`,
+    );
+    if (!res.ok) {
+      console.error('Failed to check username availability');
+      return false;
+    }
+    const data = await res.json();
+    return data.exists;
+  } catch (error) {
+    console.error('Error checking username:', error);
+    return false;
+  }
+}
+
+export async function checkIfEmailExists(email: string): Promise<boolean> {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/api/auth/check-existing?type=email&value=${encodeURIComponent(email)}`,
+    );
+    if (!res.ok) {
+      console.error('Failed to check email availability');
+      return false;
+    }
+    const data = await res.json();
+    return data.exists;
+  } catch (error) {
+    console.error('Error checking email:', error);
+    return false;
+  }
+}
