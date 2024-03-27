@@ -50,7 +50,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       <button
         type="submit"
-        className="px-4 py-2 bg-green-500 rounded text-white"
+        className="w-full py-3 bg-green-500 rounded text-white"
       >
         Login
       </button>

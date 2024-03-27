@@ -16,21 +16,21 @@ const Modal = ({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto overscroll-contain"
+      className="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto overscroll-contain
+      flex items-center justify-center px-4"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl bg-white rounded-3xl lg:rounded-xl shadow-lg p-6 mx-auto mt-10 mb-10 max-h-screen overflow-y-auto no-scrollbar"
+        className="relative w-full max-w-lg sm:max-w-xl lg:max-w-2xl bg-white rounded-3xl lg:rounded-xl shadow-lg p-10 mx-auto mt-10 mb-10 overflow-y-auto no-scrollbar flex flex-col justify-center max-h-[90vh]"
         style={{
           minHeight: '20rem',
         }}
       >
         <button
           onClick={onClose}
-          className="absolute -top-4 -right-4 sm:top-4 sm:right-4 w-10 h-10 flex items-center justify-center bg-red-500 rounded-full shadow-lg"
-          aria-label="Close"
+          className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600"
         >
-          <X className="w-5 h-5 text-black" />
+          ✕
         </button>
         {children}
       </div>
