@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -12,18 +12,6 @@ import LoginForm from '@/components/LoginForm';
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-
-useEffect(() => {
-  console.log('Session status:', status);
-  if (status === 'authenticated') {
-    console.log('Session Details:', session);
-    console.log('Session.id:', session.id);
-  } else if (status === 'unauthenticated') {
-    console.log('No active session');
-  } else {
-    console.log('Loading session...');
-  }
-}, [session, status]);
 
   // Manage modal state
   const [openModal, setOpenModal] = useState<string | null>(null);
