@@ -69,7 +69,7 @@ export const authOptions = {
             name: profile.name,
             username: profile.login,
             email: profile.email,
-            image: profile.image,
+            image: profile.avatar_url,
             bio: profile.bio || '',
           });
         }
