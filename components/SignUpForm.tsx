@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { signUpSchema } from '@/lib/validation';
 import { checkIfUsernameExists, checkIfEmailExists } from '@/lib/actions';
+import { signIn } from 'next-auth/react';
 
 const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
@@ -111,7 +112,25 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
 
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || 'Failed to sign up');
-      console.log('User created:', result.user);
+
+      // Automatically log the user in
+      const loginResult = await signIn('credentials', {
+        redirect: false,
+        email: formData.email, // Pass email
+        password: formData.password, // Pass password
+      });
+
+      if (loginResult?.error) {
+        setErrors((prev) => ({
+          ...prev,
+          form: loginResult.error || 'Unknown error',
+        }));
+        console.error('Login after sign-up failed:', loginResult.error);
+      } else {
+        console.log('Signed in successfully after sign-up');
+        onClose();
+      }
+
       onClose();
     } catch (err) {
       if (err instanceof z.ZodError) {
