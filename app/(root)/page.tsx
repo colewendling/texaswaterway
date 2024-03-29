@@ -20,7 +20,7 @@ export default async function Home({
     <>
       <section className="orange_container space-y-6">
         <h1 className="heading">
-          Howdy!, <br /> Connect With Texas Lake goers{' '}
+          Howdy! <br /> Connect With Texas Lake goers{' '}
         </h1>
         <p className="sub-heading !max-w-3xl">
           Comprehensive dashboard app offering up-to-date data on Texas lakes,
