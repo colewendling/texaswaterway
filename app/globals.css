@@ -155,16 +155,16 @@ body {
   }
 
   .event-card_date {
-    @apply font-medium text-[16px] rounded-full cursor-pointer;
+    @apply font-medium text-[16px] rounded-full cursor-default;
   }
 
   .event-card_desc {
-    @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-all;
+    @apply font-normal text-[16px] line-clamp-2 my-3 text-black-100 break-words;
     min-height: 3rem;
   }
 
   .event-card_img {
-    @apply w-full h-[164px] rounded-[10px] object-cover;
+    @apply w-full h-[180px] rounded-[10px] object-cover shadow-lg;
   }
 
   .event-card_avatar {
