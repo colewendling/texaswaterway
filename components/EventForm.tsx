@@ -16,6 +16,8 @@ import { createEvent, updateEvent, deleteEvent } from '@/lib/actions';
 const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [pitch, setPitch] = useState(existingEvent?.pitch || '');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
   const { toast } = useToast();
   const router = useRouter();
@@ -24,68 +26,108 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
     if (existingEvent?.pitch) {
       setPitch(existingEvent.pitch);
     }
-  }, [existingEvent]);
+  }, [existingEvent, imageFile]);
 
-  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+  const uploadImageToCloudinary = async (file: File) => {
+    const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
+
+    if (!cloudinaryUrl) {
+      throw new Error('Cloudinary URL is not defined in environment variables');
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'ml_default');
+
     try {
-      const formValues = {
-        title: formData.get('title') as string,
-        description: formData.get('description') as string,
-        category: formData.get('category') as string,
-        link: formData.get('link') as string,
-        pitch,
-      };
+      const response = await fetch(`${cloudinaryUrl}/image/upload`, {
+        method: 'POST',
+        body: formData,
+      });
 
-      await formSchema.parseAsync(formValues);
-
-      // const result = await createEvent(prevState, formData, pitch);
-
-      let result;
-      if (existingEvent) {
-        // Update the event if it exists
-        result = await updateEvent(existingEvent._id, formData, pitch);
-      } else {
-        // Create a new event
-        result = await createEvent(prevState, formData, pitch);
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Upload failed: ${errorData.error.message}`);
       }
 
-      if (result.status === 'SUCCESS') {
-        toast({
-          title: 'Success',
-          description: `Your event has been ${existingEvent ? 'updated' : 'created'} successfully`,
-        });
-        router.push(`/event/${result._id}`);
-      }
-
-      return result;
+      const data = await response.json();
+      return data.secure_url; // Return the Cloudinary image URL
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        const fieldErrors = error.flatten().fieldErrors;
+      console.error('Error uploading image:', error);
+      throw error; // Re-throw the error to handle it properly
+    }
+  };
 
-        setErrors(fieldErrors as unknown as Record<string, string>);
+const handleFormSubmit = async (prevState: any, formData: FormData) => {
+  try {
+    setIsUploading(true);
+    let imageUrl = existingEvent?.image || '';
 
-        toast({
-          title: 'Error',
-          description: 'Please check your inputs and try again',
-          variant: 'destructive',
-        });
+    if (imageFile) {
+      imageUrl = await uploadImageToCloudinary(imageFile);
+    } 
 
-        return { ...prevState, error: 'validation failed', status: 'ERROR' };
-      }
+    // Explicitly add the Cloudinary URL to FormData
+    formData.append('link', imageUrl);
+
+    const formValues = {
+      title: formData.get('title') as string,
+      description: formData.get('description') as string,
+      category: formData.get('category') as string,
+      link: imageUrl, // Cloudinary URL
+      pitch,
+    };
+
+    await formSchema.parseAsync(formValues);
+
+    let result;
+    if (existingEvent) {
+      // Update the event if it exists
+      result = await updateEvent(existingEvent._id, formData, pitch);
+    } else {
+      // Create a new event
+      result = await createEvent(prevState, formData, pitch);
+    }
+
+    if (result.status === 'SUCCESS') {
+      toast({
+        title: 'Success',
+        description: `Your event has been ${
+          existingEvent ? 'updated' : 'created'
+        } successfully`,
+      });
+      router.push(`/event/${result._id}`);
+    }
+
+    return result;
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      const fieldErrors = error.flatten().fieldErrors;
+
+      setErrors(fieldErrors as unknown as Record<string, string>);
 
       toast({
         title: 'Error',
-        description: 'An unexpected error has occured',
+        description: 'Please check your inputs and try again',
         variant: 'destructive',
       });
 
-      return {
-        ...prevState,
-        error: 'An unexpected error has occured',
-        status: 'ERROR',
-      };
+      return { ...prevState, error: 'validation failed', status: 'ERROR' };
     }
-  };
+
+    toast({
+      title: 'Error',
+      description: 'An unexpected error has occurred',
+      variant: 'destructive',
+    });
+
+    return {
+      ...prevState,
+      error: 'An unexpected error has occurred',
+      status: 'ERROR',
+    };
+  }
+};
 
   const handleDelete = async () => {
     if (confirm('Are you sure you want to delete this event?')) {
@@ -109,7 +151,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   return (
     <form action={formAction} className="event-form">
       <div>
-        <label htmlFor="title" className="event-form_label">
+          <label htmlFor="title" className="event-form_label">
           Title
         </label>
         <Input
@@ -155,18 +197,22 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         )}
       </div>
       <div>
-        <label htmlFor="link" className="event-form_label">
-          Image URL
+        <label htmlFor="image" className="event-form_label">
+          Upload Image
         </label>
-        <Input
-          id="link"
-          name="link"
-          defaultValue={existingEvent?.image || ''}
+        <input
+          type="file"
+          id="image"
+          name="image"
+          accept="image/*"
           className="event-form_input"
-          required
-          placeholder="Event Image URL"
+          onChange={(e) => {
+            const file = e.target.files?.[0] || null;
+            setImageFile(file);
+          }}
+          required={!existingEvent?.image}
         />
-        {errors.link && <p className="event-form_error">{errors.link}</p>}
+        {isUploading && <p className="event-form_error">Uploading image...</p>}
       </div>
       <div data-color-mode="light">
         <label htmlFor="pitch" className="event-form_label">
@@ -202,10 +248,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
             <Trash className="w-5 h-5" />
           </button>
         )}
-        <Button
-          type="submit"
-          className="event-form_btn_submit"
-        >
+        <Button type="submit" className="event-form_btn_submit">
           {isEditMode ? (
             <>
               Save <Save className="w-4 h-4 ml-2" />
