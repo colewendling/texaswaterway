@@ -77,6 +77,10 @@ body {
     @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] text-center my-5;
   }
 
+  .form-title {
+    @apply font-work-sans font-bold sm:text-[36px] sm:leading-[44px] text-[24px] leading-[32px] text-center text-black-100;
+  }
+
   .sub-heading {
     @apply font-medium text-[20px] text-white max-w-2xl text-center break-words;
   }

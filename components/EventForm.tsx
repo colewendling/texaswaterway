@@ -5,7 +5,7 @@ import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
 import { Button } from './ui/button';
-import { Send, Save, Trash } from 'lucide-react';
+import { Trash } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
 import { useActionState } from 'react';
 import { z } from 'zod';
@@ -150,8 +150,13 @@ const handleFormSubmit = async (prevState: any, formData: FormData) => {
 
   return (
     <form action={formAction} className="event-form">
+      {isEditMode && (
+        <h1 className="form-title">
+          Edit your Event
+        </h1>
+      )}
       <div>
-          <label htmlFor="title" className="event-form_label">
+        <label htmlFor="title" className="event-form_label">
           Title
         </label>
         <Input
@@ -218,6 +223,7 @@ const handleFormSubmit = async (prevState: any, formData: FormData) => {
         <label htmlFor="pitch" className="event-form_label">
           Event Pitch
         </label>
+        <div className='my-3'>
         <MDEditor
           value={pitch}
           onChange={(value) => setPitch(value as string)}
@@ -232,6 +238,7 @@ const handleFormSubmit = async (prevState: any, formData: FormData) => {
             disallowedElements: ['style'],
           }}
         />
+        </div>
         {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
       </div>
       <div
@@ -251,11 +258,11 @@ const handleFormSubmit = async (prevState: any, formData: FormData) => {
         <Button type="submit" className="event-form_btn_submit">
           {isEditMode ? (
             <>
-              Save <Save className="w-4 h-4 ml-2" />
+              Save
             </>
           ) : (
             <>
-              Submit <Send className="w-4 h-4 ml-2" />
+              Submit
             </>
           )}
         </Button>

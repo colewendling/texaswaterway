@@ -31,6 +31,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <h1 className="form-title">Login</h1>
       <input
         type="text"
         name="identifier"

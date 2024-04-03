@@ -167,6 +167,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+      <h1 className="form-title">Join Texas Waterway</h1>
       <div className="flex space-x-4">
         <div className="flex flex-col w-full">
           <input
