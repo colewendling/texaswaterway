@@ -193,11 +193,11 @@ body {
   }
 
   .event-form_input {
-    @apply border-[3px] bg-white border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300 !important;
+    @apply border-[3px] bg-white border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300;
   }
 
   .event-form_textarea {
-    @apply border-[3px] bg-white border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300 !important;
+    @apply border-[3px] bg-white border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300;
   }
 
   .event-form_error {
@@ -210,9 +210,8 @@ body {
 
   .event-form_btn_submit {
     @apply border-black p-6 font-bold text-[18px]
-    flex items-center justify-center bg-gray-400 text-white rounded-full hover:bg-primary transition ml-4
-    shadow-md hover:shadow-lg
-    !important;
+    flex items-center justify-center text-white rounded-full transition ml-4
+    shadow-md hover:shadow-lg;
   }
 
   .event-form_btn_delete {
@@ -253,4 +252,52 @@ body {
 
 .w-md-editor-toolbar {
   padding: 10px !important;
+}
+
+/* Toggle container styles */
+.toggle-container {
+  @apply flex items-center gap-3 font-sans;
+}
+
+.toggle-label {
+  @apply text-[16px] font-medium text-gray-800;
+}
+
+/* Toggle wrapper */
+.toggle-wrapper {
+  @apply relative flex items-center w-[150px] h-[40px] bg-gray-200 rounded-full cursor-pointer;
+  padding: 0; /* Remove extra padding to avoid unwanted space */
+  overflow: hidden; /* Ensure no content spills out of the rounded container */
+}
+
+/* Slider for the background highlight */
+.toggle-slider {
+  @apply absolute top-0 left-0 h-full w-1/2 bg-primary-300 rounded-full transition-transform duration-300;
+}
+
+.toggle-options {
+  @apply relative flex w-full justify-between items-center z-10;
+}
+
+.toggle-item {
+  @apply flex-1 text-center text-[14px] font-medium text-gray-600;
+  line-height: 40px;
+}
+
+.toggle-item.active {
+  @apply text-white font-semibold;
+}
+
+.toggle-item.inactive {
+  @apply text-gray-600;
+}
+
+/* Success state for form input */
+.form-input_success {
+  @apply bg-green-100 border-green-500;
+}
+
+/* Error state for form input */
+.form-input_error {
+  @apply bg-red-100 border-red-500;
 }
