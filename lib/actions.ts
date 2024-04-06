@@ -19,7 +19,7 @@ export const createEvent = async (
       status: 'ERROR',
     });
 
-  const { title, description, category, link } = Object.fromEntries(
+  const { title, description, category, image } = Object.fromEntries(
     Array.from(form).filter(([key]) => key !== 'pitch'),
   );
 
@@ -30,7 +30,7 @@ export const createEvent = async (
       title,
       description,
       category,
-      image: link,
+      image,
       slug: {
         _type: slug,
         current: slug,
@@ -72,7 +72,7 @@ export const updateEvent = async (
     });
   }
 
-  const { title, description, category, link } = Object.fromEntries(
+  const { title, description, category, image } = Object.fromEntries(
     Array.from(form).filter(([key]) => key !== 'pitch'),
   );
 
@@ -83,7 +83,7 @@ export const updateEvent = async (
       title,
       description,
       category,
-      image: link,
+      image: image,
       slug: {
         _type: 'slug',
         current: slug,
