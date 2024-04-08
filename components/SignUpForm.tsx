@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { signUpSchema } from '@/lib/validation';
 import { checkIfUsernameExists, checkIfEmailExists } from '@/lib/actions';
 import { signIn } from 'next-auth/react';
+import { handleBlur } from '@/lib/utils';
 
 const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
@@ -43,37 +44,16 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
-  const handleBlur = async (
+  const onBlurHandler = (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
-
-    // Mark the field as touched
-    setTouched((prev) => ({ ...prev, [name]: true }));
-
-    // Skip validation for empty fields
-    if (!value) {
-      // If the field is empty, mark it as invalid but don't show an error message
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-      return;
-    }
-
-    try {
-      // Access the inner schema of signUpSchema
-      const baseSchema = signUpSchema.innerType();
-
-      // Validate the field by creating a partial schema for the specific field
-      const fieldSchema = z.object({ [name]: baseSchema.shape[name] });
-      await fieldSchema.parseAsync({ [name]: formData[name] });
-      setErrors((prev) => ({ ...prev, [name]: '' }));
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        setErrors((prev) => ({
-          ...prev,
-          [name]: err.errors[0]?.message || 'Invalid input',
-        }));
-      }
-    }
+    handleBlur({
+      e,
+      formData,
+      schema: signUpSchema.innerType(),
+      setErrors,
+      setTouched,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -176,14 +156,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             placeholder="First Name"
             value={formData.name}
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={onBlurHandler}
             className={`border p-2 rounded w-full ${
               touched.name
                 ? formData.name
                   ? errors.name
-                    ? 'bg-red-100 border-red-500'
-                    : 'bg-green-100 border-green-500'
-                  : 'bg-red-100'
+                    ? 'form-input_error'
+                    : 'form-input_success'
+                  : 'form-input_error'
                 : ''
             }`}
           />
@@ -196,14 +176,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             placeholder="Last Name"
             value={formData.lastName}
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={onBlurHandler}
             className={`border p-2 rounded w-full ${
               touched.lastName
                 ? formData.lastName
                   ? errors.lastName
-                    ? 'bg-red-100 border-red-500'
-                    : 'bg-green-100 border-green-500'
-                  : 'bg-red-100'
+                    ? 'form-input_error'
+                    : 'form-input_success'
+                  : 'form-input_error'
                 : ''
             }`}
           />
@@ -217,14 +197,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           placeholder="Username"
           value={formData.username}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlurHandler}
           className={`border p-2 rounded w-full ${
             touched.username
               ? formData.username
                 ? errors.username
-                  ? 'bg-red-100 border-red-500'
-                  : 'bg-green-100 border-green-500'
-                : 'bg-red-100'
+                  ? 'form-input_error'
+                  : 'form-input_success'
+                : 'form-input_error'
               : ''
           }`}
         />
@@ -237,14 +217,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           placeholder="Email"
           value={formData.email}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlurHandler}
           className={`border p-2 rounded w-full ${
             touched.email
               ? formData.email
                 ? errors.email
-                  ? 'bg-red-100 border-red-500'
-                  : 'bg-green-100 border-green-500'
-                : 'bg-red-100'
+                  ? 'form-input_error'
+                  : 'form-input_success'
+                : 'form-input_error'
               : ''
           }`}
         />
@@ -257,14 +237,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlurHandler}
           className={`border p-2 rounded w-full ${
             touched.password
               ? formData.password
                 ? errors.password
-                  ? 'bg-red-100 border-red-500'
-                  : 'bg-green-100 border-green-500'
-                : 'bg-red-100'
+                  ? 'form-input_error'
+                  : 'form-input_success'
+                : 'form-input_error'
               : ''
           }`}
         />
@@ -279,8 +259,8 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         className={`p-2 rounded border ${
           formData.password && formData.confirmPassword
             ? passwordMatch
-              ? 'bg-green-100 border-green-500'
-              : 'bg-red-100 border-red-500'
+              ? 'form-input_success'
+              : 'form-input_error'
             : ''
         }`}
       />
@@ -294,14 +274,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           placeholder="Profile Image URL"
           value={formData.image}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlurHandler}
           className={`border p-2 rounded w-full ${
             touched.image
               ? formData.image
                 ? errors.image
-                  ? 'bg-red-100 border-red-500'
-                  : 'bg-green-100 border-green-500'
-                : 'bg-red-100'
+                  ? 'form-input_error'
+                  : 'form-input_success'
+                : 'form-input_error'
               : ''
           }`}
         />
@@ -313,14 +293,14 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           placeholder="Bio (optional)"
           value={formData.bio}
           onChange={handleChange}
-          onBlur={handleBlur}
+          onBlur={onBlurHandler}
           className={`border p-2 rounded w-full ${
             touched.bio
               ? formData.bio
                 ? errors.bio
-                  ? 'bg-red-100 border-red-500'
-                  : 'bg-green-100 border-green-500'
-                : 'bg-gray-100'
+                  ? 'form-input_error'
+                  : 'form-input_success'
+                : 'form-input_error'
               : ''
           }`}
         />
