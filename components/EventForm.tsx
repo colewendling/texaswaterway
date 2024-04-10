@@ -114,7 +114,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
       const imageUrl = useURL
         ? (formData.get('image') as string) || ''
         : imageFile
-          ? await uploadImageToCloudinary(imageFile)
+          ? await uploadImageToCloudinary(imageFile, 'events')
           : '';
 
       formData.set('image', imageUrl);

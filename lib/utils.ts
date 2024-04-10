@@ -18,7 +18,7 @@ export function parseServerActionResponse<T>(response: T) {
   return JSON.parse(JSON.stringify(response));
 }
 
-export const uploadImageToCloudinary = async (file: File) => {
+export const uploadImageToCloudinary = async (file: File, folder: string) => {
   const cloudinaryUrl = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
 
   if (!cloudinaryUrl) {
@@ -28,6 +28,7 @@ export const uploadImageToCloudinary = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
   formData.append('upload_preset', 'ml_default');
+  formData.append('folder', folder);
 
   try {
     const response = await fetch(`${cloudinaryUrl}/image/upload`, {
