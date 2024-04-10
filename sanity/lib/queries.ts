@@ -134,3 +134,31 @@ export const USER_BY_EMAIL_QUERY = `
   }
 `;
 
+export const USER_BY_USERNAME_QUERY = `
+  *[_type == "user" && username == $username][0] {
+    _id,
+    id,
+    name,
+    username,
+    bio,
+    image
+  }
+`;
+
+export const EVENT_BY_SLUG_QUERY = `
+  *[_type == "event" && slug.current == $slug][0] {
+    _id, 
+    title, 
+    slug,
+    _createdAt,
+    user -> {
+      _id, name, username, image, bio
+    }, 
+    views, 
+    description,
+    category,
+    image,
+    pitch
+  }
+`;
+

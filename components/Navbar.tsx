@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,7 +15,6 @@ const Navbar = () => {
 
   // Manage modal state
   const [openModal, setOpenModal] = useState<string | null>(null);
-
 
   const openModalHandler = (modal: 'signUp' | 'login') => setOpenModal(modal);
   const closeModalHandler = () => setOpenModal(null);
@@ -47,7 +46,7 @@ const Navbar = () => {
                 <span className="max-sm:hidden">Logout</span>
                 <LogOut className="size-6 sm:hidden text-red-500" />
               </button>
-              <Link href={`/user/${session?.id}`}>
+              <Link href={`/user/${session?.user.username}`}>
                 <Avatar className="size-10">
                   <AvatarImage
                     src={session?.user.image || ''}

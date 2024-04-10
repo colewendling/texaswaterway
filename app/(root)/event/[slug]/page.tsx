@@ -1,6 +1,6 @@
 import { formatDate } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
-import { EVENT_BY_ID_QUERY, PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries';
+import { EVENT_BY_SLUG_QUERY, PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -14,11 +14,11 @@ const md = markdownit();
 
 export const experimental_ppr = true;
 
-const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const id = (await params).id;
+const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const slug = (await params).slug;
 
   const [post, {select: editorPosts}] = await Promise.all([
-    client.fetch(EVENT_BY_ID_QUERY, { id }),
+    client.fetch(EVENT_BY_SLUG_QUERY, { slug }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'featured-events' }),
   ]);
 
@@ -42,7 +42,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
           <div className="flex-between gap-5">
             <Link
-              href={`/user/${post.user?._id}`}
+              href={`/user/${post.user?.username}`}
               className="flex gap-2 items-center mb-3"
             >
               <Image
@@ -83,7 +83,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
         )}
         <Suspense fallback={<Skeleton className="view_skeleton" />}>
-          <View id={id} />
+          <View id={post?._id} />
         </Suspense>
       </section>
     </>

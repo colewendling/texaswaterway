@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { client } from '@/sanity/lib/client';
-import { USER_BY_ID_QUERY } from '@/sanity/lib/queries';
+import { USER_BY_USERNAME_QUERY } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import UserEvents from '@/components/UserEvents';
@@ -15,13 +15,13 @@ const Page = async ({
   params,
   searchParams,
 }: {
-  params: { id: string };
+  params: { username: string };
   searchParams: Promise<{ edit?: string }>;
 }) => {
-  const id = (await params).id;
+  const username = (await params).username;
   const session = await getServerSession(authOptions);
 
-  const user = await client.fetch(USER_BY_ID_QUERY, { id });
+  const user = await client.fetch(USER_BY_USERNAME_QUERY, { username });
   if (!user) return notFound();
 
   const editMode = (await searchParams).edit === 'true';
@@ -50,13 +50,13 @@ const Page = async ({
         <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
           <div className="flex items-center justify-between">
             <p className="text-30-bold">
-              {session?.id === id ? 'Your' : 'All'} Events
+              {session?.id === user._id ? 'Your' : 'All'} Events
             </p>
-            {session?.id === id && <EditButton editMode={editMode} />}
+            {session?.id === user._id && <EditButton editMode={editMode} />}
           </div>
           <ul className="card_grid-sm">
             <Suspense fallback={<EventCardSkeleton />}>
-              <UserEvents id={id} editMode={editMode} />
+              <UserEvents id={user._id} editMode={editMode} />
             </Suspense>
           </ul>
         </div>

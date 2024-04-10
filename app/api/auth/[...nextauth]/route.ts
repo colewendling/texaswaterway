@@ -80,13 +80,13 @@ export const authOptions = {
       if (account && profile) {
 
         //Github users
-        const user = await client
+        const sanityUser = await client
           .withConfig({ useCdn: false })
           .fetch(USER_BY_GITHUB_ID_QUERY, {
             id: profile?.id,
           });
-        token.id = user?._id; 
-
+        token.id = sanityUser?._id; 
+        token.username = sanityUser?.username; 
       } else if (user) {
         //Non-Github users
         const sanityUser = await client
@@ -95,13 +95,16 @@ export const authOptions = {
             email: user.email,
           });
         token.id = sanityUser._id;
-
+        token.username = sanityUser.username; 
       }
 
       return token;
     },
     async session({ session, token }) {
       Object.assign(session, { id: token.id });
+       if (token.username) {
+         session.user.username = token.username;
+       }
       return session;
     },
   },

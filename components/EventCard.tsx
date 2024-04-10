@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import EventForm from './EventForm';
 
@@ -10,13 +10,13 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from './ui/button';
-import { Author, Event } from '@/sanity/types';
+import { User, Event } from '@/sanity/types';
 import { Skeleton } from './ui/skeleton';
 
 import { client } from '@/sanity/lib/client';
 import { PITCH_BY_EVENT_ID_QUERY } from '@/sanity/lib/queries';
 
-export type EventCardType = Omit<Event, 'author'> & { author?: Author };
+export type EventCardType = Omit<Event, 'user'> & { user?: User };
 
 const EventCard = ({
   post,
@@ -28,12 +28,13 @@ const EventCard = ({
   const {
     _createdAt,
     views,
-    author,
+    user,
     title,
     category,
     _id,
     image,
     description,
+    slug
   } = post;
 
   const [isModalOpen, setModalOpen] = useState(false);
@@ -71,19 +72,19 @@ const EventCard = ({
       </div>
       <div className="flex-between mt-5 gap-5">
         <div className="flex-1">
-          <Link href={`/user/${author?._id}`}>
+          <Link href={`/user/${user?.username}`}>
             <p className="text-16-medium line-clamp-1 hover:text-primary">
-              {author?.name}
+              {user?.name}
             </p>
           </Link>
-          <Link href={`/event/${_id}`}>
+          <Link href={`/event/${slug?.current}`}>
             <h3 className="text-26-semibold line-clamp-1">{title}</h3>
           </Link>
         </div>
-        <Link href={`/user/${author?._id}`}>
+        <Link href={`/user/${user?.username}`}>
           <Image
-            src={author?.image || ''}
-            alt={author?.name || ''}
+            src={user?.image || ''}
+            alt={user?.name || ''}
             width={48}
             height={48}
             className="event-card_avatar"
@@ -91,7 +92,7 @@ const EventCard = ({
         </Link>
       </div>
 
-      <Link href={`/event/${_id}`}>
+      <Link href={`/event/${slug?.current}`}>
         <p className="event-card_desc">{description}</p>
         <img src={image} alt="placeholder" className="event-card_img" />
       </Link>
@@ -101,7 +102,7 @@ const EventCard = ({
           <p className="text-16-medium hover:text-primary">{category}</p>
         </Link>
         <Button className="event-card_btn" asChild>
-          <Link href={`/event/${_id}`}>Details</Link>
+          <Link href={`/event/${slug?.current}`}>Details</Link>
         </Button>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
