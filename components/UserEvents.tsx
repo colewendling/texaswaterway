@@ -1,10 +1,10 @@
 import { client } from '@/sanity/lib/client';
-import { EVENTS_BY_AUTHOR_QUERY } from '@/sanity/lib/queries';
+import { EVENTS_BY_USER_QUERY } from '@/sanity/lib/queries';
 import React from 'react';
 import EventCard, { EventCardType } from './EventCard';
 
 const UserEvents = async ({ id, editMode }: { id: string; editMode: boolean }) => {
-  const events = await client.fetch(EVENTS_BY_AUTHOR_QUERY, { id });
+  const events = await client.fetch(EVENTS_BY_USER_QUERY, { id });
   return (
     <>
       {events.length > 0 ? (

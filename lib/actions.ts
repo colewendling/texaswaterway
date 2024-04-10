@@ -35,7 +35,7 @@ export const createEvent = async (
         _type: slug,
         current: slug,
       },
-      author: {
+      user: {
         _type: 'reference',
         _ref: session?.id,
       },

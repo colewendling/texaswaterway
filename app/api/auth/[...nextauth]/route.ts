@@ -1,7 +1,7 @@
 import { client } from '@/sanity/lib/client';
 import {
-  AUTHOR_BY_EMAIL_QUERY,
-  AUTHOR_BY_GITHUB_ID_QUERY,
+  USER_BY_EMAIL_QUERY,
+  USER_BY_GITHUB_ID_QUERY,
 } from '@/sanity/lib/queries';
 import { writeClient } from '@/sanity/lib/write-client';
 import NextAuth from 'next-auth';
@@ -28,7 +28,7 @@ export const authOptions = {
         }
 
         // Fetch the user by email
-        const user = await client.fetch(AUTHOR_BY_EMAIL_QUERY, { email });
+        const user = await client.fetch(USER_BY_EMAIL_QUERY, { email });
         if (!user) {
           throw new Error('No user found');
         }
@@ -57,14 +57,14 @@ export const authOptions = {
         // Handle GitHub sign-in
         const existingUser = await client
           .withConfig({ useCdn: false })
-          .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
+          .fetch(USER_BY_GITHUB_ID_QUERY, {
             id: profile.id,
           });
 
         if (!existingUser) {
           // Create a new Github user in Sanity if they don’t exist
           await writeClient.create({
-            _type: 'author',
+            _type: 'user',
             id: profile.id,
             name: profile.name,
             username: profile.login,
@@ -82,7 +82,7 @@ export const authOptions = {
         //Github users
         const user = await client
           .withConfig({ useCdn: false })
-          .fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
+          .fetch(USER_BY_GITHUB_ID_QUERY, {
             id: profile?.id,
           });
         token.id = user?._id; 
@@ -91,7 +91,7 @@ export const authOptions = {
         //Non-Github users
         const sanityUser = await client
           .withConfig({ useCdn: false })
-          .fetch(AUTHOR_BY_EMAIL_QUERY, {
+          .fetch(USER_BY_EMAIL_QUERY, {
             email: user.email,
           });
         token.id = sanityUser._id;

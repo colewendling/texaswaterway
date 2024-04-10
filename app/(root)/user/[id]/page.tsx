@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { client } from '@/sanity/lib/client';
-import { AUTHOR_BY_ID_QUERY } from '@/sanity/lib/queries';
+import { USER_BY_ID_QUERY } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import UserEvents from '@/components/UserEvents';
@@ -21,7 +21,7 @@ const Page = async ({
   const id = (await params).id;
   const session = await getServerSession(authOptions);
 
-  const user = await client.fetch(AUTHOR_BY_ID_QUERY, { id });
+  const user = await client.fetch(USER_BY_ID_QUERY, { id });
   if (!user) return notFound();
 
   const editMode = (await searchParams).edit === 'true';

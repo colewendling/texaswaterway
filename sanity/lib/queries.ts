@@ -1,12 +1,12 @@
 import { defineQuery } from 'next-sanity';
 
 export const EVENTS_QUERY = defineQuery(
-  `*[_type == 'event' && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search ] | order(_createdAt desc) {
+  `*[_type == 'event' && defined(slug.current) && !defined($search) || title match $search || category match $search || user->name match $search ] | order(_createdAt desc) {
     _id, 
     title, 
     slug,
     _createdAt,
-    author -> {
+    user -> {
       _id, 
       name,
       username, 
@@ -26,7 +26,7 @@ export const EVENT_BY_ID_QUERY = defineQuery(`
     title, 
     slug,
     _createdAt,
-    author -> {
+    user -> {
       _id, name, username, image, bio
     }, 
     views, 
@@ -42,8 +42,8 @@ export const EVENT_VIEWS_QUERY = defineQuery(`
     }
   `);
 
-export const AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
-    *[_type == 'author' && id == $id][0]{
+export const USER_BY_GITHUB_ID_QUERY = defineQuery(`
+    *[_type == 'user' && id == $id][0]{
     _id,
     id,
     name,
@@ -53,8 +53,8 @@ export const AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
     bio
 }`);
 
-export const AUTHOR_BY_ID_QUERY = defineQuery(`
-    *[_type == 'author' && _id == $id][0]{
+export const USER_BY_ID_QUERY = defineQuery(`
+    *[_type == 'user' && _id == $id][0]{
     _id,
     id,
     name,
@@ -64,13 +64,13 @@ export const AUTHOR_BY_ID_QUERY = defineQuery(`
     bio
 }`);
 
-export const EVENTS_BY_AUTHOR_QUERY = defineQuery(
-  `*[_type == 'event' && author._ref == $id] | order(_createdAt desc) {
+export const EVENTS_BY_USER_QUERY = defineQuery(
+  `*[_type == 'event' && user._ref == $id] | order(_createdAt desc) {
     _id, 
     title, 
     slug,
     _createdAt,
-    author -> {
+    user -> {
       _id, 
       name,
       username, 
@@ -100,7 +100,7 @@ export const PLAYLIST_BY_SLUG_QUERY =
     _createdAt,
     title,
     slug,
-    author->{
+    user->{
       _id,
       name,
       slug,
@@ -121,8 +121,8 @@ export const DELETE_EVENT_BY_ID_QUERY = `
   }
 `;
 
-export const AUTHOR_BY_EMAIL_QUERY = `
-  *[_type == 'author' && email == $email][0]{
+export const USER_BY_EMAIL_QUERY = `
+  *[_type == 'user' && email == $email][0]{
     _id,
     id,
     name,

@@ -808,7 +808,7 @@
         },
         "optional": true
       },
-      "author": {
+      "user": {
         "type": "objectAttribute",
         "value": {
           "type": "object",
@@ -834,7 +834,7 @@
               "optional": true
             }
           },
-          "dereferencesTo": "author"
+          "dereferencesTo": "user"
         },
         "optional": true
       },
@@ -906,7 +906,7 @@
     }
   },
   {
-    "name": "author",
+    "name": "user",
     "type": "document",
     "attributes": {
       "_id": {
@@ -919,7 +919,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "author"
+          "value": "user"
         }
       },
       "_createdAt": {

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const id = Math.floor(10000000 + Math.random() * 90000000);
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await writeClient.create({
-      _type: 'author',
+      _type: 'user',
       id,
       name,
       username,

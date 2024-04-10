@@ -18,8 +18,8 @@ export async function GET(req: Request) {
     // Build the query
     const query =
       type === 'username'
-        ? `*[_type == "author" && username == $value][0]`
-        : `*[_type == "author" && email == $value][0]`;
+        ? `*[_type == "user" && username == $value][0]`
+        : `*[_type == "user" && email == $value][0]`;
 
     // Execute the query
     const exists = !!(await client.fetch(query, { value }));

@@ -150,11 +150,11 @@ export type Event = {
   _rev: string;
   title?: string;
   slug?: Slug;
-  author?: {
+  user?: {
     _ref: string;
     _type: 'reference';
     _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: 'author';
+    [internalGroqTypeReferenceTo]?: 'user';
   };
   views?: number;
   description?: string;
@@ -169,9 +169,9 @@ export type Slug = {
   source?: string;
 };
 
-export type Author = {
+export type User = {
   _id: string;
-  _type: 'author';
+  _type: 'user';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -200,6 +200,6 @@ export type AllSanitySchemaTypes =
   | Playlist
   | Event
   | Slug
-  | Author
+  | User
   | Markdown;
 export declare const internalGroqTypeReferenceTo: unique symbol;

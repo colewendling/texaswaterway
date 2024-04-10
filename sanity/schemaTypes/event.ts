@@ -17,9 +17,9 @@ export const event = defineType({
       },
     }),
     defineField({
-      name: 'author',
+      name: 'user',
       type: 'reference',
-      to: { type: 'author' },
+      to: { type: 'user' },
     }),
     defineField({
       name: 'views',
