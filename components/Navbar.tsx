@@ -52,7 +52,7 @@ const Navbar = () => {
                     src={session?.user.image || ''}
                     alt={session?.user?.name || ''}
                   />
-                  <AvatarFallback>AV</AvatarFallback>
+                  <AvatarFallback></AvatarFallback>
                 </Avatar>
               </Link>
             </>
