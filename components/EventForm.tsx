@@ -28,11 +28,10 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   useEffect(() => {
     if (existingEvent) {
       setPitch(existingEvent?.pitch || '');
-      setFormData({
-        ...formData, 
+      setFormData((prevFormData) => ({
+        ...prevFormData,
         pitch: existingEvent?.pitch || '',
-      });
-      console.log('this ran')
+      }));
     }
   }, [existingEvent]);
 
@@ -127,8 +126,6 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         pitch,
       };
 
-      console.log(`form Values: ${JSON.stringify(formValues)}`);
-
       await formSchema.parseAsync(formValues);
 
       let result;
@@ -151,7 +148,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
             existingEvent ? 'updated' : 'created'
           } successfully`,
         });
-        router.push(`/event/${result._id}`);
+        router.push(`/event/${result.slug.current}`);
       }
 
       return result;
