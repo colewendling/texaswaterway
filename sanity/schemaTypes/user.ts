@@ -43,6 +43,12 @@ export const user = defineType({
       title: 'Bio',
       type: 'text',
     }),
+    {
+      name: 'friends',
+      title: 'Friends',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'user' }] }],
+    },
   ],
   preview: {
     select: {

@@ -125,6 +125,27 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
+export type FriendRequest = {
+  _id: string;
+  _type: 'friendRequest';
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  from?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'user';
+  };
+  to?: {
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: 'user';
+  };
+  status?: 'pending' | 'accepted' | 'rejected';
+};
+
 export type Playlist = {
   _id: string;
   _type: 'playlist';
@@ -182,6 +203,13 @@ export type User = {
   password?: string;
   image?: string;
   bio?: string;
+  friends?: Array<{
+    _ref: string;
+    _type: 'reference';
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: 'user';
+  }>;
 };
 
 export type Markdown = string;
@@ -197,6 +225,7 @@ export type AllSanitySchemaTypes =
   | SanityImageMetadata
   | Geopoint
   | SanityAssetSourceData
+  | FriendRequest
   | Playlist
   | Event
   | Slug
