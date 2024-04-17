@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import { X } from 'lucide-react';
+import ReactDOM from 'react-dom';
 
 const Modal = ({
   isOpen,
@@ -13,10 +13,10 @@ const Modal = ({
 }) => {
   if (!isOpen) return null;
 
-  return (
+  return ReactDOM.createPortal(
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto overscroll-contain
+      className="fixed inset-0 z-[1050] bg-black bg-opacity-50 overflow-y-auto overscroll-contain
       flex items-center justify-center px-4"
     >
       <div
@@ -34,7 +34,8 @@ const Modal = ({
         </button>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 
