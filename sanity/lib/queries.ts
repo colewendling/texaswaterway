@@ -141,7 +141,12 @@ export const USER_BY_USERNAME_QUERY = `
     name,
     username,
     bio,
-    image
+    image,
+    "friends": friends[]->{
+      _id,
+      username,
+      image
+    }
   }
 `;
 
@@ -161,4 +166,48 @@ export const EVENT_BY_SLUG_QUERY = `
     pitch
   }
 `;
+
+// Query to search users by name or username
+export const SEARCH_USERS_QUERY = defineQuery(`
+  *[_type == "user" && (username match $searchTerm || name match $searchTerm)] {
+    _id,
+    username,
+    image
+  }
+`);
+
+// Query to fetch pending friend requests for the logged-in user
+export const PENDING_FRIEND_REQUESTS_QUERY = defineQuery(`
+  *[_type == "friendRequest" && to._ref == $userId && status == "pending"] {
+    _id,
+    from->{
+      _id,
+      username,
+      image
+    }
+  }
+`);
+
+// Query to fetch friend requests sent by the logged-in user
+export const SENT_FRIEND_REQUESTS_QUERY = defineQuery(`
+  *[_type == "friendRequest" && from._ref == $userId && status == "pending"] {
+    _id,
+    to->{
+      _id,
+      username,
+      image
+    }
+  }
+`);
+
+export const USER_FRIENDS_BY_ID_QUERY = defineQuery(`
+  *[_type == "user" && _id == $userId][0]{
+    "friends": friends[]->{
+      _id,
+      username,
+      image
+    }
+  }
+`);
+
 
