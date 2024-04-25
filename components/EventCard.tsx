@@ -82,13 +82,15 @@ const EventCard = ({
           </Link>
         </div>
         <Link href={`/user/${user?.username}`}>
-          <Image
-            src={user?.image || ''}
-            alt={user?.name || ''}
-            width={48}
-            height={48}
-            className="event-card_avatar"
-          />
+          <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-md">
+            <Image
+              src={user?.image || ''}
+              alt={user?.name || ''}
+              fill
+              sizes="48px"
+              className="event-card_avatar"
+            />
+          </div>
         </Link>
       </div>
 

@@ -36,20 +36,22 @@ const Page = async ({
               {user.name}
             </h3>
           </div>
-          <Image
-            src={user.image}
-            alt={user.name}
-            width={220}
-            height={220}
-            className="profile_image"
-          />
+          <div className="relative w-[220px] h-[220px] rounded-full overflow-hidden shadow-md">
+            <Image
+              src={user.image}
+              alt={user.name}
+              fill
+              sizes="220px"
+              className="profile_image"
+            />
+          </div>
           <p className="text-30-extrabold mt-7 text-center">
             @{user?.username}
           </p>
           <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
-        <div className='profile_friendlist'>
-          <FriendList friends={user?.friends} userId={user._id}/>
-        </div>
+          <div className="profile_friendlist">
+            <FriendList friends={user?.friends} userId={user._id} />
+          </div>
         </div>
         <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
           <div className="flex items-center justify-between">
