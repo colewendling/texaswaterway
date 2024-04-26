@@ -319,7 +319,7 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
                   alt={friend.username}
                   className="w-10 h-10 rounded-full mr-2"
                 />
-                <span>{friend.username}</span>
+                <span className='px-1 font-work-sans'>{friend.username}</span>
               </div>
               <button
                 onClick={() => {
@@ -331,7 +331,7 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
                     handleRemoveFriend(friend._id);
                   }
                 }}
-                className="bg-red-500 text-white py-1 px-3 rounded"
+                className="text-red-500 py-1 px-3 hover:underline"
               >
                 Remove Friend
               </button>
