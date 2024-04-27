@@ -1,125 +1,11 @@
 import bcrypt from 'bcrypt';
 import { writeClient } from '@/sanity/lib/write-client';
 import { client } from '@/sanity/lib/client';
+import { events } from './events';
+import { users } from './users';
 
 export const seedDatabase = async () => {
   try {
-    const users = [
-      {
-        name: 'Anya Sikora',
-        username: 'queen',
-        email: 'anya@gmail.com',
-        bio: '✨ Reigning supreme, one dream at a time.',
-        image:
-          'https://res.cloudinary.com/dunymn6b8/image/upload/v1732568171/anya_g2cpev.png',
-      },
-      {
-        name: 'Cookie Monster',
-        username: 'cookie',
-        email: 'cookie@gmail.com',
-        bio: 'Me want cookie! 🍪 Sharing cookies, one crumb at a time.',
-        image:
-          'https://media4.giphy.com/media/YL2lpKcT5G1MjaNiEwNX3dD3H3QQ9cKJ6N21yMm5pbXIzemZ1bW9fbWXZ3V3Nm9reHZhaXo1clD2MV9pbmRlcnh5bF9naWVfYW1faWQ/200.webp',
-      },
-      {
-        name: 'Tom Thumb',
-        username: 'tom',
-        email: 'tom@gmail.com',
-        bio: 'Small in size, big in adventure. ✨',
-        image:
-          'https://media1.giphy.com/media/YL2lpKcT5G1MjaNiEwNX2TmMzdTd2jpZh5aDnhYWyWo5N/200.webp',
-      },
-      {
-        name: 'Bob Builder',
-        username: 'bob',
-        email: 'bob@gmail.com',
-        bio: 'Can we fix it? Yes, we can! 🛠️',
-        image:
-          'https://media4.giphy.com/media/YL2lpKcT5G1MjaNiEwNX3TmM5aMGVYtN3dm92M9pbmRlcnh5bF9naWVfYW1faWQ/200.webp',
-      },
-      {
-        name: 'Lucy Lovely',
-        username: 'lovely',
-        email: 'lucy@gmail.com',
-        bio: 'Spreading love and kindness wherever I go. 💕',
-        image:
-          'https://media1.giphy.com/media/YL2lpKcT5G1MjaNiEwNX3cFoKxWhWF2eTFyYzF3VlNF2UVFOtw/200.webp',
-      },
-      {
-        name: 'Ron Weasley',
-        username: 'ron',
-        email: 'ron@gmail.com',
-        bio: 'When in doubt, follow the spiders. 🕷️',
-        image:
-          'https://64.media.tumblr.com/f6c22c5cf39f998b488ded8ebb6d6/200.webp',
-      },
-      {
-        name: 'George Washington',
-        username: 'freedom',
-        email: 'george@gmail.com',
-        bio: 'It is assuredly better to go laughing than crying thro’ the rough journey of life.',
-        image:
-          'https://hips.hearstapps.com/hmg-prod/images/george-washington.jpg',
-      },
-      {
-        name: 'Luna Lovegood',
-        username: 'luna',
-        email: 'luna@gmail.com',
-        bio: 'Don’t worry, you’re just as sane as I am. 🦋',
-        image:
-          'https://i.pinimg.com/736x/42/1f/09/421f09b504eb9e7e1ef2d845b.jpg',
-      },
-      {
-        name: 'Draco Malfoy',
-        username: 'draco',
-        email: 'draco@gmail.com',
-        bio: 'Being bad never looked so good. 🐍',
-        image: 'https://pm1.narvii.com/6096/2647.jpg',
-      },
-      {
-        name: 'Marilyn Monroe',
-        username: 'marilyn',
-        email: 'marilyn@gmail.com',
-        bio: 'Keep smiling because life is a beautiful thing, and there’s so much to smile about.',
-        image: 'https://hips.hearstapps.com/hmg-prod/images/marilyn-monroe.jpg',
-      },
-      {
-        name: 'Leonhard Euler',
-        username: 'euler',
-        email: 'leonhard@gmail.com',
-        bio: 'Mathematics is the poetry of logical ideas.',
-        image: 'https://images.unsplash.com/3620.jpg',
-      },
-      {
-        name: 'Sigmund Freud',
-        username: 'freud',
-        email: 'sigmund@gmail.com',
-        bio: 'Sometimes a cigar is just a cigar. 💭',
-        image: 'https://images.unsplash.com/2001.jpg',
-      },
-      {
-        name: 'Friedrich Nietzsche',
-        username: 'zarathustra',
-        email: 'friedrich@gmail.com',
-        bio: 'He who has a why to live can bear almost any how.',
-        image: 'https://images.unsplash.com/7984.jpg',
-      },
-      {
-        name: 'Ernest Hemingway',
-        username: 'oldmanandthesea',
-        email: 'ernest@gmail.com',
-        bio: 'Write drunk, edit sober.',
-        image: 'https://upload.wikimedia.org/medium.jpg',
-      },
-      {
-        name: 'Emily Dickinson',
-        username: 'emily',
-        email: 'emily@gmail.com',
-        bio: 'Hope is the thing with feathers that perches in the soul.',
-        image: 'https://images.unsplash.com/emily.jpg',
-      },
-    ];
-
     const password = 'demo1234';
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -154,7 +40,6 @@ export const seedDatabase = async () => {
         return null; // Skip user creation if already exists
       }
 
-
       const id = Math.floor(10000000 + Math.random() * 90000000); // Generate unique 8-digit ID
       return writeClient.create({
         _type: 'user',
@@ -171,8 +56,106 @@ export const seedDatabase = async () => {
 
     const createdUsers = await Promise.all(userPromises);
 
-    // Update results for the "user" type
+    // Seed events
+    const eventPromises = events.map(async (event) => {
+      const userRef = await client.fetch(
+        `*[_type == "user" && username == $username][0]._id`,
+        { username: event.user },
+      );
+      if (!userRef) return null;
+
+      // Generate a slug from the event title
+      const slug = event.title
+        .toLowerCase()
+        .replace(/['’]/g, '') // Remove apostrophes
+        .replace(/[^a-z0-9]+/g, '-') // Replace spaces and special characters with dashes
+        .replace(/^-+|-+$/g, ''); // Remove leading/trailing dashes
+
+      return writeClient.create({
+        _type: 'event',
+        ...event,
+        slug: { _type: 'slug', current: slug },
+        user: { _type: 'reference', _ref: userRef },
+      });
+    });
+
+    const createdEvents = await Promise.all(eventPromises);
+
+    // Create a "Featured Events" playlist with 5 random events
+    const createdPlaylists = [];
+    if (createdEvents.length >= 5) {
+      const randomEventIds = createdEvents
+        .filter(Boolean) // Ensure valid events
+        .sort(() => 0.5 - Math.random()) // Shuffle the array
+        .slice(0, 5) // Pick the first 5
+        .map((event) => ({ _type: 'reference', _ref: event._id }));
+
+      const featuredPlaylistSlug = 'featured-events';
+
+      const playlist = await writeClient.create({
+        _type: 'playlist',
+        title: 'Featured Events',
+        slug: { _type: 'slug', current: featuredPlaylistSlug },
+        select: randomEventIds,
+      });
+
+      createdPlaylists.push(playlist);
+    } else {
+      console.log('Not enough events to create the Featured Events playlist.');
+    }
+
+    // Create 20 random friend requests
+    const userIds = createdUsers.map((user) => user._id).filter(Boolean);
+    const friendRequestPromises = Array.from({ length: 20 }).map(async () => {
+      const fromIndex = Math.floor(Math.random() * userIds.length);
+      let toIndex = Math.floor(Math.random() * userIds.length);
+
+      // Ensure the "from" and "to" users are different
+      while (toIndex === fromIndex) {
+        toIndex = Math.floor(Math.random() * userIds.length);
+      }
+
+      return writeClient.create({
+        _type: 'friendRequest',
+        from: { _type: 'reference', _ref: userIds[fromIndex] },
+        to: { _type: 'reference', _ref: userIds[toIndex] },
+        status: 'pending',
+      });
+    });
+
+    const createdFriendRequests = await Promise.all(friendRequestPromises);
+
+    // Assign 3-12 random friends to each user
+    const friendAssignmentPromises = createdUsers.map(async (user) => {
+      const numberOfFriends = Math.floor(Math.random() * 10) + 3; // Random number between 3 and 12
+      const friends = [];
+
+      while (friends.length < numberOfFriends) {
+        const randomFriendId =
+          userIds[Math.floor(Math.random() * userIds.length)];
+
+        // Ensure the user is not added as their own friend and avoid duplicates
+        if (randomFriendId !== user._id && !friends.includes(randomFriendId)) {
+          friends.push(randomFriendId);
+        }
+      }
+
+      return writeClient
+        .patch(user._id)
+        .set({
+          friends: friends.map((id) => ({ _type: 'reference', _ref: id })),
+        })
+        .commit();
+    });
+
+    await Promise.all(friendAssignmentPromises);
+
+    // Update results
     results.user = createdUsers.length;
+    results.event = createdEvents.length;
+    results.playlist = createdPlaylists.length;
+    results.friendRequest = createdFriendRequests.filter(Boolean).length;
+
 
     return {
       status: 'SUCCESS',
