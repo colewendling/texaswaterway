@@ -191,29 +191,6 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
                   />
                   <span>{user.username}</span>
                 </div>
-                {/* {user.isFriend ? (
-                  <button
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          `Are you sure you want to remove ${user.username} as a friend?`,
-                        )
-                      ) {
-                        handleRemoveFriend(user._id);
-                      }
-                    }}
-                    className="bg-red-500 text-white py-1 px-3 rounded"
-                  >
-                    Remove Friend
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => handleSendRequest(user._id)}
-                    className="bg-green-500 text-white py-1 px-3 rounded"
-                  >
-                    Add Friend
-                  </button>
-                )} */}
               </div>
             ))}
           </div>
