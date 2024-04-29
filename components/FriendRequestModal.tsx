@@ -41,7 +41,7 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
       });
       const sentRequests = await client.fetch(SENT_FRIEND_REQUESTS_QUERY, {
         userId,
-      })
+      });
       setPendingRequests(requests);
       setSentRequests(sentRequests);
     } catch (error) {
@@ -121,7 +121,24 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
       const result = await acceptFriendRequest(userId, requestId, fromUserId);
       if (result.status === 'SUCCESS') {
         alert('Friend request accepted!');
+
+        // Optimistic Update: Add the new friend to the friends list
+        const newFriend = pendingRequests.find(
+          (request) => request.from._id === fromUserId,
+        );
+        if (newFriend) {
+          setFriends((prevFriends) => [
+            ...prevFriends,
+            {
+              _id: newFriend.from._id,
+              username: newFriend.from.username,
+              image: newFriend.from.image,
+            },
+          ]);
+        }
+
         fetchPendingRequests(); // Refresh pending requests
+        fetchFriends(); // Refresh friends list to ensure consistency
       }
     } catch (error) {
       console.error('Error accepting friend request:', error);
@@ -147,8 +164,14 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
       const result = await removeFriend(userId, friendId);
       if (result.status === 'SUCCESS') {
         alert('Friend removed successfully!');
-        fetchPendingRequests(); // Refresh data
-        handleSearch(); // Refresh search results
+
+        // Fetch updated friends list
+        fetchFriends();
+
+        // Optional: Optimistic Update
+        setFriends((prevFriends) =>
+          prevFriends.filter((friend) => friend._id !== friendId),
+        );
       }
     } catch (error) {
       console.error('Error removing friend:', error);
