@@ -19,7 +19,7 @@ import {
 const FriendRequestModal = ({ isOpen, onClose, userId }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<
-    { _id: string; username: string; image?: string }[]
+    { _id: string; username: string; image?: string; isFriend?: boolean }[]
   >([]);
   const [pendingRequests, setPendingRequests] = useState<
     { _id: string; from: { _id: string; username: string; image?: string } }[]
@@ -191,6 +191,15 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
                   />
                   <span>{user.username}</span>
                 </div>
+                {/* Add Send Friend Request Button */}
+                {!user.isFriend && (
+                  <button
+                    onClick={() => handleSendRequest(user._id)}
+                    className="bg-blue-500 text-white py-1 px-3 rounded"
+                  >
+                    Send Friend Request
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -296,7 +305,7 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
                   alt={friend.username}
                   className="w-10 h-10 rounded-full mr-2"
                 />
-                <span className='px-1 font-work-sans'>{friend.username}</span>
+                <span className="px-1 font-work-sans">{friend.username}</span>
               </div>
               <button
                 onClick={() => {
