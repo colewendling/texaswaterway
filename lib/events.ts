@@ -211,7 +211,7 @@ Dress to impress—this is *the* party of the year!
   `,
   },
   {
-    title: 'Sunset Soirée 🍷🌅',
+    title: 'Sunset Party 🍷🌅',
     user: 'marilyn',
     views: 22,
     description: 'A glamorous gathering by the lake at sunset.',
@@ -219,9 +219,9 @@ Dress to impress—this is *the* party of the year!
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWhjd3I1ZTJxaWZmN2wxbDk1cGVzOW14a2Y5MzZqaDA3NGQwdTBxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OaHZ86Rus3f2pCk4PB/giphy.gif',
     pitch: `
-## 🌅 Marilyn’s Sunset Soirée
+## 🌅 Marilyn’s Sunset Party
 
-Glamour meets nature at **Marilyn Monroe’s** lakeside sunset soirée.
+Glamour meets nature at **Marilyn Monroe’s** lakeside sunset party.
 
 **What to expect:**
 - Champagne toast as the sun dips below the horizon. 🥂
