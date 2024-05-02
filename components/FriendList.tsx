@@ -1,23 +1,87 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { UserPlus } from 'lucide-react'; // For the "Add Friend" icon
+import FriendButton from './FriendButton';
 import FriendRequestModal from './FriendRequestModal';
+import { PENDING_FRIEND_REQUESTS_QUERY, SENT_FRIEND_REQUESTS_QUERY } from '@/sanity/lib/queries';
+import { client } from '@/sanity/lib/client';
 
-const FriendList = ({ friends, userId }) => {
+const FriendList = ({
+  friends,
+  userId,
+  sessionId,
+  isOwnProfile,
+  isFriend,
+}: {
+  friends: any[];
+  userId: string;
+  sessionId: string;
+  isOwnProfile: boolean;
+  isFriend: boolean;
+}) => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [hasPendingRequest, setHasPendingRequest] = useState(false);
+  const [requestId, setRequestId] = useState(''); // Store requestId
+
+  // Fetch pending friend requests count if on own profile
+  useEffect(() => {
+    if (isOwnProfile) {
+      const fetchPendingCount = async () => {
+        try {
+          const requests = await client.fetch(PENDING_FRIEND_REQUESTS_QUERY, {
+            userId,
+          });
+          setPendingCount(requests.length);
+        } catch (error) {
+          console.error('Error fetching pending requests:', error);
+        }
+      };
+
+      fetchPendingCount();
+    }
+  }, [isOwnProfile, userId]);
+
+  // Check if there is a pending request from session user to profile user
+  useEffect(() => {
+    if (!isOwnProfile) {
+      const fetchSentRequests = async () => {
+        try {
+          const sentRequests = await client.fetch(SENT_FRIEND_REQUESTS_QUERY, {
+            userId: sessionId,
+          });
+          const request = sentRequests.find(
+            (req: { to: { _id: string } }) => req.to._id === userId,
+          );
+
+          setHasPendingRequest(!!request);
+          setRequestId(request?._id || ''); // Set the requestId
+        } catch (error) {
+          console.error('Error fetching sent friend requests:', error);
+        }
+      };
+
+      fetchSentRequests();
+    }
+  }, [isOwnProfile, sessionId, userId]);
 
   return (
     <div className="mt-8 flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center">
         <h1 className="sub-heading">Friends</h1>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="friend-button"
-        >
-          <UserPlus size={15} />
-        </button>
+        <FriendButton
+          userId={userId}
+          sessionId={sessionId}
+          isOwnProfile={isOwnProfile}
+          isFriend={isFriend}
+          pendingCount={pendingCount}
+          setModalOpen={setModalOpen}
+          hasPendingRequest={hasPendingRequest}
+          setHasPendingRequest={setHasPendingRequest}
+          setRequestId={setRequestId}
+          requestId={requestId}
+        />
       </div>
       <hr className="friend-divider" />
 
@@ -41,9 +105,11 @@ const FriendList = ({ friends, userId }) => {
         </div>
       )}
 
-      {isModalOpen && (
+      {isOwnProfile && (
         <FriendRequestModal
           isOpen={isModalOpen}
+          pendingCount={pendingCount}
+          setPendingCount={setPendingCount}
           onClose={() => setModalOpen(false)}
           userId={userId}
         />

@@ -27,6 +27,12 @@ const Page = async ({
 
   const editMode = (await searchParams).edit === 'true';
 
+  const isOwnProfile = session?.id === user._id;
+
+  const isFriend = user?.friends?.some(
+    (friend: { _id: string }) => friend._id === session?.id,
+  );
+
   return (
     <>
       <section className="profile_container">
@@ -50,7 +56,13 @@ const Page = async ({
           </p>
           <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
           <div className="profile_friendlist">
-            <FriendList friends={user?.friends} userId={user._id} />
+            <FriendList
+              friends={user?.friends}
+              sessionId={session?.id}
+              userId={user._id}
+              isOwnProfile={isOwnProfile}
+              isFriend={isFriend}
+            />
           </div>
         </div>
         <div className="flex-1 flex flex-col gap-5 lg:-mt-5">

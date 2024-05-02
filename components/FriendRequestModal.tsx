@@ -16,7 +16,13 @@ import {
   USER_FRIENDS_BY_ID_QUERY,
 } from '@/sanity/lib/queries';
 
-const FriendRequestModal = ({ isOpen, onClose, userId }) => {
+const FriendRequestModal = ({
+  isOpen,
+  onClose,
+  userId,
+  pendingCount,
+  setPendingCount,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<
     { _id: string; username: string; image?: string; isFriend?: boolean }[]
@@ -72,11 +78,14 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
     setIsLoading(true); // Start loading
     try {
       const results = await client.fetch(SEARCH_USERS_QUERY, { searchTerm });
-      // Fetch the current user's friends to check friendship status
-      const currentUser = await client.fetch(
-        '*[_type == "user" && _id == $userId][0]{friends}',
-        { userId },
-      );
+
+      // Fetch the current user's friends and sent requests
+      const [currentUser, currentSentRequests] = await Promise.all([
+        client.fetch('*[_type == "user" && _id == $userId][0]{friends}', {
+          userId,
+        }),
+        client.fetch(SENT_FRIEND_REQUESTS_QUERY, { userId }),
+      ]);
 
       // Filter out the current user and update results
       const updatedResults = results
@@ -85,6 +94,9 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
           ...user,
           isFriend: currentUser.friends.some(
             (friend) => friend._ref === user._id,
+          ),
+          hasSentRequest: currentSentRequests.some(
+            (request) => request.to._id === user._id,
           ),
         }));
 
@@ -153,6 +165,7 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
         alert('Friend request rejected!');
         fetchPendingRequests(); // Refresh pending requests
         handleSearch(); // Refresh search results
+        setPendingCount(pendingCount - 1); // Update pending request count
       }
     } catch (error) {
       console.error('Error rejecting friend request:', error);
@@ -198,37 +211,50 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
           Search
         </button>
 
+        {/* Search Results Section */}
         {searchResults.length > 0 ? (
           <div className="mt-4">
             <h3 className="font-semibold mb-2">Search Results</h3>
-            {searchResults.map((user) => (
-              <div
-                key={user._id}
-                className="flex items-center justify-between mb-2"
-              >
-                <div className="flex items-center">
-                  <img
-                    src={user.image || '/default-avatar.png'}
-                    alt={user.username}
-                    className="w-10 h-10 rounded-full mr-2"
-                  />
-                  <span>{user.username}</span>
+            {searchResults.map((user) => {
+              // Check if the user is already in sentRequests
+              const isRequestSent = sentRequests.some(
+                (request) => request.to._id === user._id,
+              );
+
+              return (
+                <div
+                  key={user._id}
+                  className="flex items-center justify-between mb-2"
+                >
+                  <div className="flex items-center">
+                    <img
+                      src={user.image || '/default-avatar.png'}
+                      alt={user.username}
+                      className="w-10 h-10 rounded-full mr-2"
+                    />
+                    <span>{user.username}</span>
+                  </div>
+                  {/* Add Send Friend Request Button */}
+                  {!user.isFriend && !isRequestSent && (
+                    <button
+                      onClick={() => handleSendRequest(user._id)}
+                      className="bg-blue-500 text-white py-1 px-3 rounded"
+                    >
+                      Send Friend Request
+                    </button>
+                  )}
+                  {isRequestSent && (
+                    <span className="text-gray-500 text-sm cursor-default">
+                      Request Sent
+                    </span>
+                  )}
                 </div>
-                {/* Add Send Friend Request Button */}
-                {!user.isFriend && (
-                  <button
-                    onClick={() => handleSendRequest(user._id)}
-                    className="bg-blue-500 text-white py-1 px-3 rounded"
-                  >
-                    Send Friend Request
-                  </button>
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         ) : (
           hasSearched &&
-          !isLoading && // Ensure loading has finished
+          !isLoading &&
           searchTerm && (
             <p className="text-gray-500 text-center mt-4">
               No users found matching "{searchTerm}".
@@ -247,11 +273,16 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
               className="flex items-center justify-between mb-2"
             >
               <div className="flex items-center">
-                <img
-                  src={request.from.image || '/default-avatar.png'}
-                  alt={request.from.username}
-                  className="w-10 h-10 rounded-full mr-2"
-                />
+                <a
+                  href={`/user/${request.from.username}`}
+                  className="flex-shrink-0 cursor-pointer"
+                >
+                  <img
+                    src={request.from.image || '/default-avatar.png'}
+                    alt={request.from.username}
+                    className="w-10 h-10 rounded-full mr-2"
+                  />
+                </a>
                 <span>{request.from.username}</span>
               </div>
               <div className="flex space-x-2">
@@ -286,11 +317,16 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
               className="flex items-center justify-between mb-2"
             >
               <div className="flex items-center">
-                <img
-                  src={request.to.image || '/default-avatar.png'}
-                  alt={request.to.username}
-                  className="w-10 h-10 rounded-full mr-2"
-                />
+                <a
+                  href={`/user/${request.to.username}`}
+                  className="flex-shrink-0 cursor-pointer"
+                >
+                  <img
+                    src={request.to.image || '/default-avatar.png'}
+                    alt={request.to.username}
+                    className="w-10 h-10 rounded-full mr-2"
+                  />
+                </a>
                 <span>{request.to.username}</span>
               </div>
               <button
@@ -323,11 +359,16 @@ const FriendRequestModal = ({ isOpen, onClose, userId }) => {
               className="flex items-center justify-between mb-2"
             >
               <div className="flex items-center">
-                <img
-                  src={friend.image || '/default-avatar.png'}
-                  alt={friend.username}
-                  className="w-10 h-10 rounded-full mr-2"
-                />
+                <a
+                  href={`/user/${friend.username}`}
+                  className="flex-shrink-0 cursor-pointer"
+                >
+                  <img
+                    src={friend.image || '/default-avatar.png'}
+                    alt={friend.username}
+                    className="w-10 h-10 rounded-full mr-2"
+                  />
+                </a>
                 <span className="px-1 font-work-sans">{friend.username}</span>
               </div>
               <button
