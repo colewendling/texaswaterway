@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Modal from './Modal';
 import EventForm from './EventForm';
-
 import { cn, formatDate } from '@/lib/utils';
 import { EyeIcon, Edit } from 'lucide-react';
 import React from 'react';
@@ -12,9 +11,8 @@ import Image from 'next/image';
 import { Button } from './ui/button';
 import { User, Event } from '@/sanity/types';
 import { Skeleton } from './ui/skeleton';
-
 import { client } from '@/sanity/lib/client';
-import { PITCH_BY_EVENT_ID_QUERY } from '@/sanity/lib/queries';
+import { EVENT_PITCH_BY_EVENT_ID_QUERY } from '@/sanity/lib/queries/eventQueries';
 
 export type EventCardType = Omit<Event, 'user'> & { user?: User };
 
@@ -45,7 +43,7 @@ const EventCard = ({
 
     // Fetch the pitch for this event when the modal opens
     try {
-      const data = await client.fetch(PITCH_BY_EVENT_ID_QUERY, { id: _id });
+      const data = await client.fetch(EVENT_PITCH_BY_EVENT_ID_QUERY, { id: _id });
       setPitch(data?.pitch || ''); // Set the fetched pitch or an empty string
     } catch (error) {
       console.error('Failed to fetch pitch:', error);

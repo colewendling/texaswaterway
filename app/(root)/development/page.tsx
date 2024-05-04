@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
+import { clearDatabase, seedDatabase } from '@/app/actions/databaseActions';
+
 
 const DevelopmentPage = () => {
   const [loading, setLoading] = useState<{ clear: boolean; seed: boolean }>({
@@ -24,15 +26,11 @@ const DevelopmentPage = () => {
     setResults(null);
 
     try {
-      const res = await fetch('/api/clear-database', {
-        method: 'POST',
-      });
-
-      const data = await res.json();
+      const data = await clearDatabase();
 
       if (data.status === 'SUCCESS') {
         setMessage('Database cleared successfully!');
-        setResults(data.results);
+        setResults(data.results ?? {});
       } else {
         setMessage('Failed to clear database.');
         console.error('Error:', data.error);
@@ -59,15 +57,11 @@ const DevelopmentPage = () => {
     setResults(null);
 
     try {
-      const res = await fetch('/api/seed-database', {
-        method: 'POST',
-      });
-
-      const data = await res.json();
+      const data = await seedDatabase();
 
       if (data.status === 'SUCCESS') {
         setMessage('Database seeded successfully!');
-        setResults(data.results);
+        setResults(data.results ?? {});
       } else {
         setMessage('Failed to seed database.');
         console.error('Error:', data.error);

@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { client } from '@/sanity/lib/client';
-import { USER_BY_USERNAME_QUERY } from '@/sanity/lib/queries';
+import { USER_BY_USERNAME_QUERY } from '@/sanity/lib/queries/userQueries';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import UserEvents from '@/components/UserEvents';

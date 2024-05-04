@@ -1,6 +1,7 @@
 import { formatDate } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
-import { EVENT_BY_SLUG_QUERY, PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries';
+import { EVENT_BY_SLUG_QUERY } from '@/sanity/lib/queries/eventQueries';
+import { PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries/playlistQueries';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -17,7 +18,7 @@ export const experimental_ppr = true;
 const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const slug = (await params).slug;
 
-  const [post, {select: editorPosts}] = await Promise.all([
+  const [post, { select: editorPosts }] = await Promise.all([
     client.fetch(EVENT_BY_SLUG_QUERY, { slug }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: 'featured-events' }),
   ]);

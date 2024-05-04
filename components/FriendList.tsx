@@ -4,7 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import FriendButton from './FriendButton';
 import FriendRequestModal from './FriendRequestModal';
-import { PENDING_FRIEND_REQUESTS_QUERY, SENT_FRIEND_REQUESTS_QUERY } from '@/sanity/lib/queries';
+import {
+  PENDING_FRIEND_REQUESTS_QUERY,
+  SENT_FRIEND_REQUESTS_QUERY,
+} from '@/sanity/lib/queries/friendRequestQueries';
 import { client } from '@/sanity/lib/client';
 
 const FriendList = ({

@@ -3,9 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { signUpSchema } from '@/lib/validation';
-import { checkIfUsernameExists, checkIfEmailExists } from '@/lib/actions';
+import {
+  checkIfUsernameExists,
+  checkIfEmailExists,
+} from '@/app/actions/authActions';
 import { signIn } from 'next-auth/react';
 import { handleBlur } from '@/lib/utils';
+import { createUser } from '@/app/actions/userActions';
 
 const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
@@ -83,15 +87,19 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
       // Concatenate first name and last name
       const fullName = `${formData.name} ${formData.lastName}`.trim();
 
-      // Submit the form
-      const res = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, name: fullName }),
+      // Create the user
+      const result = await createUser({
+        name: fullName,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        bio: formData.bio,
+        image: formData.image,
       });
 
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || 'Failed to sign up');
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to sign up');
+      }
 
       // Automatically log the user in
       const loginResult = await signIn('credentials', {

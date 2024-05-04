@@ -4,17 +4,19 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Modal from './Modal';
 import { client } from '@/sanity/lib/client';
 import {
-  sendFriendRequest,
+  createFriendRequest,
   acceptFriendRequest,
-  rejectFriendRequest,
+  deleteFriendRequest,
   removeFriend,
-} from '@/lib/actions';
+} from '@/app/actions/friendActions';
 import {
-  SEARCH_USERS_QUERY,
   PENDING_FRIEND_REQUESTS_QUERY,
   SENT_FRIEND_REQUESTS_QUERY,
-  USER_FRIENDS_BY_ID_QUERY,
-} from '@/sanity/lib/queries';
+} from '@/sanity/lib/queries/friendRequestQueries';
+import {
+  SEARCH_USERS_QUERY,
+  USER_FRIENDS_BY_USER_ID_QUERY,
+} from '@/sanity/lib/queries/userQueries';
 
 const FriendRequestModal = ({
   isOpen,
@@ -57,7 +59,9 @@ const FriendRequestModal = ({
 
   const fetchFriends = useCallback(async () => {
     try {
-      const result = await client.fetch(USER_FRIENDS_BY_ID_QUERY, { userId });
+      const result = await client.fetch(USER_FRIENDS_BY_USER_ID_QUERY, {
+        userId,
+      });
       setFriends(result?.friends || []); // Ensure friends array is set correctly
     } catch (error) {
       console.error('Error fetching friends:', error);
@@ -111,7 +115,7 @@ const FriendRequestModal = ({
   // Send a friend request
   const handleSendRequest = async (toUserId: string) => {
     try {
-      const result = await sendFriendRequest(userId, toUserId);
+      const result = await createFriendRequest(userId, toUserId);
       if (result.status === 'SUCCESS') {
         alert('Friend request sent successfully!');
         setSearchResults([]);
@@ -125,12 +129,12 @@ const FriendRequestModal = ({
 
   // Accept a friend request
   const handleAcceptRequest = async (
+    fromUserId: string,
     userId: string,
     requestId: string,
-    fromUserId: string,
   ) => {
     try {
-      const result = await acceptFriendRequest(userId, requestId, fromUserId);
+      const result = await acceptFriendRequest(fromUserId, userId, requestId);
       if (result.status === 'SUCCESS') {
         alert('Friend request accepted!');
 
@@ -160,7 +164,7 @@ const FriendRequestModal = ({
   // Reject a friend request
   const handleRejectRequest = async (requestId: string) => {
     try {
-      const result = await rejectFriendRequest(requestId);
+      const result = await deleteFriendRequest(requestId);
       if (result.status === 'SUCCESS') {
         alert('Friend request rejected!');
         fetchPendingRequests(); // Refresh pending requests

@@ -10,7 +10,7 @@ import { useActionState } from 'react';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { createEvent, updateEvent, deleteEvent } from '@/lib/actions';
+import { createEvent, updateEvent, deleteEvent } from '@/app/actions/eventActions';
 import { uploadImageToCloudinary } from '@/lib/utils';
 import ToggleButton from './ToggleButton';
 import { handleBlur } from '@/lib/utils';

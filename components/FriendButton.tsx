@@ -2,11 +2,7 @@
 
 import React from 'react';
 import { UserPlus } from 'lucide-react';
-import {
-  sendFriendRequest,
-  rejectFriendRequest,
-  removeFriend,
-} from '@/lib/actions';
+import { createFriendRequest, deleteFriendRequest, removeFriend } from '@/app/actions/friendActions';
 import { cn } from '@/lib/utils';
 
 
@@ -35,7 +31,7 @@ const FriendButton = ({
 }) => {
   const handleSendRequest = async (fromUserId: string, toUserId: string) => {
     try {
-      const result = await sendFriendRequest(fromUserId, toUserId);
+      const result = await createFriendRequest(fromUserId, toUserId);
       if (result.status === 'SUCCESS') {
         alert('Friend request sent successfully!');
         setHasPendingRequest(true);
@@ -55,7 +51,7 @@ const FriendButton = ({
     }
 
     try {
-      const result = await rejectFriendRequest(requestId); // Use requestId
+      const result = await deleteFriendRequest(requestId); // Use requestId
       if (result.status === 'SUCCESS') {
         alert('Friend request canceled.');
         setHasPendingRequest(false); // Update state optimistically

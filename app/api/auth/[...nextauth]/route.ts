@@ -2,7 +2,7 @@ import { client } from '@/sanity/lib/client';
 import {
   USER_BY_EMAIL_QUERY,
   USER_BY_GITHUB_ID_QUERY,
-} from '@/sanity/lib/queries';
+} from '@/sanity/lib/queries/userQueries';
 import { writeClient } from '@/sanity/lib/write-client';
 import NextAuth from 'next-auth';
 import GitHubProvider from 'next-auth/providers/github';
