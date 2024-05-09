@@ -9,7 +9,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './sanity/**/*.{js,ts,jsx,tsx,mdx}',
-    './globals.css',
+    './styles/globals.css',
   ],
   theme: {
     extend: {
