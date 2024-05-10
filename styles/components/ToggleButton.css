@@ -1,0 +1,34 @@
+.toggle-container {
+  @apply flex items-center gap-3 font-sans;
+}
+
+.toggle-label {
+  @apply text-[16px] font-medium text-gray-800;
+}
+
+.toggle-wrapper {
+  @apply relative flex items-center w-[150px] h-[40px] bg-gray-200 rounded-full cursor-pointer;
+  padding: 0; /* Remove extra padding to avoid unwanted space */
+  overflow: hidden; /* Ensure no content spills out of the rounded container */
+}
+
+.toggle-slider {
+  @apply absolute top-0 left-0 h-full w-1/2 bg-primary-300 rounded-full transition-transform duration-300;
+}
+
+.toggle-options {
+  @apply relative flex w-full justify-between items-center z-10;
+}
+
+.toggle-item {
+  @apply flex-1 text-center text-[14px] font-medium text-gray-600;
+  line-height: 40px;
+}
+
+.toggle-item.active {
+  @apply text-white font-semibold;
+}
+
+.toggle-item.inactive {
+  @apply text-gray-600;
+}

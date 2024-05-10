@@ -1,0 +1,11 @@
+.friend-button {
+  @apply w-8 h-8 text-white rounded-full flex items-center justify-center shadow-md relative;
+}
+
+.friend-button--green {
+  @apply bg-green-500 hover:bg-green-600;
+}
+
+.friend-button-notification-circle {
+  @apply absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full;
+}

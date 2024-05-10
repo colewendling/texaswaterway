@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* Tailwind Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+
+  body {
+    @apply bg-primary-400;
+  }
+}
+
+@layer components {
+  /* Import custom component styles */
+  @import './components/EventCard.css';
+  @import './components/EventForm.css';
+  @import './components/FriendButton.css';
+  @import './components/Navbar.css';
+  @import './components/SearchForm.css';
+  @import './components/ToggleButton.css';
+  @import './components/View.css';
+  /* Import custom layout styles */
+  @import './layouts/EventPage.css';
+  @import './layouts/UserProfile.css';
+}
+
+@layer utilities {
+  @import './utilities.css';
+}

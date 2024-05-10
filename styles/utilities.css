@@ -1,0 +1,92 @@
+.flex-between {
+  @apply flex justify-between items-center;
+}
+
+.text-14-normal {
+  @apply font-normal text-sm text-white-100/80;
+}
+.text-16-medium {
+  @apply font-medium text-[16px] text-black;
+}
+.text-20-medium {
+  @apply font-medium text-[20px] text-black;
+}
+.text-30-extrabold {
+  @apply text-[30px] font-extrabold text-white;
+}
+
+.text-24-black {
+  @apply text-[24px] font-black text-black;
+}
+.text-26-semibold {
+  @apply font-semibold text-[26px] text-black;
+}
+.text-30-semibold {
+  @apply font-semibold text-[30px] text-black;
+}
+
+.text-30-bold {
+  @apply text-[30px] font-bold text-black;
+}
+
+.devmode-1 {
+  @apply border-2 border-red-500 !important;
+}
+
+.devmode-2 {
+  @apply border-2 border-green-500 !important;
+}
+
+.devmode-3 {
+  @apply border-2 border-yellow-500 !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.orange_container {
+  @apply w-full bg-primary-300 min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
+}
+
+.tag {
+  @apply bg-primary-500 px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative tag-tri;
+}
+
+.heading {
+  @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] text-center my-5;
+}
+
+.form-title {
+  @apply font-work-sans font-bold sm:text-[36px] sm:leading-[44px] text-[24px] leading-[32px] text-center text-black-100;
+}
+
+.sub-heading {
+  @apply font-medium text-[20px] text-white max-w-2xl text-center break-words;
+}
+
+.section_container {
+  @apply px-6 py-10 max-w-7xl mx-auto;
+}
+
+.card_grid {
+  @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
+}
+
+.card_grid-sm {
+  @apply grid sm:grid-cols-2 gap-5;
+}
+
+.no-result {
+  @apply text-black-100 text-sm font-normal;
+}
+
+.tag-tri {
+  @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
+}

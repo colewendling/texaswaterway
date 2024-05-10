@@ -1,0 +1,39 @@
+.friend-list {
+  @apply w-full px-6 py-5 rounded-[20px] shadow-md flex flex-col items-center gap-4;
+}
+
+.friend-list h1 {
+  @apply text-2xl font-semibold text-black mb-4;
+}
+
+.friend-item {
+  @apply flex flex-col items-center;
+}
+
+.friend-photo {
+  @apply w-14 h-14 rounded-full object-cover mb-2;
+}
+
+@media (max-width: 1024px) {
+  .profile_friendlist {
+    @apply mt-8;
+  }
+
+  .friend-list {
+    @apply w-full px-4;
+  }
+}
+
+.friend-divider {
+  @apply bg-white h-[1px] mb-4 w-full mx-auto;
+}
+
+/* Success state for form input */
+.form-input_success {
+  @apply bg-green-100 border-green-500;
+}
+
+/* Error state for form input */
+.form-input_error {
+  @apply bg-red-100 border-red-500;
+}
