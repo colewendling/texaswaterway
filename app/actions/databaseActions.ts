@@ -6,7 +6,6 @@ import { client } from '@/sanity/lib/client';
 import { events } from '@/lib/events';
 import { users } from '@/lib/users';
 
-
 // Server Action to clear Sanity Database
 export const clearDatabase = async () => {
   try {
@@ -165,22 +164,29 @@ export const seedDatabase = async () => {
     // Assign 3-12 random friends to each user
     const friendAssignmentPromises = createdUsers.map(async (user) => {
       const numberOfFriends = Math.floor(Math.random() * 10) + 3; // Random number between 3 and 12
-      const friends = [];
+      const friends: { _type: string; _ref: string; _key: string }[] = [];
 
       while (friends.length < numberOfFriends) {
         const randomFriendId =
           userIds[Math.floor(Math.random() * userIds.length)];
 
-        // Ensure the user is not added as their own friend and avoid duplicates
-        if (randomFriendId !== user._id && !friends.includes(randomFriendId)) {
-          friends.push(randomFriendId);
+        // Ensure no duplicate friends and no self-referencing
+        if (
+          randomFriendId !== user._id &&
+          !friends.find((f) => f._ref === randomFriendId)
+        ) {
+          friends.push({
+            _type: 'reference',
+            _ref: randomFriendId,
+            _key: `${randomFriendId}-${Date.now()}-${Math.random()}`, // Generate a unique key
+          });
         }
       }
 
       return writeClient
         .patch(user._id)
         .set({
-          friends: friends.map((id) => ({ _type: 'reference', _ref: id })),
+          friends,
         })
         .commit();
     });
@@ -207,4 +213,3 @@ export const seedDatabase = async () => {
     };
   }
 };
-
