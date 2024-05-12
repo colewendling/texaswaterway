@@ -55,7 +55,7 @@ const EventCard = ({
       {editMode && (
         <button
           onClick={handleEditClick}
-          className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-white hover:bg-primary border-2 border-black rounded-full shadow-md"
+          className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-white hover:bg-primary-500 border-2 border-black rounded-full shadow-md"
           aria-label="Edit"
         >
           <Edit className="w-5 h-5 text-black" />

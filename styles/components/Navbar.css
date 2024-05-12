@@ -1,11 +1,55 @@
-.avatar {
-  @apply p-0 focus-visible:ring-0 bg-none rounded-full drop-shadow-md !important;
+.navbar {
+  @apply flex justify-between items-center px-5 py-3 shadow-sm bg-white font-medium;
 }
 
-.dropdown-menu {
-  @apply w-56 border-[5px] border-black bg-white p-5 rounded-2xl !important;
+.navbar-logo-container {
+  @apply flex flex-row;
 }
 
-.login {
-  @apply border-[5px] py-4 border-black bg-white text-black relative shadow-100 font-work-sans font-medium hover:shadow-none transition-all duration-500 !important;
+.navbar-logo {
+  @apply block;
+}
+
+.navbar-logo-text {
+  @apply hidden 850:block;
+}
+
+.navbar-button-container {
+  @apply flex items-center gap-5;
+}
+
+.navbar-avatar {
+  @apply size-12 rounded-full;
+}
+
+.navbar-button {
+  @apply flex items-center gap-2 py-2 px-3 rounded-lg sm:border-2;
+}
+
+.navbar-button-github {
+  @apply navbar-button text-white bg-black hover:bg-black/90 border-black;
+}
+
+.navbar-button-login {
+  @apply navbar-button  hover:text-green-500 sm:hover:bg-green-50 hover:border-green-300;
+}
+
+.navbar-button-signup {
+  @apply navbar-button  text-white hover:bg-blue-600 hover:border-blue-600 bg-blue-500 border-blue-500;
+}
+
+.navbar-button-create {
+  @apply navbar-button  hover:text-blue-500 sm:hover:bg-blue-50 hover:border-blue-300;
+}
+
+.navbar-button-logout {
+  @apply navbar-button  hover:text-red-500 sm:hover:bg-red-50 hover:border-red-300;
+}
+
+.navbar-button-icon {
+  @apply size-8 sm:size-6;
+}
+
+.navbar-button-text {
+  @apply hidden sm:inline;
 }

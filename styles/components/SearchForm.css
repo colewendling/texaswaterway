@@ -3,7 +3,7 @@
 }
 
 .search-input {
-  @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black-100 w-full h-auto outline-none;
+  @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black w-full h-auto outline-none bg-white;
 }
 
 .search-btn {

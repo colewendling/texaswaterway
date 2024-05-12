@@ -3,5 +3,5 @@
 }
 
 .view-text {
-  @apply font-medium text-[16px] bg-primary-100 px-4 py-2 rounded-lg capitalize;
+  @apply font-medium text-[16px] bg-red-100 px-4 py-2 rounded-lg capitalize;
 }

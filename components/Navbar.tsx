@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BadgePlus, LogOut, Github } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Modal from '@/components/Modal';
 import SignUpForm from '@/components/SignUpForm';
 import LoginForm from '@/components/LoginForm';
@@ -15,71 +14,80 @@ const Navbar = () => {
 
   // Manage modal state
   const [openModal, setOpenModal] = useState<string | null>(null);
-
   const openModalHandler = (modal: 'signUp' | 'login') => setOpenModal(modal);
   const closeModalHandler = () => setOpenModal(null);
 
   return (
-    <header className="px-5 py-3 shadow-sm font-work-sans bg-white">
-      <nav className="flex justify-between items-center">
-        {/* Logo Section */}
-        <Link href="/" className="flex flex-row">
-          <Image src="/logo-black.svg" alt="logo" width={80} height={80} />
+    <header>
+      <nav className="navbar">
+        {/* Site Logo & Text */}
+        <Link href="/" className="navbar-logo-container">
           <Image
-            src="/text-black.svg"
+            className="navbar-logo"
+            src="/logos/logo-black.svg"
+            alt="logo"
+            width={80}
+            height={80}
+          />
+          <Image
+            className="navbar-logo-text"
+            src="/logos/text-black.svg"
             alt="logo"
             width={240}
             height={30}
-            className="hidden 850:block"
           />
         </Link>
 
-        {/* User Interaction Section */}
-        <div className="flex items-center gap-5 text-black">
+        {/* Navbar Links */}
+        <div className="navbar-button-container">
           {session && session?.user ? (
             <>
-              <Link href="/event/create">
-                <span className="max-sm:hidden">Create</span>
-                <BadgePlus className="size-6 sm:hidden" />
+              <Link className="navbar-button-create" href="/event/create">
+                <BadgePlus className="navbar-button-icon" />
+                <span className="navbar-button-text">Create</span>
               </Link>
-              <button onClick={() => signOut({ callbackUrl: '/' })}>
-                <span className="max-sm:hidden">Logout</span>
-                <LogOut className="size-6 sm:hidden text-red-500" />
+              <button
+                className="navbar-button-logout"
+                onClick={() => signOut({ callbackUrl: '/' })}
+              >
+                <LogOut className="navbar-button-icon" />
+                <span className="navbar-button-text">Logout</span>
               </button>
-              <Link href={`/user/${session?.user.username}`}>
-                <Avatar className="size-10">
-                  <AvatarImage
-                    src={session?.user.image || ''}
-                    alt={session?.user?.name || ''}
-                  />
-                  <AvatarFallback></AvatarFallback>
-                </Avatar>
+              <Link
+                className="navbar-avatar"
+                href={`/user/${session?.user.username}`}
+              >
+                <img
+                  src={session?.user.image || ''}
+                  alt={session?.user?.name || ''}
+                  className="navbar-avatar"
+                />
               </Link>
             </>
           ) : (
-            <div className="flex flex-nowrap items-center gap-2 sm:gap-5 overflow-auto">
+            <>
               <button
+                className="navbar-button-github"
                 onClick={() => signIn('github')}
-                className="flex items-center gap-2 px-3 py-2 text-sm bg-black text-white rounded sm:px-4 sm:py-2 sm:text-base"
               >
-                <Github className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden sm:inline">Sign in with GitHub</span>
+                <Github className="navbar-button-icon" />
+                <span className="navbar-button-text">GitHub Login</span>
               </button>
               <button
+                className="navbar-button-login"
                 onClick={() => openModalHandler('login')}
-                className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-200 rounded sm:px-4 sm:py-2 sm:text-base"
               >
-                <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden sm:inline">Login</span>
+                <LogOut className="navbar-button-icon" />
+                <span className="navbar-button-text">Login</span>
               </button>
               <button
+                className="navbar-button-signup"
                 onClick={() => openModalHandler('signUp')}
-                className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-500 text-white rounded sm:px-4 sm:py-2 sm:text-base"
               >
-                <BadgePlus className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden sm:inline">Sign Up</span>
+                <BadgePlus className="navbar-button-icon" />
+                <span className="navbar-button-text">Sign Up</span>
               </button>
-            </div>
+            </>
           )}
         </div>
 

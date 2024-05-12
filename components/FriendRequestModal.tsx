@@ -373,7 +373,7 @@ const FriendRequestModal = ({
                     className="w-10 h-10 rounded-full mr-2"
                   />
                 </a>
-                <span className="px-1 font-work-sans">{friend.username}</span>
+                <span className="px-1 font-inter">{friend.username}</span>
               </div>
               <button
                 onClick={() => {

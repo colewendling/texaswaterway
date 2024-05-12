@@ -2,8 +2,16 @@
   @apply flex justify-between items-center;
 }
 
+.grid-3-cols {
+  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4;
+}
+
+.container {
+  @apply max-w-screen-lg mx-auto px-4;
+}
+
 .text-14-normal {
-  @apply font-normal text-sm text-white-100/80;
+  @apply font-normal text-sm text-white;
 }
 .text-16-medium {
   @apply font-medium text-[16px] text-black;
@@ -29,16 +37,20 @@
   @apply text-[30px] font-bold text-black;
 }
 
-.devmode-1 {
-  @apply border-2 border-red-500 !important;
+.dev-1 {
+  @apply border-[3px] border-red-500 !important;
 }
 
-.devmode-2 {
-  @apply border-2 border-green-500 !important;
+.dev-2 {
+  @apply border-[3px] border-blue-500 !important;
 }
 
-.devmode-3 {
-  @apply border-2 border-yellow-500 !important;
+.dev-3 {
+  @apply border-[3px] border-green-500 !important;
+}
+
+.dev-g > * {
+  @apply outline outline-1 outline-red-500;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -52,19 +64,19 @@
 }
 
 .orange_container {
-  @apply w-full bg-primary-300 min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
+  @apply w-full bg-primary-500 min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
 }
 
 .tag {
-  @apply bg-primary-500 px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative tag-tri;
+  @apply bg-primary-500 px-6 py-3 font-inter font-bold rounded-sm uppercase relative tag-tri;
 }
 
 .heading {
-  @apply uppercase bg-black px-6 py-3 font-work-sans font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] text-center my-5;
+  @apply uppercase bg-black px-6 py-3 font-inter font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] text-center my-5;
 }
 
 .form-title {
-  @apply font-work-sans font-bold sm:text-[36px] sm:leading-[44px] text-[24px] leading-[32px] text-center text-black-100;
+  @apply font-inter font-bold sm:text-[36px] sm:leading-[44px] text-[24px] leading-[32px] text-center text-black;
 }
 
 .sub-heading {
@@ -84,7 +96,7 @@
 }
 
 .no-result {
-  @apply text-black-100 text-sm font-normal;
+  @apply text-black text-sm font-normal;
 }
 
 .tag-tri {

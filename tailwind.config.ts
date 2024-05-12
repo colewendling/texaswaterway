@@ -14,42 +14,27 @@ const config: Config = {
   theme: {
     extend: {
       screens: {
-        xs: '475px',
         '850': '850px',
       },
       colors: {
+        white: '#f6f6f8',
+        black: '#1b1d27',
         primary: {
-          '100': '#FFE8F0',
-          '200': '#EBFFFE',
-          '300': '#D0704A',
-          '400': '#fff8e6',
-          '500': '#f2d3c7',
-          DEFAULT: '#EE2B69',
+          '100': '#f6e2db',
+          '200': '#ecc6b7',
+          '300': '#e3a992',
+          '400': '#d98d6e',
+          '500': '#d0704a',
+          '600': '#a65a3b',
+          '700': '#7d432c',
+          '800': '#532d1e',
         },
-        secondary: '#FBE843',
-        black: {
-          '100': '#333333',
-          '200': '#141413',
-          '300': '#7D8087',
-          DEFAULT: '#000000',
-        },
-        white: {
-          '100': '#F7F7F7',
-          DEFAULT: '#FFFFFF',
+        secondary: {
+          '500': '#fff8e6',
         },
       },
       fontFamily: {
-        'work-sans': ['var(--font-work-sans)'],
-      },
-      borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
-      },
-      boxShadow: {
-        100: '2px 2px 0px 0px rgb(0, 0, 0)',
-        200: '2px 2px 0px 2px rgb(0, 0, 0)',
-        300: '2px 2px 0px 2px rgb(238, 43, 105)',
+        inter: ['var(--inter)'],
       },
     },
   },

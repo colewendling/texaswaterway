@@ -10,7 +10,11 @@ import { useActionState } from 'react';
 import { z } from 'zod';
 import { useToast } from '@/hooks/use-toast';
 import { useRouter } from 'next/navigation';
-import { createEvent, updateEvent, deleteEvent } from '@/app/actions/eventActions';
+import {
+  createEvent,
+  updateEvent,
+  deleteEvent,
+} from '@/app/actions/eventActions';
 import { uploadImageToCloudinary } from '@/lib/utils';
 import ToggleButton from './ToggleButton';
 import { handleBlur } from '@/lib/utils';
@@ -320,7 +324,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
             />
             {imageFile && (
               <div className="flex items-center gap-2">
-                <p className="text-gray-600 text-sm font-medium font-work-sans">
+                <p className="text-gray-600 text-sm font-medium font-inter">
                   <span className="font-bold">Selected Image:</span>{' '}
                   {imageFile.name}
                 </p>
@@ -366,7 +370,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
             id="pitch"
             preview="edit"
             height={300}
-            style={{ borderRadius: 20, overflow: 'hidden' }}
+            style={{ borderRadius: 15, overflow: 'hidden' }}
             textareaProps={{
               placeholder:
                 'Briefly describe your event and add relevant details',

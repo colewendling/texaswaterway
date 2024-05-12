@@ -1,58 +1,24 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import 'easymde/dist/easymde.min.css'
-import { Toaster } from "@/components/ui/toaster";
+import type { Metadata } from 'next';
+import localFont from 'next/font/local';
+import 'easymde/dist/easymde.min.css';
+import { Toaster } from '@/components/ui/toaster';
 import '@/styles/globals.css';
 
-const workSans = localFont({
+const inter = localFont({
   src: [
+    { path: './fonts/Inter.ttf', weight: '100 900' }, // Thin to Black
     {
-      path: './fonts/WorkSans-Black.ttf',
-      weight: '900',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-ExtraBold.ttf',
-      weight: '800',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-SemiBold.ttf',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-Medium.ttf',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-Thin.ttf',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: './fonts/WorkSans-ExtraLight.ttf',
-      weight: '100',
-      style: 'normal',
+      path: './fonts/Inter-Italic.ttf',
+      weight: '100 900',
+      style: 'italic',
     },
   ],
-  variable: '--font-work-sans',
+  variable: '--font-inter',
 });
 
 export const metadata: Metadata = {
-  title: "Texas Waterway",
-  description: "Lake Data Application",
+  title: 'Texas Waterway',
+  description: 'Lake Data Application',
 };
 
 export default function RootLayout({
@@ -62,9 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={workSans.variable}
-      >
+      <body className={`${inter.variable} font-sans`}>
         {children}
         <Toaster />
       </body>

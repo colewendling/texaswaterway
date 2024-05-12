@@ -65,7 +65,7 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
           <h3 className="text-30-bold">Event Details</h3>
           {parsedContent ? (
             <article
-              className="prose max-w-4xl font-work-sans break-all"
+              className="prose max-w-4xl break-all"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (

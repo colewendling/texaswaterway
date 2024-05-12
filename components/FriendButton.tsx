@@ -2,9 +2,12 @@
 
 import React from 'react';
 import { UserPlus } from 'lucide-react';
-import { createFriendRequest, deleteFriendRequest, removeFriend } from '@/app/actions/friendActions';
+import {
+  createFriendRequest,
+  deleteFriendRequest,
+  removeFriend,
+} from '@/app/actions/friendActions';
 import { cn } from '@/lib/utils';
-
 
 const FriendButton = ({
   userId,
@@ -103,7 +106,7 @@ const FriendButton = ({
           onClick={() => {
             handleSendRequest(sessionId, userId);
           }}
-          className="min-w-[150px] p-1 rounded-full  border-[2px] border-white text-white cursor-pointer bg-primary-300 hover:bg-blue-500"
+          className="min-w-[150px] p-1 rounded-full  border-[2px] border-white text-white cursor-pointer bg-primary-500 hover:bg-blue-500"
         >
           + Add Friend
         </button>
