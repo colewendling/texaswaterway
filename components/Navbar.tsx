@@ -22,22 +22,17 @@ const Navbar = () => {
       <nav className="navbar">
         {/* Site Logo & Text */}
         <Link href="/" className="navbar-logo-container">
-          <Image
-            className="navbar-logo"
+          <img
             src="/logos/logo-black.svg"
-            alt="logo"
-            width={80}
-            height={80}
+            alt="Texas Waterway Logo"
+            className="navbar-logo"
           />
-          <Image
-            className="navbar-logo-text"
+          <img
             src="/logos/text-black.svg"
-            alt="logo"
-            width={240}
-            height={30}
+            alt="Texas Waterway"
+            className="navbar-logo-text"
           />
         </Link>
-
         {/* Navbar Links */}
         <div className="navbar-button-container">
           {session && session?.user ? (

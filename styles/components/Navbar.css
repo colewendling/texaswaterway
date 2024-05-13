@@ -3,19 +3,19 @@
 }
 
 .navbar-logo-container {
-  @apply flex flex-row;
+  @apply flex items-center gap-3;
 }
 
 .navbar-logo {
-  @apply block;
+  @apply size-12 sm:size-20;
 }
 
 .navbar-logo-text {
-  @apply hidden 850:block;
+  @apply hidden 850:block sm:w-[240px];
 }
 
 .navbar-button-container {
-  @apply flex items-center gap-5;
+  @apply flex items-center gap-8 sm:gap-5;
 }
 
 .navbar-avatar {
@@ -23,31 +23,31 @@
 }
 
 .navbar-button {
-  @apply flex items-center gap-2 py-2 px-3 rounded-lg sm:border-2;
+  @apply flex items-center gap-2 py-2 sm:px-3 rounded-lg sm:border-2;
 }
 
 .navbar-button-github {
-  @apply navbar-button text-white bg-black hover:bg-black/90 border-black;
+  @apply navbar-button sm:text-white sm:bg-black sm:hover:bg-slate-800 border-black;
 }
 
 .navbar-button-login {
-  @apply navbar-button  hover:text-green-500 sm:hover:bg-green-50 hover:border-green-300;
+  @apply navbar-button text-gray-500 hover:text-green-500 sm:hover:bg-green-50 hover:border-green-300;
 }
 
 .navbar-button-signup {
-  @apply navbar-button  text-white hover:bg-blue-600 hover:border-blue-600 bg-blue-500 border-blue-500;
+  @apply navbar-button  text-blue-500 sm:bg-blue-50 border-blue-300 hover:text-blue-600 hover:border-blue-500;
 }
 
 .navbar-button-create {
-  @apply navbar-button  hover:text-blue-500 sm:hover:bg-blue-50 hover:border-blue-300;
+  @apply navbar-button  text-blue-500 sm:bg-blue-50 border-blue-300 hover:text-blue-600 hover:border-blue-500;
 }
 
 .navbar-button-logout {
-  @apply navbar-button  hover:text-red-500 sm:hover:bg-red-50 hover:border-red-300;
+  @apply navbar-button text-gray-500  hover:text-red-500 sm:hover:bg-red-50 hover:border-red-300;
 }
 
 .navbar-button-icon {
-  @apply size-8 sm:size-6;
+  @apply size-6 sm:size-6;
 }
 
 .navbar-button-text {
