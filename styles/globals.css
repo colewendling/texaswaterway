@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-white;
+    @apply bg-secondary-500 overscroll-none;
     @apply font-sans;
   }
 }
@@ -19,6 +19,7 @@
   /* Import custom component styles */
   @import './components/EventCard.css';
   @import './components/EventForm.css';
+  @import './components/Footer.css';
   @import './components/FriendButton.css';
   @import './components/Navbar.css';
   @import './components/SearchForm.css';
