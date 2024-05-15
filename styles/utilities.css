@@ -102,3 +102,23 @@
 .tag-tri {
   @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
 }
+
+.hero-container {
+  @apply flex flex-col items-center justify-center text-center py-10 px-4;
+}
+
+.hero-heading {
+  @apply text-[64px] font-light leading-tight text-black;
+}
+
+.hero-highlight {
+  @apply bg-[#E46C4E] text-white px-3 py-1;
+}
+
+.hero-subheading {
+  @apply text-[64px] font-extrabold leading-tight mt-2;
+}
+
+.hero-subheading-white {
+  @apply hero-subheading text-white;
+}
