@@ -17,6 +17,7 @@ const Footer = () => {
         {/* Contact Info */}
         <div className="footer-contact">
           <h3 className="footer-title">Contact</h3>
+          <span>cole wendling</span>
           <a href="mailto:cole@wendling.io" className="footer-link">
             <Mail className="footer-icon" />
             cole@wendling.io
