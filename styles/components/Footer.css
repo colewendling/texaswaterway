@@ -1,9 +1,9 @@
 .footer-container {
-  @apply bg-gradient-to-b from-slate-800 to-primary-500 text-white px-5 py-10;
+  @apply bg-gradient-to-b from-slate-800 to-primary-500 text-white px-10 py-10;
 }
 
 .footer-content {
-  @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto items-start;
+  @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-7xl mx-auto items-start;
 }
 
 .footer-logo-container {
@@ -19,7 +19,7 @@
 }
 
 .footer-contact {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col gap-2  items-end md:items-start;
 }
 
 .footer-title {
@@ -47,11 +47,11 @@
 }
 
 .footer-links-row {
-  @apply flex flex-row gap-6;
+  @apply flex flex-row gap-3 lg:gap-6;
 }
 
 .footer-newsletter {
-  @apply flex flex-col gap-2;
+  @apply flex flex-col gap-2 items-end md:items-start;
 }
 
 .footer-newsletter-link {
