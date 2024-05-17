@@ -19,7 +19,7 @@
 }
 
 .footer-contact {
-  @apply flex flex-col gap-2  items-end md:items-start;
+  @apply flex flex-col gap-2 items-start;
 }
 
 .footer-title {
@@ -51,7 +51,7 @@
 }
 
 .footer-newsletter {
-  @apply flex flex-col gap-2 items-end md:items-start;
+  @apply flex flex-col gap-2 items-start;
 }
 
 .footer-newsletter-link {
