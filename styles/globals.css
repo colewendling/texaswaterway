@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-secondary-500 overscroll-none;
+    @apply bg-background overscroll-none;
     @apply font-sans;
   }
 }
@@ -21,6 +21,8 @@
   @import './components/EventForm.css';
   @import './components/Footer.css';
   @import './components/FriendButton.css';
+  @import './components/FriendList.css';
+  @import './components/HeroText.css';
   @import './components/Navbar.css';
   @import './components/SearchForm.css';
   @import './components/ToggleButton.css';

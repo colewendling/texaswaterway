@@ -2,6 +2,7 @@ import EventCard, { EventCardType } from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
 import { EVENTS_QUERY } from '@/sanity/lib/queries/eventQueries';
 import { sanityFetch, SanityLive } from '@/sanity/lib/live';
+import HeroText from '@/components/HeroText';
 
 export default async function Home({
   searchParams,
@@ -16,16 +17,7 @@ export default async function Home({
   return (
     <>
       <section className="orange_container space-y-6">
-        <div className="hero-container">
-          <h1 className="hero-heading animate-slideInLeft">
-            Explore & <span className="hero-highlight">connect</span> with
-          </h1>
-          <h1 className="hero-heading animate-slideInRight">
-            <span className="hero-subheading">187+</span>
-
-            <span className="hero-subheading-white"> lake communities</span>
-          </h1>
-        </div>
+        <HeroText />
         <SearchForm query={query} />
       </section>
       <section className="section_container">

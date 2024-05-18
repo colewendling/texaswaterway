@@ -1,0 +1,19 @@
+.hero-container {
+  @apply text-6xl flex flex-col items-center justify-center text-center py-10 px-4 gap-6;
+}
+
+.hero-heading {
+  @apply font-light leading-tight text-black;
+}
+
+.hero-highlight {
+  @apply bg-[#E46C4E] text-white px-3 py-1;
+}
+
+.hero-subheading {
+  @apply  font-extrabold leading-tight mt-2;
+}
+
+.hero-subheading-white {
+  @apply hero-subheading text-white;
+}
