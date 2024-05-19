@@ -106,7 +106,7 @@ const FriendButton = ({
           onClick={() => {
             handleSendRequest(sessionId, userId);
           }}
-          className="min-w-[150px] p-1 rounded-full  border-[2px] border-white text-white cursor-pointer bg-primary-500 hover:bg-blue-500"
+          className="min-w-[150px] p-1 rounded-full  border-[2px] border-white text-white cursor-pointer bg-primary hover:bg-blue-500"
         >
           + Add Friend
         </button>

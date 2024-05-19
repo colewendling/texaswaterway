@@ -64,11 +64,11 @@
 }
 
 .orange_container {
-  @apply w-full bg-gradient-to-b from-primary-500 to-slate-800  min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
+  @apply w-full bg-gradient-to-b from-primary to-slate-800  min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
 }
 
 .tag {
-  @apply bg-primary-500 px-6 py-3 font-inter font-bold rounded-sm uppercase relative tag-tri;
+  @apply bg-primary px-6 py-3 font-inter font-bold rounded-sm uppercase relative tag-tri;
 }
 
 .heading {
@@ -101,24 +101,4 @@
 
 .tag-tri {
   @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
-}
-
-.hero-container {
-  @apply flex flex-col items-center justify-center text-center py-10 px-4;
-}
-
-.hero-heading {
-  @apply text-[64px] font-light leading-tight text-black;
-}
-
-.hero-highlight {
-  @apply bg-[#E46C4E] text-white px-3 py-1;
-}
-
-.hero-subheading {
-  @apply text-[64px] font-extrabold leading-tight mt-2;
-}
-
-.hero-subheading-white {
-  @apply hero-subheading text-white;
 }

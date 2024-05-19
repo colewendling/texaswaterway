@@ -13,7 +13,7 @@
 }
 
 .toggle-slider {
-  @apply absolute top-0 left-0 h-full w-1/2 bg-primary-500 rounded-full transition-transform duration-300;
+  @apply absolute top-0 left-0 h-full w-1/2 bg-primary rounded-full transition-transform duration-300;
 }
 
 .toggle-options {

@@ -1,5 +1,5 @@
 .event-card {
-  @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-xl hover:border-primary-500  hover:shadow-2xl hover:bg-primary-200 transition-all duration-500;
+  @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-xl hover:border-secondary  hover:shadow-2xl hover:bg-red-50 transition-all duration-300;
 }
 
 .event-card_date {
