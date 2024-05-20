@@ -5,13 +5,15 @@
 
 @layer base {
   :root {
-    /* --radius: 0.5rem; */
     --inter: 'Inter', sans-serif;
   }
 
+  html {
+    @apply bg-white mt-2;
+  }
+
   body {
-    @apply bg-background overscroll-none;
-    @apply font-sans;
+    @apply bg-background overscroll-y-none;
   }
 }
 
