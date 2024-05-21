@@ -49,6 +49,10 @@
   @apply border-[3px] border-green-500 !important;
 }
 
+.dev-4 {
+  @apply border-[3px] border-purple-500 !important;
+}
+
 .dev-g > * {
   @apply outline outline-1 outline-red-500;
 }
