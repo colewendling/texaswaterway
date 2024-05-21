@@ -17,8 +17,8 @@ const EditButton = ({ editMode }: { editMode: boolean }) => {
   };
 
   return (
-    <button onClick={toggleEdit} className="btn-primary text-20-medium">
-      {editMode ? 'Done' : 'Edit'}
+    <button onClick={toggleEdit} className="edit-button">
+      <span>{editMode ? 'Done' : 'Edit'}</span>
     </button>
   );
 };

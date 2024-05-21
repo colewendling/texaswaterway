@@ -19,6 +19,7 @@
 
 @layer components {
   /* Import custom component styles */
+  @import './components/EditButton.css';
   @import './components/EventCard.css';
   @import './components/EventForm.css';
   @import './components/Footer.css';
