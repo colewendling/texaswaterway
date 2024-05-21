@@ -22,6 +22,7 @@ const config: Config = {
         primary: '#d0704a',
         secondary: '#E46C4E',
         background: '#fff8e6',
+        water: '#D2DBED',
       },
       fontFamily: {
         inter: ['var(--inter)'],
@@ -35,10 +36,16 @@ const config: Config = {
           '0%': { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
+        boatSailing: {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(var(--right-boundary))' }, 
+          '100%': { transform: 'translateX(0)' }, 
+        },
       },
       animation: {
         slideInLeft: 'slideInLeft 1.5s ease-out',
         slideInRight: 'slideInRight 1.5s ease-out',
+        boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
       },
     },
   },
