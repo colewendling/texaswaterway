@@ -73,7 +73,7 @@ const FriendList = ({
     <div className="mt-8 flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center">
         <h1 className="sub-heading">Friends</h1>
-        <FriendButton
+        {sessionId && (<FriendButton
           userId={userId}
           sessionId={sessionId}
           isOwnProfile={isOwnProfile}
@@ -84,7 +84,7 @@ const FriendList = ({
           setHasPendingRequest={setHasPendingRequest}
           setRequestId={setRequestId}
           requestId={requestId}
-        />
+        />)}
       </div>
       <hr className="friend-divider" />
 

@@ -58,7 +58,7 @@ const Page = async ({
           <div className="profile_friendlist">
             <FriendList
               friends={user?.friends}
-              sessionId={session?.id}
+              sessionId={session?.id || null}
               userId={user._id}
               isOwnProfile={isOwnProfile}
               isFriend={isFriend}
