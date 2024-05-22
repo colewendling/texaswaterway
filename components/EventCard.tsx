@@ -8,7 +8,6 @@ import { EyeIcon, Edit } from 'lucide-react';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from './ui/button';
 import { User, Event } from '@/sanity/types';
 import { Skeleton } from './ui/skeleton';
 import { client } from '@/sanity/lib/client';
@@ -53,59 +52,64 @@ const EventCard = ({
   };
 
   return (
-    <li className="event-card group relative">
+    <li className="event-card group">
       {editMode && (
         <button
           onClick={handleEditClick}
-          className="absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-white hover:bg-primary border-2 border-black rounded-full shadow-md"
+          className="event-card-edit-button"
           aria-label="Edit"
         >
-          <Edit className="w-5 h-5 text-black" />
+          <Edit className="event-card-edit-icon" />
         </button>
       )}
-      <div className="flex-between">
-        <p className="event-card_date">{formatDate(_createdAt)}</p>
-        <div className="flex gap-1.5">
-          <EyeIcon className="size-6 text-primary" />
-          <span className="text-16-medium">{views}</span>
+      <Link href={`/event/${slug?.current}`}>
+        <div className="event-card-top">
+          <p className="event-card_date">{formatDate(_createdAt)}</p>
+          <div className="event-card-view">
+            <EyeIcon className="event-card-view-icon" />
+            <span className="event-card-text">{views}</span>
+          </div>
         </div>
-      </div>
-      <div className="flex-between mt-5 gap-5">
-        <div className="flex-1">
+      </Link>
+      <div className="event-card-header">
+        <div className="event-card-header-container">
           <Link href={`/user/${user?.username}`}>
-            <p className="text-16-medium line-clamp-1 hover:text-primary">
-              {user?.name}
-            </p>
+            <p className="event-card-username">{user?.name}</p>
           </Link>
           <Link href={`/event/${slug?.current}`}>
-            <h3 className="text-26-semibold line-clamp-1">{title}</h3>
+            <h3 className="event-card-title">{title}</h3>
           </Link>
         </div>
         <Link href={`/user/${user?.username}`}>
-          <div className="relative w-12 h-12 rounded-full overflow-hidden shadow-md">
+          <div className="event-card-avatar-container">
             <Image
               src={user?.image || ''}
               alt={user?.name || ''}
               fill
               sizes="48px"
-              className="event-card_avatar"
+              className="event-card-avatar"
             />
           </div>
         </Link>
       </div>
 
-      <Link href={`/event/${slug?.current}`}>
-        <p className="event-card_desc">{description}</p>
-        <img src={image} alt="placeholder" className="event-card_img" />
-      </Link>
-
-      <div className="flex-between gap-3 mt-5">
-        <Link href={`/?query=${category?.toLowerCase()}`}>
-          <p className="text-16-medium hover:text-primary">{category}</p>
+      <div className="event-card-middle">
+        <Link href={`/event/${slug?.current}`}>
+          <p className="event-card-description">{description}</p>
+          <img src={image} alt="placeholder" className="event-card-img" />
         </Link>
-        <Button className="event-card_btn" asChild>
-          <Link href={`/event/${slug?.current}`}>Details</Link>
-        </Button>
+      </div>
+
+      <div className="event-card-bottom">
+        <Link href={`/?query=${category?.toLowerCase()}`}>
+          <p className="event-card-category">{category}</p>
+        </Link>
+        <a
+          className="event-card-button"
+          href={`/event/${slug?.current}`}
+        >
+          <span className="event-card-button-text">Details</span>
+        </a>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <EventForm existingEvent={{ ...post, pitch }} />
@@ -118,7 +122,7 @@ export const EventCardSkeleton = () => (
   <>
     {[0, 1, 2, 3, 4].map((index: number) => (
       <li key={cn('skeleton', index)}>
-        <Skeleton className="event-card_skeleton" />
+        <Skeleton className="event-card-skeleton" />
       </li>
     ))}
   </>

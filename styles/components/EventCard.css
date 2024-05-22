@@ -1,28 +1,93 @@
 .event-card {
-  @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-xl hover:border-secondary  hover:shadow-2xl hover:bg-red-50 transition-all duration-300;
+  @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-xl hover:border-secondary  hover:shadow-2xl hover:bg-red-50 hover:scale-105 transition-transform duration-300 relative;
+}
+
+.event-card-edit-button {
+  @apply absolute -top-4 -right-4 w-10 h-10 flex items-center justify-center bg-white hover:bg-red-50 border-2 border-black rounded-full shadow-md shadow-black/50 hover:border-primary text-black hover:text-primary;
+}
+
+.event-card-edit-icon {
+  @apply w-5 h-5;
+}
+
+.event-card-section {
+  @apply flex justify-between items-center;
+}
+
+.event-card-top {
+  @apply event-card-section;
 }
 
 .event-card_date {
-  @apply font-medium text-[16px] rounded-full cursor-default;
+  @apply font-medium text-[16px] rounded-full;
 }
 
-.event-card_desc {
+.event-card-view {
+  @apply flex gap-1.5;
+}
+
+.event-card-view-icon {
+  @apply size-6 text-primary;
+}
+
+.event-card-text {
+  @apply font-medium text-[16px] text-black;
+}
+
+.event-card-header {
+  @apply event-card-section mt-5 gap-5;
+}
+
+.event-card-header-container {
+  @apply flex-1;
+}
+
+.event-card-username {
+  @apply event-card-text line-clamp-1 hover:text-primary;
+}
+
+.event-card-title {
+  @apply text-[24px] font-semibold text-black line-clamp-1;
+}
+
+.event-card-avatar-container {
+  @apply relative w-12 h-12 rounded-full overflow-hidden shadow-md shadow-black/50;
+}
+
+.event-card-avatar {
+  @apply rounded-full hover:scale-110 transition-transform duration-300 object-cover w-12 h-12 overflow-hidden shadow-md border-[1px] border-black;
+}
+
+.event-card-middle {
+  @apply event-card-section;
+}
+
+.event-card-description {
   @apply font-normal text-[16px] line-clamp-2 my-3 text-black break-words;
   min-height: 3rem;
 }
 
-.event-card_img {
+.event-card-img {
   @apply w-full h-[180px] rounded-[10px] object-cover shadow-lg;
 }
 
-.event-card_avatar {
-  @apply rounded-full hover:scale-110 transition-transform duration-300 object-cover w-12 h-12 overflow-hidden shadow-md border-[1px] border-black;
+.event-card-bottom {
+  @apply event-card-section mt-5 gap-3;
 }
 
-.event-card_btn {
-  @apply rounded-full bg-black font-medium text-[16px] text-white px-5 py-3 hover:scale-110 transition-transform duration-300 !important;
+.event-card-category {
+  @apply font-medium text-[16px] text-black hover:text-primary;
+}
+
+.event-card-button {
+  @apply flex items-center gap-2 py-2 px-5 rounded-full border-2 text-white bg-black hover:bg-slate-800 border-black;
+}
+
+.event-card-button-text {
+  @apply font-medium text-[16px];
 }
 
 .event-card_skeleton {
   @apply w-full h-96 rounded-[22px] bg-zinc-400;
 }
+
