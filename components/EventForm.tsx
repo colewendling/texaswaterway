@@ -16,8 +16,8 @@ import {
   deleteEvent,
 } from '@/app/actions/eventActions';
 import { uploadImageToCloudinary } from '@/lib/utils';
-import ToggleButton from './ToggleButton';
 import { handleBlur } from '@/lib/utils';
+import ImageUpload from './ImageUpload';
 
 const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   const [pitch, setPitch] = useState(existingEvent?.pitch || '');
@@ -208,7 +208,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
     <form action={formAction} className="event-form">
       {isEditMode && <h1 className="form-title">Edit your Event</h1>}
       <div>
-        <label htmlFor="title" className="event-form_label">
+        <label htmlFor="title" className="event-form-label">
           Title
         </label>
         <Input
@@ -219,20 +219,20 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           placeholder="Event Title"
           onBlur={onBlurHandler}
           onChange={handleChange}
-          className={`event-form_input ${
+          className={`event-form-input ${
             touched.title
               ? formData.title
                 ? errors.title
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
-        {errors.title && <p className="event-form_error">{errors.title}</p>}
+        {errors.title && <p className="event-form-error">{errors.title}</p>}
       </div>
       <div>
-        <label htmlFor="description" className="event-form_label">
+        <label htmlFor="description" className="event-form-label">
           Description
         </label>
         <Textarea
@@ -243,22 +243,22 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           placeholder="Event Description"
           onBlur={onBlurHandler}
           onChange={handleChange}
-          className={`event-form_textarea ${
+          className={`event-form-textarea ${
             touched.description
               ? formData.description
                 ? errors.description
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
         {errors.description && (
-          <p className="event-form_error">{errors.description}</p>
+          <p className="event-form-error">{errors.description}</p>
         )}
       </div>
       <div>
-        <label htmlFor="category" className="event-form_label">
+        <label htmlFor="category" className="event-form-label">
           Category
         </label>
         <Input
@@ -269,98 +269,36 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           placeholder="Event Category (Fishing, Trade, Meetup...)"
           onBlur={onBlurHandler}
           onChange={handleChange}
-          className={`event-form_input ${
+          className={`event-form-input ${
             touched.category
               ? formData.category
                 ? errors.category
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
         {errors.category && (
-          <p className="event-form_error">{errors.category}</p>
+          <p className="event-form-error">{errors.category}</p>
         )}
       </div>
-      <div>
-        <label htmlFor="image" className="event-form_label">
-          <span className="flex items-center gap-2">
-            <span>Upload Image</span>
-            <span
-              className={`w-3 h-3 rounded-full ${
-                imageFile ? 'bg-green-500' : 'bg-gray-400'
-              }`}
-            ></span>
-          </span>
-        </label>
-        <div>
-          <ToggleButton
-            label="Image Upload:"
-            value={useURL}
-            onToggle={handleToggle}
-            optionOne="Upload"
-            optionTwo="URL"
-          />
-        </div>
-        {!useURL ? (
-          <div className="flex flex-col gap-2 mt-2">
-            <label
-              htmlFor="image"
-              className="cursor-pointer inline-block rounded-full bg-gray-200 text-black px-4 py-2 text-sm font-medium hover:bg-gray-500 transition max-w-[120px] text-center"
-            >
-              Choose File
-            </label>
-            <input
-              id="image"
-              type="file"
-              name="image"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0] || null;
-                setImageFile(file);
-              }}
-            />
-            {imageFile && (
-              <div className="flex items-center gap-2">
-                <p className="text-gray-600 text-sm font-medium font-inter">
-                  <span className="font-bold">Selected Image:</span>{' '}
-                  {imageFile.name}
-                </p>
-                <img
-                  src={URL.createObjectURL(imageFile)}
-                  alt="Selected Preview"
-                  className="w-12 h-12 rounded object-cover border border-gray-300"
-                />
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="flex flex-col w-full space-y-1">
-            <input
-              type="url"
-              name="image"
-              placeholder="Image URL"
-              defaultValue={existingEvent?.image || formData.image}
-              onChange={handleChange}
-              onBlur={onBlurHandler}
-              className={`event-form_input ${
-                touched.image
-                  ? formData.image
-                    ? errors.image
-                      ? 'form-input_error'
-                      : 'from-input_success'
-                    : 'form-input_error'
-                  : ''
-              }`}
-            />
-            {errors.image && <p className="text-red-500">{errors.image}</p>}
-          </div>
-        )}
-      </div>
+
+      <ImageUpload
+        useURL={useURL}
+        setUseURL={setUseURL}
+        setImageFile={setImageFile}
+        setFormData={setFormData}
+        imageFile={imageFile}
+        formData={formData}
+        errors={errors}
+        touched={touched}
+        handleChange={handleChange}
+        onBlurHandler={onBlurHandler}
+        existingEvent={existingEvent}
+      />
       <div data-color-mode="light">
-        <label htmlFor="pitch" className="event-form_label">
+        <label htmlFor="pitch" className="event-form-label">
           Event Pitch
         </label>
         <div className="my-3">
@@ -380,7 +318,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
             }}
           />
         </div>
-        {errors.pitch && <p className="event-form_error">{errors.pitch}</p>}
+        {errors.pitch && <p className="event-form-error">{errors.pitch}</p>}
       </div>
       <div
         className={`flex items-center ${
@@ -391,15 +329,15 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           <button
             type="button"
             onClick={handleDelete}
-            className="w-12 h-12 flex items-center justify-center bg-red-400 text-white rounded-full hover:bg-red-600 transition"
+            className="event-form-button-delete"
           >
-            <Trash className="w-5 h-5" />
+            <Trash className="event-form-delete-icon" />
           </button>
         )}
         <button
           type="submit"
           disabled={!isFormValid}
-          className={`event-form_btn_submit ${
+          className={`event-form-button-submit ${
             isFormValid ? 'bg-green-500' : 'bg-gray-400 cursor-not-allowed'
           }`}
         >

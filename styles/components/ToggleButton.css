@@ -1,5 +1,5 @@
 .toggle-container {
-  @apply flex items-center gap-3 font-sans;
+  @apply flex items-center gap-12 font-sans;
 }
 
 .toggle-label {
@@ -7,9 +7,9 @@
 }
 
 .toggle-wrapper {
-  @apply relative flex items-center w-[150px] h-[40px] bg-gray-200 rounded-full cursor-pointer;
-  padding: 0; /* Remove extra padding to avoid unwanted space */
-  overflow: hidden; /* Ensure no content spills out of the rounded container */
+  @apply relative flex items-center w-[150px] h-[40px] bg-gray-200 rounded-full cursor-pointer shadow-md shadow-black/20;
+  padding: 0;
+  overflow: hidden;
 }
 
 .toggle-slider {

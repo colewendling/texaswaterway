@@ -2,33 +2,35 @@
   @apply max-w-2xl mx-auto my-10 space-y-8 px-6;
 }
 
-.event-form_label {
+.event-form-label {
   @apply font-bold text-[18px] text-black uppercase;
 }
 
-.event-form_input {
+.event-form-input {
   @apply border-[3px] bg-white border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black;
 }
 
-.event-form_textarea {
+.event-form-textarea {
   @apply border-[3px] bg-white border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black;
 }
 
-.event-form_error {
-  @apply text-red-500 mt-2 ml-5;
+.event-form-error {
+  @apply text-red-500 mt-2;
 }
 
-.event-form_editor {
-  @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black !important;
+.event-form-editor {
+  @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black;
 }
 
-.event-form_btn_submit {
-  @apply border-black p-6 font-bold text-[18px]
-    flex items-center justify-center text-white rounded-full transition ml-4
-    shadow-md hover:shadow-lg;
+.event-form-button-submit {
+  @apply border-black px-4 py-2 font-bold text-[18px]
+    flex items-center justify-center text-white rounded-full transition ml-4 shadow-md shadow-black/20;
 }
 
-.event-form_btn_delete {
-  @apply border-black w-12 h-12 flex items-center justify-center bg-red-400 text-white rounded-full hover:bg-red-600 transition font-bold text-[18px]
-    shadow-md hover:shadow-lg !important;
+.event-form-button-delete {
+  @apply w-12 h-12 flex items-center justify-center bg-red-400 text-white rounded-full hover:bg-red-600 transition;
+}
+
+.event-form-delete-icon {
+  @apply w-5 h-5;
 }

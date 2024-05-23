@@ -26,6 +26,7 @@
   @import './components/FriendButton.css';
   @import './components/FriendList.css';
   @import './components/HeroText.css';
+  @import './components/ImageUpload.css';
   @import './components/Navbar.css';
   @import './components/SearchForm.css';
   @import './components/ToggleButton.css';

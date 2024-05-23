@@ -1,0 +1,55 @@
+.image-upload {
+  @apply py-3 flex flex-col gap-3;
+}
+
+.image-upload-toggle-container {
+  @apply py-3 flex gap-3;
+}
+
+.image-upload-label {
+  @apply font-bold text-[18px] text-black uppercase pb-3;
+}
+
+.image-upload-circle-container {
+  @apply flex items-center gap-2;
+}
+
+.image-upload-circle {
+  @apply w-3 h-3 rounded-full;
+}
+
+.image-upload-button-container {
+  @apply flex flex-col gap-2 mt-2;
+}
+
+.image-upload-button {
+  @apply text-blue-500 bg-blue-50 border-blue-300 hover:text-blue-600 hover:border-blue-500 cursor-pointer border-2 max-w-[180px] flex justify-center items-center text-center rounded-full px-5 py-2 text-[16px];
+}
+
+.image-upload-preview-container {
+  @apply flex items-center gap-12;
+}
+
+.image-upload-preview-text {
+  @apply text-gray-600 text-sm font-medium flex gap-2;
+}
+
+.image-upload-preview-label {
+  @apply font-bold;
+}
+
+.image-upload-preview-filename {
+  @apply text-primary;
+}
+
+.image-upload-preview-image {
+  @apply w-[80px] h-[80px] rounded object-cover border border-gray-300;
+}
+
+.image-upload-input-container {
+  @apply flex flex-col w-full space-y-1;
+}
+
+.image-upload-input {
+  @apply border-[2px] bg-white border-black px-5 py-2 text-[16px] text-black font-semibold rounded-full mt-3 placeholder:text-black;
+}
