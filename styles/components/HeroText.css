@@ -1,5 +1,5 @@
 .hero-container {
-  @apply text-6xl flex flex-col items-center justify-center text-center py-10 px-4 gap-6;
+  @apply text-5xl flex flex-col items-center justify-center text-center py-8 px-4 gap-3;
 }
 
 .hero-heading {
