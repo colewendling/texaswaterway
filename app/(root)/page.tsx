@@ -28,11 +28,7 @@ export default async function Home({
           className="hero-art-right"
         />
         <div className="water-rectangle"></div>
-        <img
-          src="/art/boat.png"
-          alt="Boat"
-          className="hero-boat"
-        />
+        <img src="/art/boat.png" alt="Boat" className="hero-boat" />
         <h1 className="heading">
           Howdy! <br /> Connect With Texas Lake goers{' '}
         </h1>
@@ -40,9 +36,6 @@ export default async function Home({
           Comprehensive dashboard app offering up-to-date data on Texas lakes,
           including lake levels, water storage, weather conditions, and fishing
           insights.
-        </p>
-        <p className="sub-heading !max-w-3xl">
-          Explore and Share Local Events, News Stories and Enjoy Live Lake Data.
         </p>
         <HeroText />
         <SearchForm query={query} />
