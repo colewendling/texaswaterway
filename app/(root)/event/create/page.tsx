@@ -11,7 +11,7 @@ const Page = async () => {
   
   return (
     <>
-      <section className="orange_container !min-h-[230px] relative">
+      <section className="orange_container min-h-[200px] md:min-h-[400px] relative">
         <h1 className="heading">Submit your Event</h1>
         <img
           src="/art/events-left.png"
