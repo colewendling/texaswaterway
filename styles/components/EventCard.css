@@ -58,16 +58,12 @@
   @apply rounded-full hover:scale-110 transition-transform duration-300 object-cover w-12 h-12 overflow-hidden shadow-md border-[1px] border-black;
 }
 
-.event-card-middle {
-  @apply event-card-section;
-}
-
 .event-card-description {
   @apply font-normal text-[16px] line-clamp-2 my-3 text-black break-words;
   min-height: 3rem;
 }
 
-.event-card-img {
+.event-card-image {
   @apply w-full h-[180px] rounded-[10px] object-cover shadow-lg;
 }
 

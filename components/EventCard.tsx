@@ -92,22 +92,15 @@ const EventCard = ({
           </div>
         </Link>
       </div>
-
-      <div className="event-card-middle">
-        <Link href={`/event/${slug?.current}`}>
-          <p className="event-card-description">{description}</p>
-          <img src={image} alt="placeholder" className="event-card-img" />
-        </Link>
-      </div>
-
+      <Link href={`/event/${slug?.current}`}>
+        <p className="event-card-description">{description}</p>
+        <img src={image} alt="placeholder" className="event-card-image" />
+      </Link>
       <div className="event-card-bottom">
         <Link href={`/?query=${category?.toLowerCase()}`}>
           <p className="event-card-category">{category}</p>
         </Link>
-        <a
-          className="event-card-button"
-          href={`/event/${slug?.current}`}
-        >
+        <a className="event-card-button" href={`/event/${slug?.current}`}>
           <span className="event-card-button-text">Details</span>
         </a>
       </div>
