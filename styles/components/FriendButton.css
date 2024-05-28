@@ -9,3 +9,23 @@
 .friend-button-notification-circle {
   @apply absolute top-0 right-0 bg-red-500 text-white text-xs font-bold w-4 h-4 flex items-center justify-center rounded-full;
 }
+
+.friend-button-notify {
+  @apply bg-red-500 hover:bg-red-600;
+}
+
+.friend-button-default {
+  @apply bg-blue-500 hover:bg-blue-600;
+}
+
+.friend-button-add {
+  @apply min-w-[150px] p-1 rounded-full  border-[2px] border-blue-500 text-white cursor-pointer bg-blue-300/20 hover:bg-blue-300/40;
+}
+
+.friend-button-cancel {
+  @apply flex items-center justify-center gap-2 min-w-[150px] py-1 px-4 rounded-full  border-[2px] border-slate-500 bg-slate-400/50 text-white cursor-pointer hover:border-red-500 hover:bg-red-50/20 hover:text-blue-50;
+}
+
+.friend-button-remove {
+  @apply text-white/80 py-1 px-3 hover:underline hover:text-white;
+}

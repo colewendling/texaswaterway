@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Ban } from 'lucide-react';
 import {
   createFriendRequest,
   deleteFriendRequest,
@@ -83,7 +83,7 @@ const FriendButton = ({
           onClick={() => {
             setModalOpen(true);
           }}
-          className={`friend-button ${pendingCount > 0 ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`}
+          className={`friend-button ${pendingCount > 0 ? 'friend-button-notify' : 'friend-button-default'}`}
         >
           <UserPlus size={15} />
           {pendingCount > 0 && (
@@ -106,7 +106,7 @@ const FriendButton = ({
           onClick={() => {
             handleSendRequest(sessionId, userId);
           }}
-          className="min-w-[150px] p-1 rounded-full  border-[2px] border-white text-white cursor-pointer bg-primary hover:bg-blue-500"
+          className="friend-button-add"
         >
           + Add Friend
         </button>
@@ -114,17 +114,20 @@ const FriendButton = ({
       {!isOwnProfile && !isFriend && hasPendingRequest && (
         <button
           onClick={() => handleCancelRequest(requestId)}
-          className="min-w-[150px] p-1  rounded-full bg-gray-500 text-white cursor-pointer hover:bg-blue-600"
+          className="friend-button-cancel"
         >
+          <span>
+            <Ban size={15} />
+          </span>
           Cancel Request
         </button>
       )}
       {!isOwnProfile && isFriend && (
         <button
           onClick={() => handleRemoveFriend(sessionId, userId)}
-          className="text-white py-1 px-3 hover:underline hover:text-red-800"
+          className="friend-button-remove"
         >
-          Remove as Friend
+          - Remove as Friend
         </button>
       )}
     </>
