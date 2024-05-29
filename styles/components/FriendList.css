@@ -1,39 +1,29 @@
 .friend-list {
-  @apply w-full px-6 py-5 rounded-[20px] shadow-md flex flex-col items-center gap-4;
+  @apply mt-8 flex flex-col gap-4;
 }
 
-.friend-list h1 {
-  @apply text-2xl font-semibold text-black mb-4;
+.friend-list-top {
+  @apply flex justify-between items-center;
 }
 
-.friend-item {
+.friend-list-divider {
+  @apply bg-white h-[1px] mb-4 w-full mx-auto;
+}
+
+.friend-list-grid {
+  @apply grid grid-cols-2 md:grid-cols-3 gap-6;
+}
+
+.friend-list-item {
   @apply flex flex-col items-center;
 }
 
-.friend-photo {
-  @apply w-14 h-14 rounded-full object-cover mb-2;
+.friend-list-avatar {
+  @apply w-16 h-16 rounded-full object-cover mb-2;
 }
 
 @media (max-width: 1024px) {
   .profile_friendlist {
     @apply mt-8;
   }
-
-  .friend-list {
-    @apply w-full px-4;
-  }
-}
-
-.friend-divider {
-  @apply bg-white h-[1px] mb-4 w-full mx-auto;
-}
-
-/* Success state for form input */
-.form-input_success {
-  @apply bg-green-100 border-green-500;
-}
-
-/* Error state for form input */
-.form-input_error {
-  @apply bg-red-100 border-red-500;
 }

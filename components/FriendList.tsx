@@ -70,38 +70,40 @@ const FriendList = ({
   }, [isOwnProfile, sessionId, userId]);
 
   return (
-    <div className="mt-8 flex flex-col gap-4">
-      <div className="flex flex-row justify-between items-center">
+    <div className="friend-list">
+      <div className="friend-list-top">
         <h1 className="sub-heading">Friends</h1>
-        {sessionId && (<FriendButton
-          userId={userId}
-          sessionId={sessionId}
-          isOwnProfile={isOwnProfile}
-          isFriend={isFriend}
-          pendingCount={pendingCount}
-          setModalOpen={setModalOpen}
-          hasPendingRequest={hasPendingRequest}
-          setHasPendingRequest={setHasPendingRequest}
-          setRequestId={setRequestId}
-          requestId={requestId}
-        />)}
+        {sessionId && (
+          <FriendButton
+            userId={userId}
+            sessionId={sessionId}
+            isOwnProfile={isOwnProfile}
+            isFriend={isFriend}
+            pendingCount={pendingCount}
+            setModalOpen={setModalOpen}
+            hasPendingRequest={hasPendingRequest}
+            setHasPendingRequest={setHasPendingRequest}
+            setRequestId={setRequestId}
+            requestId={requestId}
+          />
+        )}
       </div>
-      <hr className="friend-divider" />
+      <hr className="friend-list-divider" />
 
       {!friends || friends.length === 0 ? (
         <p className="">No friends added yet.</p>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="friend-list-grid">
           {friends.map((friend) => (
             <Link
               key={friend._id}
               href={`/user/${friend.username}`}
-              className="friend-item flex flex-col items-center"
+              className="friend-list-item"
             >
               <img
                 src={friend.image || '/default-avatar.png'}
                 alt={friend.username}
-                className="friend-photo w-16 h-16 rounded-full object-cover mb-2"
+                className="friend-list-avatar"
               />
             </Link>
           ))}

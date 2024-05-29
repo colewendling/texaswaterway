@@ -169,9 +169,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               touched.name
                 ? formData.name
                   ? errors.name
-                    ? 'form-input_error'
-                    : 'form-input_success'
-                  : 'form-input_error'
+                    ? 'form-input-error'
+                    : 'form-input-success'
+                  : 'form-input-error'
                 : ''
             }`}
           />
@@ -189,9 +189,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               touched.lastName
                 ? formData.lastName
                   ? errors.lastName
-                    ? 'form-input_error'
-                    : 'form-input_success'
-                  : 'form-input_error'
+                    ? 'form-input-error'
+                    : 'form-input-success'
+                  : 'form-input-error'
                 : ''
             }`}
           />
@@ -210,9 +210,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             touched.username
               ? formData.username
                 ? errors.username
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
@@ -230,9 +230,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             touched.email
               ? formData.email
                 ? errors.email
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
@@ -250,9 +250,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             touched.password
               ? formData.password
                 ? errors.password
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
@@ -267,8 +267,8 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         className={`p-2 rounded border ${
           formData.password && formData.confirmPassword
             ? passwordMatch
-              ? 'form-input_success'
-              : 'form-input_error'
+              ? 'form-input-success'
+              : 'form-input-error'
             : ''
         }`}
       />
@@ -287,9 +287,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             touched.image
               ? formData.image
                 ? errors.image
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />
@@ -306,9 +306,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             touched.bio
               ? formData.bio
                 ? errors.bio
-                  ? 'form-input_error'
-                  : 'form-input_success'
-                : 'form-input_error'
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
               : ''
           }`}
         />

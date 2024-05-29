@@ -150,3 +150,13 @@
   }
   left: var(--left-boundary);
 }
+
+/* Success state for form input */
+.form-input-success {
+  @apply bg-green-100 border-green-500 !important;
+}
+
+/* Error state for form input */
+.form-input-error {
+  @apply bg-red-100 border-red-500 !important;
+}
