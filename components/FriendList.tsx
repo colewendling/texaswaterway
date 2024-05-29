@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import FriendButton from './FriendButton';
-import FriendRequestModal from './FriendRequestModal';
+import FriendManager from './FriendManager';
 import {
   PENDING_FRIEND_REQUESTS_QUERY,
   SENT_FRIEND_REQUESTS_QUERY,
@@ -111,7 +111,7 @@ const FriendList = ({
       )}
 
       {isOwnProfile && (
-        <FriendRequestModal
+        <FriendManager
           isOpen={isModalOpen}
           pendingCount={pendingCount}
           setPendingCount={setPendingCount}
