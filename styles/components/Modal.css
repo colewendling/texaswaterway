@@ -1,0 +1,15 @@
+.modal-container {
+  @apply fixed inset-0 z-[100] bg-black bg-opacity-50 flex items-center justify-center p-6;
+}
+
+.modal {
+  @apply flex flex-col relative bg-white rounded-3xl shadow-lg shadow-black/50 justify-start overflow-y-auto w-full max-w-[500px] max-h-[90vh];
+}
+
+.modal::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.modal-button-close {
+  @apply absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center shadow-md hover:bg-red-600;
+}
