@@ -30,7 +30,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form onSubmit={handleSubmit} className="login-form">
       <h1 className="form-title">Login</h1>
       <input
         type="text"
@@ -38,7 +38,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
         placeholder="Email"
         value={formData.identifier}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="login-form-input"
       />
       <input
         type="password"
@@ -46,13 +46,10 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
-        className="border p-2 rounded"
+        className="login-form-input"
       />
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      <button
-        type="submit"
-        className="w-full py-3 bg-green-500 rounded text-white"
-      >
+      {errorMessage && <p className="login-form-error">{errorMessage}</p>}
+      <button type="submit" className="login-form-button">
         Login
       </button>
     </form>

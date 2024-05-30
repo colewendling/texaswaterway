@@ -1,0 +1,15 @@
+.login-form {
+  @apply flex flex-col space-y-4 p-10;
+}
+
+.login-form-input {
+  @apply border p-2 rounded;
+}
+
+.login-form-error {
+  @apply text-red-500 text-center;
+}
+
+.login-form-button {
+  @apply w-full py-3 bg-green-500 rounded text-white;
+}
