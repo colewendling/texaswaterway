@@ -25,8 +25,11 @@
   @import './components/Footer.css';
   @import './components/FriendButton.css';
   @import './components/FriendList.css';
+  @import './components/FriendManager.css';
   @import './components/HeroText.css';
   @import './components/ImageUpload.css';
+  @import './components/LoginForm.css';
+  @import './components/Modal.css';
   @import './components/Navbar.css';
   @import './components/SearchForm.css';
   @import './components/ToggleButton.css';
