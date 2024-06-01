@@ -36,8 +36,8 @@ export const signUpSchema = z
       .max(50),
     username: z
       .string()
-      .min(3, 'Username must be at least 3 characters long')
-      .max(30),
+      .min(3, 'Username must be 3 to 15 characters long')
+      .max(15),
     email: z.string().email('Invalid email address'),
     password: z
       .string()
