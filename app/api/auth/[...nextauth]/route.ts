@@ -2,6 +2,7 @@ import { client } from '@/sanity/lib/client';
 import {
   USER_BY_EMAIL_QUERY,
   USER_BY_GITHUB_ID_QUERY,
+  USER_BY_IDENTIFIER_QUERY,
 } from '@/sanity/lib/queries/userQueries';
 import { writeClient } from '@/sanity/lib/write-client';
 import NextAuth from 'next-auth';
@@ -18,17 +19,17 @@ export const authOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'Email', type: 'email' },
+        identifier: { label: 'Email or Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const { email, password } = credentials || {};
-        if (!email || !password) {
-          throw new Error('Missing email or password');
+        const { identifier, password } = credentials || {};
+        if (!identifier || !password) {
+          throw new Error('Missing identifier or password');
         }
 
-        // Fetch the user by email
-        const user = await client.fetch(USER_BY_EMAIL_QUERY, { email });
+        // Fetch the user by email or username
+        const user = await client.fetch(USER_BY_IDENTIFIER_QUERY, { identifier });
         if (!user) {
           throw new Error('No user found');
         }

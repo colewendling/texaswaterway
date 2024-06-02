@@ -17,7 +17,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
 
     const result = await signIn('credentials', {
       redirect: false,
-      email: formData.identifier, // Pass as "email" to credentials provider
+      identifier: formData.identifier,
       password: formData.password,
     });
 
@@ -35,7 +35,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
       <input
         type="text"
         name="identifier"
-        placeholder="Email"
+        placeholder="Email or Username"
         value={formData.identifier}
         onChange={handleChange}
         className="login-form-input"

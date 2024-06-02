@@ -61,7 +61,6 @@ export const USER_FRIENDS_BY_USER_ID_QUERY = defineQuery(`
   }
 `);
 
-
 // Query to search users by name or username
 export const SEARCH_USERS_QUERY = defineQuery(`
   *[_type == "user" && (username match $searchTerm || name match $searchTerm)] {
@@ -70,3 +69,16 @@ export const SEARCH_USERS_QUERY = defineQuery(`
     image
   }
 `);
+
+export const USER_BY_IDENTIFIER_QUERY = `
+  *[_type == 'user' && (email == $identifier || username == $identifier)][0]{
+    _id,
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio,
+    password
+  }
+`;
