@@ -321,9 +321,9 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         {errors.pitch && <p className="event-form-error">{errors.pitch}</p>}
       </div>
       <div
-        className={`flex items-center ${
+        className={`event-form-button-container ${
           isEditMode ? 'justify-between' : 'justify-center'
-        } mt-6 w-full`}
+        }`}
       >
         {isEditMode && (
           <button
@@ -338,7 +338,9 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           type="submit"
           disabled={!isFormValid}
           className={`event-form-button-submit ${
-            isFormValid ? 'bg-green-500' : 'bg-gray-400 cursor-not-allowed'
+            isFormValid
+              ? 'event-form-button-submit-valid'
+              : 'event-form-button-submit-disabled'
           }`}
         >
           {isEditMode ? <>Save</> : <>Submit</>}
