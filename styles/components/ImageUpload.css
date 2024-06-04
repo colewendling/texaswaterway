@@ -18,6 +18,14 @@
   @apply w-3 h-3 rounded-full;
 }
 
+.image-upload-circle-valid {
+  @apply bg-green-500;
+}
+
+.image-upload-circle-null {
+  @apply bg-gray-400;
+}
+
 .image-upload-button-container {
   @apply flex flex-col gap-2 mt-2;
 }
@@ -52,4 +60,8 @@
 
 .image-upload-input {
   @apply border-[2px] bg-white border-black px-5 py-2 text-[16px] text-black font-semibold rounded-full mt-3 placeholder:text-black;
+}
+
+.image-upload-error {
+  @apply text-red-500 text-center py-2;
 }

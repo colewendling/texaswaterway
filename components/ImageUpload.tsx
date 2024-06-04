@@ -50,7 +50,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           <span>Upload Image</span>
           <span
             className={`image-upload-circle ${
-              imageFile ? 'bg-green-500' : 'bg-gray-400'
+              imageFile
+                ? 'image-upload-circle-valid'
+                : 'image-upload-circle-null'
             }`}
           ></span>
         </span>
@@ -66,7 +68,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
       </div>
       {!useURL ? (
         <div className="image-upload-button-container">
-          <label htmlFor="image" className="image-upload-button flex">
+          <label htmlFor="image" className="image-upload-button">
             <span className="upload-button-text">Upload Image</span>
           </label>
           <input
@@ -117,7 +119,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 : ''
             }`}
           />
-          {errors.image && <p className="text-red-500">{errors.image}</p>}
+          {errors.image && <p className="image-upload-error">{errors.image}</p>}
         </div>
       )}
     </div>
