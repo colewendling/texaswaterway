@@ -8,6 +8,7 @@ interface ImageUploadProps {
   setUseURL: React.Dispatch<React.SetStateAction<boolean>>;
   setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
   setFormData: React.Dispatch<React.SetStateAction<any>>;
+  setErrors: React.Dispatch<React.SetStateAction<Record<string, string>>>;
   imageFile: File | null;
   formData: any;
   errors: Record<string, string>;
@@ -26,6 +27,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   setUseURL,
   setImageFile,
   setFormData,
+  setErrors,
   imageFile,
   formData,
   errors,
@@ -40,6 +42,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setFormData((prev) => ({
       ...prev,
       image: useURL ? '' : existingEvent?.image || '',
+    }));
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      image: '',
     }));
   };
 

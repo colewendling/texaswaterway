@@ -50,15 +50,6 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
 
   const [useURL, setUseURL] = useState(existingEvent?.image ? true : false);
 
-  const handleToggle = () => {
-    setUseURL((prev) => !prev);
-    setImageFile(null);
-    setFormData((prev) => ({
-      ...prev,
-      image: useURL ? '' : existingEvent?.image || '',
-    }));
-  };
-
   const handlePitchChange = (value: string | undefined) => {
     setPitch(value || '');
     setFormData((prev) => ({
@@ -289,6 +280,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         setUseURL={setUseURL}
         setImageFile={setImageFile}
         setFormData={setFormData}
+        setErrors={setErrors}
         imageFile={imageFile}
         formData={formData}
         errors={errors}
