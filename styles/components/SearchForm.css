@@ -1,11 +1,19 @@
 .search-form {
-  @apply max-w-3xl w-full min-h-[80px] bg-white border-[5px] border-black rounded-[80px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5;
+  @apply max-w-3xl w-full min-h-[80px] bg-white border-[5px] border-black rounded-[80px] text-[24px] mt-8 px-5 flex flex-row items-center gap-5 z-30;
 }
 
-.search-input {
+.search-form-input {
   @apply flex-1 font-bold placeholder:font-semibold placeholder:text-black w-full h-auto outline-none bg-white;
 }
 
-.search-btn {
-  @apply size-[50px] rounded-full bg-black flex justify-center items-center !important;
+.search-form-button-container {
+  @apply flex gap-2;
+}
+
+.search-form-button {
+  @apply size-[50px] rounded-full bg-black text-white flex justify-center items-center;
+}
+
+.search-form-button-icon {
+  @apply size-5;
 }

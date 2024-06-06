@@ -5,17 +5,17 @@ import { Search } from 'lucide-react';
 
 const SearchForm = ({ query }: { query?: string }) => {
   return (
-    <Form action="/" scroll={false} className="search-form z-30">
+    <Form action="/" scroll={false} className="search-form">
       <input
         name="query"
         defaultValue={query}
-        className="search-input"
+        className="search-form-input"
         placeholder="Search"
       />
-      <div className="flex gap-2">
+      <div className="search-form-button-container">
         {query && <SearchFormReset />}
-        <button type="submit" className="search-btn text-white">
-          <Search className="size-5" />
+        <button type="submit" className="search-form-button">
+          <Search className="search-form-button-icon" />
         </button>
       </div>
     </Form>
