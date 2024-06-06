@@ -31,6 +31,7 @@
   @import './components/LoginForm.css';
   @import './components/Modal.css';
   @import './components/Navbar.css';
+  @import './components/Ping.css';
   @import './components/SearchForm.css';
   @import './components/ToggleButton.css';
   @import './components/View.css';

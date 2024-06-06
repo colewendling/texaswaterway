@@ -1,0 +1,19 @@
+.ping {
+  @apply relative;
+}
+
+.ping-container {
+  @apply absolute -left-4 top-1;
+}
+
+.ping-circle-container {
+  @apply flex size-[11px];
+}
+
+.ping-circle-animated {
+  @apply absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75;
+}
+
+.ping-circle-background {
+  @apply relative inline-flex size-[11px] rounded-full bg-primary;
+}
