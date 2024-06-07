@@ -33,6 +33,7 @@
   @import './components/Navbar.css';
   @import './components/Ping.css';
   @import './components/SearchForm.css';
+  @import './components/SignUpForm.css';
   @import './components/ToggleButton.css';
   @import './components/View.css';
   /* Import custom layout styles */

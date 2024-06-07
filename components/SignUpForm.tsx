@@ -154,10 +154,10 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   }, [formData]);
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      <h1 className="form-title">Join Texas Waterway</h1>
-      <div className="flex space-x-4">
-        <div className="flex flex-col w-full">
+    <form onSubmit={handleSubmit} className="signup">
+      <h1 className="signup-title">Join Texas Waterway</h1>
+      <div className="signup-input-dual-container">
+        <div className="signup-input-container">
           <input
             type="text"
             name="name"
@@ -165,7 +165,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             value={formData.name}
             onChange={handleChange}
             onBlur={onBlurHandler}
-            className={`border p-2 rounded w-full ${
+            className={`signup-input ${
               touched.name
                 ? formData.name
                   ? errors.name
@@ -175,9 +175,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
                 : ''
             }`}
           />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          {errors.name && <p className="signup-error">{errors.name}</p>}
         </div>
-        <div className="flex flex-col w-full">
+        <div className="signup-input-container">
           <input
             type="text"
             name="lastName"
@@ -185,7 +185,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
             value={formData.lastName}
             onChange={handleChange}
             onBlur={onBlurHandler}
-            className={`border p-2 rounded w-full ${
+            className={`signup-input ${
               touched.lastName
                 ? formData.lastName
                   ? errors.lastName
@@ -195,10 +195,10 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
                 : ''
             }`}
           />
-          {errors.lastName && <p className="text-red-500">{errors.lastName}</p>}
+          {errors.lastName && <p className="signup-error">{errors.lastName}</p>}
         </div>
       </div>
-      <div className="flex flex-col w-full space-y-1">
+      <div className="signup-input-container">
         <input
           type="text"
           name="username"
@@ -206,7 +206,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           value={formData.username}
           onChange={handleChange}
           onBlur={onBlurHandler}
-          className={`border p-2 rounded w-full ${
+          className={`signup-input ${
             touched.username
               ? formData.username
                 ? errors.username
@@ -216,9 +216,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               : ''
           }`}
         />
-        {errors.username && <p className="text-red-500">{errors.username}</p>}
+        {errors.username && <p className="signup-error">{errors.username}</p>}
       </div>
-      <div className="flex flex-col w-full space-y-1">
+      <div className="signup-input-container">
         <input
           type="email"
           name="email"
@@ -226,7 +226,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           value={formData.email}
           onChange={handleChange}
           onBlur={onBlurHandler}
-          className={`border p-2 rounded w-full ${
+          className={`signup-input ${
             touched.email
               ? formData.email
                 ? errors.email
@@ -236,9 +236,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               : ''
           }`}
         />
-        {errors.email && <p className="text-red-500">{errors.email}</p>}
+        {errors.email && <p className="signup-error">{errors.email}</p>}
       </div>
-      <div className="flex flex-col w-full space-y-1">
+      <div className="signup-input-container">
         <input
           type="password"
           name="password"
@@ -246,7 +246,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           value={formData.password}
           onChange={handleChange}
           onBlur={onBlurHandler}
-          className={`border p-2 rounded w-full ${
+          className={`signup-input ${
             touched.password
               ? formData.password
                 ? errors.password
@@ -256,7 +256,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               : ''
           }`}
         />
-        {errors.password && <p className="text-red-500">{errors.password}</p>}
+        {errors.password && <p className="signup-error">{errors.password}</p>}
       </div>
       <input
         type="password"
@@ -273,9 +273,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         }`}
       />
       {errors.confirmPassword && (
-        <p className="text-red-500">{errors.confirmPassword}</p>
+        <p className="signup-error">{errors.confirmPassword}</p>
       )}
-      <div className="flex flex-col w-full space-y-1">
+      <div className="signup-input-container">
         <input
           type="url"
           name="image"
@@ -283,7 +283,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           value={formData.image}
           onChange={handleChange}
           onBlur={onBlurHandler}
-          className={`border p-2 rounded w-full ${
+          className={`signup-input ${
             touched.image
               ? formData.image
                 ? errors.image
@@ -293,16 +293,16 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               : ''
           }`}
         />
-        {errors.image && <p className="text-red-500">{errors.image}</p>}
+        {errors.image && <p className="signup-error">{errors.image}</p>}
       </div>
-      <div className="flex flex-col w-full space-y-1">
+      <div className="signup-input-container">
         <textarea
           name="bio"
           placeholder="Bio (optional)"
           value={formData.bio}
           onChange={handleChange}
           onBlur={onBlurHandler}
-          className={`border p-2 rounded w-full ${
+          className={`signup-input ${
             touched.bio
               ? formData.bio
                 ? errors.bio
@@ -312,13 +312,13 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               : ''
           }`}
         />
-        {errors.bio && <p className="text-red-500">{errors.bio}</p>}
+        {errors.bio && <p className="signup-error">{errors.bio}</p>}
       </div>
       <button
         type="submit"
         disabled={!isFormValid}
-        className={`px-4 py-2 rounded text-white ${
-          isFormValid ? 'bg-green-500' : 'bg-gray-400 cursor-not-allowed'
+        className={`signup-button ${
+          isFormValid ? 'signup-button-valid' : 'signup-button-disabled'
         }`}
       >
         Create Account

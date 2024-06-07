@@ -1,0 +1,35 @@
+.signup {
+  @apply flex flex-col space-y-4 p-10;
+}
+
+.signup-title {
+  @apply font-inter font-semibold  text-2xl sm:text-3xl leading-[32px] text-center text-black py-4;
+}
+
+.signup-input-dual-container {
+  @apply flex space-x-4;
+}
+
+.signup-input-container {
+  @apply flex flex-col w-full;
+}
+
+.signup-input {
+  @apply border p-2 rounded w-full;
+}
+
+.signup-error {
+  @apply text-red-500 text-sm;
+}
+
+.signup-button {
+  @apply px-4 py-2 rounded text-white;
+}
+
+.signup-button-valid {
+  @apply bg-green-500;
+}
+
+.signup-button-disabled {
+  @apply bg-gray-400 cursor-not-allowed;
+}
