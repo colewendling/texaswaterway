@@ -13,6 +13,7 @@ export const PLAYLIST_BY_SLUG_QUERY =
     user->{
       _id,
       name,
+      username,
       slug,
       image,
       bio
