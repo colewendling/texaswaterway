@@ -44,7 +44,7 @@ export default async function Home({
         <p className="text-30-semibold">
           {query ? `Search results for "${query}"` : 'All Events'}
         </p>
-        <ul className="mt-7 card_grid">
+        <ul className="mt-7 card-grid">
           {posts?.length > 0 ? (
             posts.map((post: EventCardType) => (
               <EventCard key={post?._id} post={post} />

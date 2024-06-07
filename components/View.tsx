@@ -9,14 +9,17 @@ const View = async ({ id }: { id: string }) => {
     .withConfig({ useCdn: false })
     .fetch(EVENT_VIEWS_BY_ID_QUERY, { id });
 
-  after(async () => await writeClient
-    .patch(id)
-    .set({ views: totalViews + 1 })
-    .commit());
+  after(
+    async () =>
+      await writeClient
+        .patch(id)
+        .set({ views: totalViews + 1 })
+        .commit(),
+  );
 
   return (
-    <div className="view-container">
-      <div className="absolute -top-2 -right-2">
+    <div className="view">
+      <div className="view-container">
         <Ping />
       </div>
       <p className="view-text">

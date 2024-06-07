@@ -28,66 +28,60 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const parsedContent = md.render(post?.pitch || '');
 
   return (
-    <>
-      <section className="orange_container !min-h-[230px]">
-        <p className="tag">{formatDate(post?._createdAt)}</p>
-        <h1 className="heading">{post.title}</h1>
-        <p className="sub-heading !max-w-5xl">{post.description}</p>
+    <div className="event-page">
+      <section className="event-hero-container">
+        <p className="event-tag">{formatDate(post?._createdAt)}</p>
+        <h1 className="event-heading">{post.title}</h1>
+        <p className="event-subheading">{post.description}</p>
       </section>
       <section className="section_container">
-        <img
-          src={post.image}
-          alt="thumbnail"
-          className="w-full h-auto rounded-xl"
-        />
-        <div className="space-y-5 mt-10 max-w-4xl mx-auto">
-          <div className="flex-between gap-5">
+        <img src={post.image} alt="thumbnail" className="event-header-image" />
+        <div className="event-container">
+          <div className="event-top">
             <Link
               href={`/user/${post.user?.username}`}
-              className="flex gap-2 items-center mb-3"
+              className="event-user-container"
             >
               <Image
                 src={post.user.image}
                 alt="avatar"
                 width={64}
                 height={64}
-                className="rounded-full drop-shadow-lg"
+                className="event-user-avatar"
               />
               <div>
                 <p className="text-20-medium">{post.user.name}</p>
-                <p className="text-16-medium !text-black-300">
-                  @{post.user.username}
-                </p>
+                <p className="text-16-medium">@{post.user.username}</p>
               </div>
             </Link>
-            <p className="category-tag">{post.category}</p>
+            <p className="event-category">{post.category}</p>
           </div>
           <h3 className="text-30-bold">Event Details</h3>
           {parsedContent ? (
             <article
-              className="prose max-w-4xl break-all"
+              className="event-pitch"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (
             <p className="no-results">No details provided for this event.</p>
           )}
         </div>
-        <hr className="divider" />
+        <hr className="event-divider" />
         {editorPosts?.length > 0 && (
-          <div className="max-w-4xl mx-auto">
+          <div className="event-playlist-container">
             <p className="text-30-semibold">Featured Events</p>
-            <ul className="mt-7 card_grid-sm">
+            <ul className="event-playlist card-grid-sm">
               {editorPosts.map((post: EventCardType, i: number) => (
                 <EventCard key={i} post={post} />
               ))}
             </ul>
           </div>
         )}
-        <Suspense fallback={<Skeleton className="view_skeleton" />}>
+        <Suspense fallback={<Skeleton className="view-skeleton" />}>
           <View id={post?._id} />
         </Suspense>
       </section>
-    </>
+    </div>
   );
 };
 

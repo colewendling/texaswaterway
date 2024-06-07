@@ -67,10 +67,6 @@
   scrollbar-width: none; /* Firefox */
 }
 
-.tag {
-  @apply bg-primary px-6 py-3 font-inter font-bold rounded-sm uppercase relative tag-tri;
-}
-
 .heading {
   @apply uppercase bg-black px-6 py-3 font-inter font-extrabold text-white sm:text-[54px] sm:leading-[64px] text-[36px] leading-[46px] text-center my-5;
 }
@@ -87,20 +83,16 @@
   @apply px-6 py-10 max-w-7xl mx-auto;
 }
 
-.card_grid {
+.card-grid {
   @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
 }
 
-.card_grid-sm {
+.card-grid-sm {
   @apply grid sm:grid-cols-2 gap-5;
 }
 
 .no-result {
   @apply text-black text-sm font-normal;
-}
-
-.tag-tri {
-  @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
 }
 
 .orange_container {

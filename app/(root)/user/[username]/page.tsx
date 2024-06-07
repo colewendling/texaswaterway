@@ -72,7 +72,7 @@ const Page = async ({
             </p>
             {session?.id === user._id && <EditButton editMode={editMode} />}
           </div>
-          <ul className="card_grid-sm">
+          <ul className="card-grid-sm">
             <Suspense fallback={<EventCardSkeleton />}>
               <UserEvents id={user._id} editMode={editMode} />
             </Suspense>

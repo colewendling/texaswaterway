@@ -1,7 +1,11 @@
-.view-container {
+.view {
   @apply flex justify-end items-center mt-5 fixed bottom-3 right-3;
 }
 
+.view-container {
+  @apply absolute -top-2 -right-2;
+}
+
 .view-text {
-  @apply font-medium text-[16px] bg-red-100 px-4 py-2 rounded-lg capitalize;
+  @apply font-medium text-[16px] bg-red-100 px-4 py-2 rounded-lg;
 }

@@ -83,7 +83,6 @@
   @apply font-medium text-[16px];
 }
 
-.event-card_skeleton {
+.event-card-skeleton {
   @apply w-full h-96 rounded-[22px] bg-zinc-400;
 }
-
