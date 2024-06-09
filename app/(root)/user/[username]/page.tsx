@@ -35,27 +35,23 @@ const Page = async ({
 
   return (
     <>
-      <section className="profile_container">
-        <div className="profile_card">
-          <div className="profile_title">
-            <h3 className="text-24-black uppercase text-center line-clamp-1">
-              {user.name}
-            </h3>
+      <section className="profile">
+        <div className="profile-card">
+          <div className="profile-title-container">
+            <h3 className="profile-title">{user.name}</h3>
           </div>
-          <div className="relative w-[220px] h-[220px] rounded-full overflow-hidden shadow-md">
+          <div className="profile-image-container">
             <Image
               src={user.image}
               alt={user.name}
               fill
               sizes="220px"
-              className="profile_image"
+              className="profile-image"
             />
           </div>
-          <p className="text-30-extrabold mt-7 text-center">
-            @{user?.username}
-          </p>
-          <p className="mt-1 text-center text-14-normal">{user?.bio}</p>
-          <div className="profile_friendlist">
+          <p className="profile-username">@{user?.username}</p>
+          <p className="profile-bio">{user?.bio}</p>
+          <div className="profile-friendlist">
             <FriendList
               friends={user?.friends}
               sessionId={session?.id || null}
@@ -65,9 +61,9 @@ const Page = async ({
             />
           </div>
         </div>
-        <div className="flex-1 flex flex-col gap-5 lg:-mt-5">
-          <div className="flex items-center justify-between">
-            <p className="text-30-bold">
+        <div className="profile-events-container">
+          <div className="profile-events-title-container">
+            <p className="profile-events-title">
               {session?.id === user._id ? 'Your' : 'All'} Events
             </p>
             {session?.id === user._id && <EditButton editMode={editMode} />}

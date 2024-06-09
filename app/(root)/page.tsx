@@ -16,7 +16,7 @@ export default async function Home({
 
   return (
     <>
-      <section className="orange_container space-y-6 relative">
+      <section className="home-hero-container">
         <img
           src="/art/plants-left.png"
           alt="Plants Left"
@@ -29,10 +29,10 @@ export default async function Home({
         />
         <div className="water-rectangle"></div>
         <img src="/art/boat.png" alt="Boat" className="hero-boat" />
-        <h1 className="heading">
+        <h1 className="home-hero-heading">
           Howdy! <br /> Connect With Texas Lake goers{' '}
         </h1>
-        <p className="sub-heading !max-w-3xl">
+        <p className="home-hero-subheading">
           Comprehensive dashboard app offering up-to-date data on Texas lakes,
           including lake levels, water storage, weather conditions, and fishing
           insights.
@@ -44,7 +44,7 @@ export default async function Home({
         <p className="text-30-semibold">
           {query ? `Search results for "${query}"` : 'All Events'}
         </p>
-        <ul className="mt-7 card-grid">
+        <ul className="home-event-container  card-grid">
           {posts?.length > 0 ? (
             posts.map((post: EventCardType) => (
               <EventCard key={post?._id} post={post} />

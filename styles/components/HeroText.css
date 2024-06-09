@@ -1,5 +1,5 @@
 .hero-container {
-  @apply text-5xl flex flex-col items-center justify-center text-center py-8 px-4 gap-3;
+  @apply text-3xl flex flex-col items-center justify-center text-center py-4 px-4 gap-3;
 }
 
 .hero-heading {
@@ -11,7 +11,7 @@
 }
 
 .hero-subheading {
-  @apply  font-extrabold leading-tight mt-2;
+  @apply font-extrabold leading-tight mt-2;
 }
 
 .hero-subheading-white {

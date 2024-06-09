@@ -38,6 +38,7 @@
   @import './components/View.css';
   /* Import custom layout styles */
   @import './layouts/EventPage.css';
+  @import './layouts/HomePage.css';
   @import './layouts/UserPage.css';
 }
 
