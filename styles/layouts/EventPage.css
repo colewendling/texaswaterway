@@ -73,3 +73,11 @@
 .event-playlist {
   @apply mt-7;
 }
+
+.event-create-hero-container {
+  @apply event-hero-container md:min-h-[400px] relative;
+}
+
+.event-create-form-container {
+  @apply py-10;
+}

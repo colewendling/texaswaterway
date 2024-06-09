@@ -8,10 +8,10 @@ const Page = async () => {
   const session = await getServerSession(authOptions);
 
   if (!session) redirect('/');
-  
+
   return (
     <>
-      <section className="orange_container min-h-[200px] md:min-h-[400px] relative">
+      <section className="event-create-hero-container">
         <h1 className="heading">Create your Event</h1>
         <img
           src="/art/events-left.png"
@@ -24,7 +24,9 @@ const Page = async () => {
           className="hero-art-right"
         />
       </section>
-      <EventForm />
+      <div className="event-create-form-container">
+        <EventForm />
+      </div>
     </>
   );
 };
