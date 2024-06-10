@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { clearDatabase, seedDatabase } from '@/app/actions/databaseActions';
-
+import { redirect } from 'next/navigation';
 
 const DevelopmentPage = () => {
   const [loading, setLoading] = useState<{ clear: boolean; seed: boolean }>({
@@ -11,6 +11,10 @@ const DevelopmentPage = () => {
   });
   const [message, setMessage] = useState('');
   const [results, setResults] = useState<Record<string, number> | null>(null);
+
+  if (process.env.NODE_ENV === 'production') {
+    redirect('/');
+  }
 
   const handleClearDatabase = async () => {
     if (
