@@ -12,9 +12,9 @@ const DevelopmentPage = () => {
   const [message, setMessage] = useState('');
   const [results, setResults] = useState<Record<string, number> | null>(null);
 
-  if (process.env.NODE_ENV === 'production') {
-    redirect('/');
-  }
+  // if (process.env.NODE_ENV === 'production') {
+  //   redirect('/');
+  // }
 
   const handleClearDatabase = async () => {
     if (
