@@ -18,7 +18,30 @@ const inter = localFont({
 
 export const metadata: Metadata = {
   title: 'Texas Waterway',
-  description: 'Lake Data Application',
+  description:
+    'Comprehensive dashboard app offering lake data, levels, and weather insights for Texas lakes.',
+  authors: [{ name: 'Cole Wendling' }],
+  openGraph: {
+    title: 'Texas Waterway',
+    description:
+      'Comprehensive dashboard app offering lake data, levels, and weather insights for Texas lakes.',
+    url: 'https://www.texaswaterway.com',
+    images: [
+      {
+        url: '/meta/social-share.png',
+        width: 1200,
+        height: 630,
+        alt: 'Texas Waterway - Comprehensive Lake Data',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Texas Waterway',
+    description:
+      'Comprehensive dashboard app offering lake data, levels, and weather insights for Texas lakes.',
+    images: ['/meta/social-share.png'],
+  },
 };
 
 export default function RootLayout({

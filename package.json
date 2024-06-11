@@ -1,6 +1,16 @@
 {
   "name": "texaswaterway",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "A lake data application for Texas",
+  "author": "Cole Wendling <cole@wendling.io>",
+  "contributors": [
+    {
+      "name": "Cole Wendling",
+      "email": "cole@wendling.io",
+      "url": "https://wendling.io"
+    }
+  ],
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "next dev",
