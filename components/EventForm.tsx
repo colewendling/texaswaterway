@@ -14,6 +14,7 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
+  checkIfTitleExists,
 } from '@/app/actions/eventActions';
 import { uploadImageToCloudinary } from '@/lib/utils';
 import { handleBlur } from '@/lib/utils';
@@ -40,14 +41,12 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   }, [existingEvent]);
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [isFormValid, setIsFormValid] = useState(false);
-
   const { toast } = useToast();
   const router = useRouter();
-
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
-
+  const isEditMode = !!existingEvent;
   const [useURL, setUseURL] = useState(existingEvent?.image ? true : false);
 
   const handlePitchChange = (value: string | undefined) => {
@@ -105,6 +104,24 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
 
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
+      const currentTitle = formData.get('title') as string;
+
+      // Check if the title is different from the existing title in edit mode
+      if (
+        !isEditMode ||
+        (isEditMode && currentTitle !== existingEvent?.title)
+      ) {
+        const titleExists = await checkIfTitleExists(currentTitle);
+        if (titleExists) {
+          setFormData((prev) => ({ ...prev, title: currentTitle }));
+          setErrors((prev) => ({
+            ...prev,
+            title: `The title "${currentTitle}" is taken. Please choose another.`,
+          }));
+          return; // Stop the form submission if the title already exists
+        }
+      }
+
       const imageUrl = useURL
         ? (formData.get('image') as string) || ''
         : imageFile
@@ -187,8 +204,6 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
       }
     }
   };
-
-  const isEditMode = !!existingEvent;
 
   const [state, formAction, isPending] = useActionState(handleFormSubmit, {
     error: '',

@@ -5,6 +5,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { writeClient } from '@/sanity/lib/write-client';
 import slugify from 'slugify';
 import { parseServerActionResponse } from '@/lib/utils';
+import { client } from '@/sanity/lib/client';
 
 // Server Action to create an event
 export const createEvent = async (
@@ -123,3 +124,15 @@ export const deleteEvent = async (eventId: string) => {
     throw new Error('Failed to delete event');
   }
 };
+
+// Server Action to check if an event title is unique
+export async function checkIfTitleExists(title: string): Promise<boolean> {
+  try {
+    const query = `*[_type == "event" && title == $value][0]`;
+    const result = await client.fetch(query, { value: title });
+    return !!result; // Returns true if an event with this title exists
+  } catch (error) {
+    console.error('Error checking event title uniqueness:', error);
+    return false;
+  }
+}
