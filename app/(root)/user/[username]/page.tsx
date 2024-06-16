@@ -64,7 +64,10 @@ const Page = async ({
         <div className="profile-events-container">
           <div className="profile-events-title-container">
             <p className="profile-events-title">
-              {session?.id === user._id ? 'Your' : 'All'} Events
+              {session?.id === user._id
+                ? 'Your'
+                : `${user.name.split(' ')[0]}'s`}{' '}
+              Events
             </p>
             {session?.id === user._id && <EditButton editMode={editMode} />}
           </div>
