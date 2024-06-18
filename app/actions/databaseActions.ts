@@ -124,7 +124,11 @@ export const seedDatabase = async () => {
         .filter(Boolean) // Ensure valid events
         .sort(() => 0.5 - Math.random()) // Shuffle the array
         .slice(0, 5) // Pick the first 5
-        .map((event) => ({ _type: 'reference', _ref: event._id }));
+        .map((event) => ({
+          _type: 'reference',
+          _ref: event._id,
+          _key: `${event._id}-${Date.now()}-${Math.random()}`, // Add a unique key
+        }));
 
       const featuredPlaylistSlug = 'featured-events';
 
