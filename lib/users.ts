@@ -5,7 +5,7 @@ export const users = [
     email: 'anya@gmail.com',
     bio: '✨ Reigning supreme, one dream at a time.',
     image:
-      'https://res.cloudinary.com/dunymn6b8/image/upload/v1732568171/anya_g2cpev.png',
+      'https://plus.unsplash.com/premium_photo-1664299749481-ac8dc8b49754?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2F0fGVufDB8fDB8fHww',
   },
   {
     name: 'Cookie Monster',
