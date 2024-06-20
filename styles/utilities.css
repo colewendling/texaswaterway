@@ -96,7 +96,7 @@
 }
 
 .hero-art {
-  @apply absolute bottom-0 pointer-events-none h-auto w-[120px] md:w-[200px] lg:w-[250px] xl:w-[360px] 2xl:w-[400px] z-20;
+  @apply absolute bottom-0 pointer-events-none h-auto w-[120px] md:w-[200px] lg:w-[250px] xl:w-[360px] 2xl:w-[400px] z-20 select-none;
 }
 
 .hero-art-left {
@@ -147,4 +147,24 @@
 /* Error state for form input */
 .form-input-error {
   @apply bg-red-100 border-red-500 !important;
+}
+
+.loading-dots {
+  @apply flex gap-1 items-center justify-center;
+}
+
+.loading-dot {
+  @apply w-2 h-2 bg-slate-400 rounded-full animate-pulse;
+}
+
+.loading-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.loading-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dot:nth-child(3) {
+  animation-delay: 0.4s;
 }
