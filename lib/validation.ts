@@ -44,20 +44,26 @@ export const signUpSchema = z
       .min(8, 'Password must be at least 8 characters long')
       .max(128, 'Password must be no more than 128 characters long'),
     confirmPassword: z.string(),
-    image: z
-      .string()
-      .url('Invalid URL')
-      .optional()
-      .refine(async (url) => {
-        if (!url) return true; // Allow empty image URL
-        try {
-          const res = await fetch(url, { method: 'HEAD' });
-          const contentType = res.headers.get('content-type');
-          return contentType?.startsWith('image/');
-        } catch {
-          return false;
-        }
-      }, 'Image must be a valid URL pointing to an image'),
+    image: z.union([
+      z
+        .string()
+        .url()
+        .refine(async (url) => {
+          try {
+            const res = await fetch(url, { method: 'HEAD' });
+            const contentType = res.headers.get('content-type');
+            return contentType?.startsWith('image/');
+          } catch {
+            return false;
+          }
+        }, 'Image must be a valid URL pointing to an image'),
+      z
+        .custom<File>((value) => value instanceof File)
+        .refine(
+          (file) => file.type.startsWith('image/'),
+          'Uploaded file must be an image',
+        ),
+    ]),
     bio: z
       .string()
       .max(200, 'Bio must be no more than 200 characters long')
@@ -67,3 +73,30 @@ export const signUpSchema = z
     message: 'Passwords do not match',
     path: ['confirmPassword'], // Specify which field the error belongs to
   });
+
+export const userFormSchema = z.object({
+  image: z.union([
+    z
+      .string()
+      .url()
+      .refine(async (url) => {
+        try {
+          const res = await fetch(url, { method: 'HEAD' });
+          const contentType = res.headers.get('content-type');
+          return contentType?.startsWith('image/');
+        } catch {
+          return false;
+        }
+      }, 'Image must be a valid URL pointing to an image'),
+    z
+      .custom<File>((value) => value instanceof File)
+      .refine(
+        (file) => file.type.startsWith('image/'),
+        'Uploaded file must be an image',
+      ),
+  ]),
+  bio: z
+    .string()
+    .max(200, 'Bio must be no more than 200 characters long')
+    .optional(),
+});
