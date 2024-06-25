@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ToggleButton from './ToggleButton';
+import { Upload } from 'lucide-react';
 
 interface ImageUploadProps {
   useURL: boolean;
@@ -19,7 +20,8 @@ interface ImageUploadProps {
   onBlurHandler: (
     e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
-  existingEvent?: any;
+  existing?: any;
+  buttonCentered?: boolean;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -34,14 +36,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   touched,
   handleChange,
   onBlurHandler,
-  existingEvent,
+  existing,
+  buttonCentered,
 }) => {
   const handleToggle = () => {
     setUseURL((prev) => !prev);
     setImageFile(null);
     setFormData((prev) => ({
       ...prev,
-      image: useURL ? '' : existingEvent?.image || '',
+      image: useURL ? '' : existing?.image || '',
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -63,7 +66,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           ></span>
         </span>
       </label>
-      <div>
+      <div className="image-upload-toggle-button-container">
         <ToggleButton
           label="Image Upload:"
           value={useURL}
@@ -73,9 +76,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         />
       </div>
       {!useURL ? (
-        <div className="image-upload-button-container">
+        <div
+          className={`image-upload-button-container ${
+            buttonCentered ? 'items-center' : ''
+          }`}
+        >
           <label htmlFor="image" className="image-upload-button">
-            <span className="upload-button-text">Upload Image</span>
+            <Upload className="image-upload-button-icon" />
+            <span className="image-upload-button-text">Upload Image</span>
           </label>
           <input
             id="image"
@@ -112,7 +120,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             type="url"
             name="image"
             placeholder="Image URL"
-            defaultValue={existingEvent?.image || formData.image}
+            defaultValue={existing?.image || formData.image}
             onChange={handleChange}
             onBlur={onBlurHandler}
             className={`image-upload-input ${
