@@ -1,5 +1,5 @@
 .toggle-container {
-  @apply flex items-center gap-12 font-sans;
+  @apply flex items-center gap-12 font-sans pb-4;
 }
 
 .toggle-label {
