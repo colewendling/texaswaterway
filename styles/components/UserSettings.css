@@ -1,0 +1,39 @@
+.user-settings {
+  @apply relative;
+}
+
+.user-settings-button {
+  @apply flex flex-col justify-center items-center cursor-pointer;
+}
+
+.user-settings-button-inactive {
+  @apply user-settings-button text-slate-500;
+}
+
+.user-settings-button-active {
+  @apply user-settings-button text-secondary;
+}
+
+.user-settings-button-icon {
+  @apply size-6;
+}
+
+.user-settings-dropdown {
+  @apply absolute border-[2px] border-slate-600 right-[0px] top-[50px] sm:top-[35px] mt-2 w-[225px] h-[150px] bg-gray-100 bg-opacity-30 backdrop-blur-lg rounded-lg flex flex-col z-[110] px-2 py-4 gap-3 shadow-2xl shadow-black/50  justify-center;
+}
+
+.user-settings-dropdown-divider {
+  @apply bg-white my-1 w-full;
+}
+
+.user-settings-dropdown-option {
+  @apply flex items-center justify-start opacity-100 bg-none gap-3 py-2 px-6 rounded-lg bg-white text-gray-800  border-[2px] border-black hover:text-secondary sm:hover:bg-red-50 hover:border-secondary;
+}
+
+.user-settings-dropdown-option-icon {
+  @apply size-5;
+}
+
+.user-settings-dropdown-option-text {
+  @apply font-medium text-[16px] select-none;
+}
