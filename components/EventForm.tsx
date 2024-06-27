@@ -302,7 +302,8 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         touched={touched}
         handleChange={handleChange}
         onBlurHandler={onBlurHandler}
-        existingEvent={existingEvent}
+        existing={existingEvent}
+        buttonCentered={false}
       />
       <div data-color-mode="light">
         <label htmlFor="pitch" className="event-form-label">
