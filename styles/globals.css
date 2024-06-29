@@ -35,7 +35,10 @@
   @import './components/SearchForm.css';
   @import './components/SignUpForm.css';
   @import './components/ToggleButton.css';
+  @import './components/UserForm.css';
+  @import './components/UserSettings.css';
   @import './components/View.css';
+
   /* Import custom layout styles */
   @import './layouts/EventPage.css';
   @import './layouts/HomePage.css';
