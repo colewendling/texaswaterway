@@ -18,8 +18,12 @@
   @apply flex items-center gap-8 sm:gap-5;
 }
 
+.navbar-avatar-container {
+  @apply size-12 rounded-full select-none overflow-hidden shadow-md shadow-slate-500/50 hover:scale-105;
+}
+
 .navbar-avatar {
-  @apply size-12 rounded-full;
+  @apply select-none w-full h-full object-cover;
 }
 
 .navbar-button {
@@ -42,14 +46,26 @@
   @apply navbar-button  text-blue-500 sm:bg-blue-50 border-blue-300 hover:text-blue-600 hover:border-blue-500;
 }
 
-.navbar-button-logout {
-  @apply navbar-button text-gray-500  hover:text-red-500 sm:hover:bg-red-50 hover:border-red-300;
-}
-
 .navbar-button-icon {
   @apply size-6 sm:size-6;
 }
 
 .navbar-button-text {
   @apply hidden sm:inline;
+}
+
+.navbar-button-create-skeleton {
+  @apply flex items-center justify-center py-2 border-2 w-28 h-11 rounded-lg bg-slate-200 animate-pulse shadow-md shadow-slate-500/50 !important;
+}
+
+.navbar-avatar-skeleton {
+  @apply flex items-center justify-center size-12  border-2 bg-slate-200 shadow-md shadow-slate-500/50 rounded-full animate-pulse !important;
+}
+
+.navbar-settings-button-skeleton {
+  @apply flex flex-col justify-center items-center !important;
+}
+
+.navbar-settings-button-icon-skeleton {
+  @apply size-6 text-slate-400 !important;
 }

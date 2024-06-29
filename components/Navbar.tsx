@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useSession, signIn, signOut } from 'next-auth/react';
+import React, { useState, useEffect } from 'react';
+import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { BadgePlus, LogOut, Github } from 'lucide-react';
+import { BadgePlus, LogOut, Github, Settings } from 'lucide-react';
 import Modal from '@/components/Modal';
 import SignUpForm from '@/components/SignUpForm';
 import LoginForm from '@/components/LoginForm';
+import UserSettings from './UserSettings';
+import { Skeleton } from './ui/skeleton';
 
 const Navbar = () => {
   const { data: session, status } = useSession();
@@ -16,6 +17,16 @@ const Navbar = () => {
   const [openModal, setOpenModal] = useState<string | null>(null);
   const openModalHandler = (modal: 'signUp' | 'login') => setOpenModal(modal);
   const closeModalHandler = () => setOpenModal(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Update isLoading based on status
+  useEffect(() => {
+    if (status === 'loading') {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [status]);
 
   return (
     <header>
@@ -35,21 +46,39 @@ const Navbar = () => {
         </Link>
         {/* Navbar Links */}
         <div className="navbar-button-container">
-          {session && session?.user ? (
+          {isLoading ? (
+            <>
+              {/* Skeleton for Create Button */}
+              <Skeleton className="navbar-button-create-skeleton">
+                <div className="loading-dots">
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                </div>
+              </Skeleton>
+
+              {/* Skeleton for Avatar */}
+              <Skeleton className="navbar-avatar-skeleton">
+                <div className="loading-dots">
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                </div>
+              </Skeleton>
+
+              {/* Skeleton for UserSettings */}
+              <Skeleton className="navbar-settings-button-skeleton">
+                <Settings className="navbar-settings-button-icon-skeleton" />
+              </Skeleton>
+            </>
+          ) : session && session?.user ? (
             <>
               <Link className="navbar-button-create" href="/event/create">
                 <BadgePlus className="navbar-button-icon" />
                 <span className="navbar-button-text">Create</span>
               </Link>
-              <button
-                className="navbar-button-logout"
-                onClick={() => signOut({ callbackUrl: '/' })}
-              >
-                <LogOut className="navbar-button-icon" />
-                <span className="navbar-button-text">Logout</span>
-              </button>
               <Link
-                className="navbar-avatar"
+                className="navbar-avatar-container"
                 href={`/user/${session?.user.username}`}
               >
                 <img
@@ -58,6 +87,7 @@ const Navbar = () => {
                   className="navbar-avatar"
                 />
               </Link>
+              <UserSettings />
             </>
           ) : (
             <>
