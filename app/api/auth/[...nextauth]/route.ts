@@ -29,7 +29,9 @@ export const authOptions = {
         }
 
         // Fetch the user by email or username
-        const user = await client.fetch(USER_BY_IDENTIFIER_QUERY, { identifier });
+        const user = await client.fetch(USER_BY_IDENTIFIER_QUERY, {
+          identifier,
+        });
         if (!user) {
           throw new Error('No user found');
         }
@@ -53,7 +55,6 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ account, profile }: { account: any; profile?: any }) {
-
       if (account.provider === 'github') {
         // Handle GitHub sign-in
         const existingUser = await client
@@ -77,17 +78,26 @@ export const authOptions = {
       }
       return true;
     },
-    async jwt({ token, account, profile, user }: { token: any; account: any; profile?: any; user?: any }) {
+    async jwt({
+      token,
+      account,
+      profile,
+      user,
+    }: {
+      token: any;
+      account: any;
+      profile?: any;
+      user?: any;
+    }) {
       if (account && profile) {
-
         //Github users
         const sanityUser = await client
           .withConfig({ useCdn: false })
           .fetch(USER_BY_GITHUB_ID_QUERY, {
             id: profile?.id,
           });
-        token.id = sanityUser?._id; 
-        token.username = sanityUser?.username; 
+        token.id = sanityUser?._id;
+        token.username = sanityUser?.username;
       } else if (user) {
         //Non-Github users
         const sanityUser = await client
@@ -96,16 +106,22 @@ export const authOptions = {
             email: user.email,
           });
         token.id = sanityUser._id;
-        token.username = sanityUser.username; 
+        token.username = sanityUser.username;
       }
 
       return token;
     },
     async session({ session, token }) {
+      const user = await client
+        .withConfig({ useCdn: false })
+        .fetch(USER_BY_EMAIL_QUERY, { email: session.user.email });
+
+      if (user) {
+        session.user.image = user.image;
+        session.user.username = user.username || session.user.username;
+      }
+
       Object.assign(session, { id: token.id });
-       if (token.username) {
-         session.user.username = token.username;
-       }
       return session;
     },
   },
