@@ -12,21 +12,9 @@ import { Skeleton } from './ui/skeleton';
 
 const Navbar = () => {
   const { data: session, status } = useSession();
-
-  // Manage modal state
   const [openModal, setOpenModal] = useState<string | null>(null);
   const openModalHandler = (modal: 'signUp' | 'login') => setOpenModal(modal);
   const closeModalHandler = () => setOpenModal(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Update isLoading based on status
-  useEffect(() => {
-    if (status === 'loading') {
-      setIsLoading(true);
-    } else {
-      setIsLoading(false);
-    }
-  }, [status]);
 
   return (
     <header>
@@ -46,7 +34,7 @@ const Navbar = () => {
         </Link>
         {/* Navbar Links */}
         <div className="navbar-button-container">
-          {isLoading ? (
+          {status === 'loading' ? (
             <>
               {/* Skeleton for Create Button */}
               <Skeleton className="navbar-button-create-skeleton">
