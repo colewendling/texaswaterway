@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { updateUser, deleteUser, getUserById } from '@/app/actions/userActions';
-import { signOut } from 'next-auth/react';
-import { getSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { handleBlur, uploadImageToCloudinary } from '@/lib/utils';
 import { userFormSchema } from '@/lib/validation';
@@ -13,6 +12,7 @@ import { Textarea } from './ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const UserForm = ({ onClose }: { onClose: () => void }) => {
+  const { data: session, update } = useSession();
   const [formData, setFormData] = useState({
     image: '',
     bio: '',
@@ -30,7 +30,6 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
   useEffect(() => {
     const fetchUserData = async () => {
       setIsLoading(true);
-      const session = await getSession();
       if (session?.user) {
         const userId = session.id;
         try {
@@ -53,20 +52,17 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
   // Update form validity whenever formData changes
   useEffect(() => {
     const validateForm = async () => {
-      if (isLoading) return; // Skip validation during loading
-
+      if (isLoading) return;
       try {
-        const imageValue = useURL
-          ? formData.image || '' // Ensure a string is passed for URL validation
-          : imageFile || '';
+        const imageValue = useURL ? formData.image || '' : imageFile || '';
         await userFormSchema.parseAsync({
           ...formData,
           image: imageValue,
         });
-        setIsFormValid(true); // Form is valid if no error is thrown
+        setIsFormValid(true);
       } catch (err) {
         if (err instanceof z.ZodError) {
-          setIsFormValid(false); // Form is invalid
+          setIsFormValid(false);
         }
       }
     };
@@ -106,7 +102,7 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
           : '';
 
       const updatedFormData = { ...formData, image: imageValue };
-      await userFormSchema.parseAsync(updatedFormData); // Zod validation
+      await userFormSchema.parseAsync(updatedFormData);
 
       if (!existingUser?._id) {
         alert('User ID is missing. Unable to update profile.');
@@ -116,9 +112,19 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
 
       if (result.success) {
         alert('Profile updated successfully!');
+
+        // Update the session with the new image
+        await update({
+          ...session,
+          user: {
+            ...session?.user,
+            image: imageValue, // Update the image URL
+          },
+        });
+
         onClose();
-        router.push(`/user/${existingUser?.username}`); // Navigate to the home page
-        router.refresh(); // Refresh the home page
+        router.push(`/user/${existingUser?.username}`);
+        router.refresh();
       } else {
         alert('Failed to update profile');
       }
