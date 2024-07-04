@@ -8,8 +8,9 @@ import {
   checkIfEmailExists,
 } from '@/app/actions/authActions';
 import { signIn } from 'next-auth/react';
-import { handleBlur } from '@/lib/utils';
+import { handleBlur, uploadImageToCloudinary } from '@/lib/utils';
 import { createUser } from '@/app/actions/userActions';
+import ImageUpload from './ImageUpload';
 
 const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
@@ -27,6 +28,8 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [passwordMatch, setPasswordMatch] = useState(false);
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const [useURL, setUseURL] = useState(true);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -64,10 +67,6 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
     e.preventDefault();
 
     try {
-      // Validate form data with zod asynchronously
-      await signUpSchema.parseAsync(formData);
-
-      // Check username and email availability
       const usernameExists = await checkIfUsernameExists(formData.username);
       const emailExists = await checkIfEmailExists(formData.email);
 
@@ -84,8 +83,33 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         return;
       }
 
+      // Handle image upload if a file is provided
+      const imageValue = useURL
+        ? formData.image
+        : imageFile
+          ? await uploadImageToCloudinary(imageFile, 'users')
+          : '';
+
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        image: imageValue,
+      }));
+
       // Concatenate first name and last name
       const fullName = `${formData.name} ${formData.lastName}`.trim();
+
+      const formValues = {
+        name: formData.name,
+        lastName: formData.lastName,
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        bio: formData.bio,
+        image: imageValue,
+      };
+
+      signUpSchema.parseAsync(formValues);
 
       // Create the user
       const result = await createUser({
@@ -94,8 +118,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         email: formData.email,
         password: formData.password,
         bio: formData.bio,
-        image: formData.image,
+        image: imageValue,
       });
+      console.log('result: ', JSON.stringify(result));
 
       if (!result.success) {
         throw new Error(result.error || 'Failed to sign up');
@@ -104,8 +129,8 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
       // Automatically log the user in
       const loginResult = await signIn('credentials', {
         redirect: false,
-        email: formData.email, // Pass email
-        password: formData.password, // Pass password
+        identifier: formData.email,
+        password: formData.password,
       });
 
       if (loginResult?.error) {
@@ -121,6 +146,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
 
       onClose();
     } catch (err) {
+      console.error('Error during sign-up:');
       if (err instanceof z.ZodError) {
         // Map Zod errors to the error state
         const fieldErrors = err.errors.reduce(
@@ -141,7 +167,8 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   useEffect(() => {
     const validateForm = async () => {
       try {
-        await signUpSchema.parseAsync(formData); // Validate asynchronously
+        const imageValue = useURL ? formData.image || '' : imageFile || '';
+        await signUpSchema.parseAsync({ ...formData, image: imageValue });
         setIsFormValid(true); // Form is valid if no error is thrown
       } catch (err) {
         if (err instanceof z.ZodError) {
@@ -151,7 +178,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
     };
 
     validateForm();
-  }, [formData]);
+  }, [formData, useURL, imageFile]);
 
   return (
     <form onSubmit={handleSubmit} className="signup">
@@ -276,24 +303,20 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         <p className="signup-error">{errors.confirmPassword}</p>
       )}
       <div className="signup-input-container">
-        <input
-          type="url"
-          name="image"
-          placeholder="Profile Image URL"
-          value={formData.image}
-          onChange={handleChange}
-          onBlur={onBlurHandler}
-          className={`signup-input ${
-            touched.image
-              ? formData.image
-                ? errors.image
-                  ? 'form-input-error'
-                  : 'form-input-success'
-                : 'form-input-error'
-              : ''
-          }`}
+        <ImageUpload
+          useURL={useURL}
+          setUseURL={setUseURL}
+          setImageFile={setImageFile}
+          setFormData={setFormData}
+          setErrors={setErrors}
+          imageFile={imageFile}
+          formData={formData}
+          errors={errors}
+          touched={touched}
+          handleChange={handleChange}
+          onBlurHandler={onBlurHandler}
+          buttonCentered={true}
         />
-        {errors.image && <p className="signup-error">{errors.image}</p>}
       </div>
       <div className="signup-input-container">
         <textarea
