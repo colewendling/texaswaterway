@@ -19,9 +19,20 @@ import {
 import { uploadImageToCloudinary } from '@/lib/utils';
 import { handleBlur } from '@/lib/utils';
 import ImageUpload from './ImageUpload';
+import { useSession } from 'next-auth/react';
 
 const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
+  const { data: session } = useSession();
   const [pitch, setPitch] = useState(existingEvent?.pitch || '');
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const { toast } = useToast();
+  const router = useRouter();
+  const isEditMode = !!existingEvent;
+  const [useURL, setUseURL] = useState(existingEvent?.image ? true : false);
+
   const [formData, setFormData] = useState({
     title: existingEvent?.title || '',
     description: existingEvent?.description || '',
@@ -39,15 +50,6 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
       }));
     }
   }, [existingEvent]);
-
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [touched, setTouched] = useState<Record<string, boolean>>({});
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [isFormValid, setIsFormValid] = useState(false);
-  const { toast } = useToast();
-  const router = useRouter();
-  const isEditMode = !!existingEvent;
-  const [useURL, setUseURL] = useState(existingEvent?.image ? true : false);
 
   const handlePitchChange = (value: string | undefined) => {
     setPitch(value || '');
@@ -198,7 +200,8 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
       try {
         await deleteEvent(existingEvent._id);
         alert('Event deleted successfully');
-        router.push('/');
+        router.push(`/user/${session?.user?.username}`);
+        router.refresh();
       } catch (error) {
         alert('Failed to delete the event.');
       }
