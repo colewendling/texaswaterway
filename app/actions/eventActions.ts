@@ -116,12 +116,27 @@ export const updateEvent = async (
 // Server Action to delete an event
 export const deleteEvent = async (eventId: string) => {
   try {
+    // Step 1: Check for playlists referencing the event
+    const playlistsReferencingEvent = await writeClient.fetch(
+      `*[_type == "playlist" && references("${eventId}")]{ _id }`,
+    );
+
+    // Step 2: Remove event references from these playlists
+    for (const playlist of playlistsReferencingEvent) {
+      await writeClient
+        .patch(playlist._id)
+        .unset([`events[_ref=="${eventId}"]`]) // Replace "events" with the correct field in playlists
+        .commit();
+    }
+
+    // Step 3: Delete the event
     const result = await writeClient.delete(eventId);
+
     console.log('Event deleted successfully:', result);
     return { status: 'SUCCESS', _id: eventId };
   } catch (error) {
     console.error('Error deleting event:', error);
-    throw new Error('Failed to delete event');
+    return { status: 'ERROR', error: 'Failed to delete event' };
   }
 };
 
