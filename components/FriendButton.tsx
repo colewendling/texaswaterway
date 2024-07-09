@@ -7,7 +7,6 @@ import {
   deleteFriendRequest,
   removeFriend,
 } from '@/app/actions/friendActions';
-import { cn } from '@/lib/utils';
 
 const FriendButton = ({
   userId,
@@ -85,18 +84,14 @@ const FriendButton = ({
           }}
           className={`friend-button ${pendingCount > 0 ? 'friend-button-notify' : 'friend-button-default'}`}
         >
-          <UserPlus size={15} />
+          <UserPlus className="friend-button-icon" />
           {pendingCount > 0 && (
             <>
-              <span className="friend-button-notification-circle"></span>
-              <span
-                className={cn(
-                  'animate-pulse',
-                  'friend-button-notification-circle',
-                )}
-              >
+              <span className="friend-button-notification-circle-text">
                 {pendingCount}
               </span>
+              <span className="friend-button-notification-circle-bg" />
+              <span className="friend-button-notification-circle" />
             </>
           )}
         </button>
