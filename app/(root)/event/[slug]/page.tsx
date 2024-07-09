@@ -33,6 +33,16 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
         <p className="event-tag">{formatDate(post?._createdAt)}</p>
         <h1 className="event-heading">{post.title}</h1>
         <p className="event-subheading">{post.description}</p>
+        <img
+          src="/art/events-left.png"
+          alt="Events Left"
+          className="event-hero-art-left"
+        />
+        <img
+          src="/art/events-right.png"
+          alt="Events Left"
+          className="event-hero-art-right"
+        />
       </section>
       <section className="section_container">
         <img src={post.image} alt="thumbnail" className="event-header-image" />

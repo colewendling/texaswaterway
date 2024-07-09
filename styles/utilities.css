@@ -107,6 +107,18 @@
   @apply hero-art right-0;
 }
 
+.event-hero-art {
+  @apply absolute bottom-0 pointer-events-none h-auto w-[170px] md:w-[250px] lg:w-[300px] xl:w-[360px] 2xl:w-[400px] z-20 select-none;
+}
+
+.event-hero-art-left {
+  @apply event-hero-art left-0;
+}
+
+.event-hero-art-right {
+  @apply event-hero-art right-0;
+}
+
 .water-rectangle {
   @apply absolute bottom-0 w-full h-[10px] bg-gradient-to-r from-[#91a9d5] to-[#c7d4f1] z-10;
 }

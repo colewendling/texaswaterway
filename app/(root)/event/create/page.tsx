@@ -11,17 +11,17 @@ const Page = async () => {
 
   return (
     <>
-      <section className="event-create-hero-container">
+      <section className="event-hero-container">
         <h1 className="heading">Create your Event</h1>
         <img
           src="/art/events-left.png"
           alt="Events Left"
-          className="hero-art-left"
+          className="event-hero-art-left"
         />
         <img
           src="/art/events-right.png"
           alt="Events Left"
-          className="hero-art-right"
+          className="event-hero-art-right"
         />
       </section>
       <div className="event-create-form-container">

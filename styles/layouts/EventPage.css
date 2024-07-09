@@ -3,7 +3,7 @@
 }
 
 .event-hero-container {
-  @apply w-full bg-gradient-to-b from-primary to-slate-800   flex justify-center items-center flex-col pt-10 px-6 pb-40 min-h-[230px];
+  @apply w-full bg-gradient-to-b from-primary to-slate-800   flex justify-center items-center flex-col pt-10 px-6 pb-40 min-h-[230px] md:min-h-[400px] relative;
 }
 
 .event-tag {
@@ -72,10 +72,6 @@
 
 .event-playlist {
   @apply mt-7;
-}
-
-.event-create-hero-container {
-  @apply event-hero-container md:min-h-[400px] relative;
 }
 
 .event-create-form-container {
