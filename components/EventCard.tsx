@@ -74,7 +74,7 @@ const EventCard = ({
       <div className="event-card-header">
         <div className="event-card-header-container">
           <Link href={`/user/${user?.username}`}>
-            <p className="event-card-username">{user?.name}</p>
+            <p className="event-card-name">{user?.name}</p>
           </Link>
           <Link href={`/event/${slug?.current}`}>
             <h3 className="event-card-title">{title}</h3>

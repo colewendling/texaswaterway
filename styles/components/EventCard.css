@@ -19,7 +19,7 @@
 }
 
 .event-card_date {
-  @apply font-medium text-[16px] rounded-full;
+  @apply font-medium text-[16px] sm:text-[14px] md:text-[14px] lg:text-[14px] xl:text-[16px];
 }
 
 .event-card-view {
@@ -42,12 +42,12 @@
   @apply flex-1;
 }
 
-.event-card-username {
-  @apply event-card-text line-clamp-1 hover:text-primary;
+.event-card-name {
+  @apply font-normal text-gray-600 text-[16px] sm:text-[14px] md:text-[14px] lg:text-[14px] xl:text-[16px] line-clamp-1 hover:text-primary;
 }
 
 .event-card-title {
-  @apply text-[24px] font-semibold text-black line-clamp-1;
+  @apply text-[20px] sm:text-[16px] md:text-[16px] lg:text-[16px] xl:text-[20px] font-semibold text-black line-clamp-1 py-1;
 }
 
 .event-card-avatar-container {
