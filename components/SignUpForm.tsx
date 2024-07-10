@@ -163,6 +163,41 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
+  useEffect(() => {
+    const validateConfirmPassword = async () => {
+      try {
+        if (!formData.confirmPassword) {
+          setErrors((prev) => ({ ...prev, confirmPassword: '' }));
+          return;
+        }
+        await signUpSchema.parseAsync({
+          ...formData,
+          confirmPassword: formData.confirmPassword,
+        });
+        setErrors((prev) => {
+          const { confirmPassword, ...otherErrors } = prev;
+          return { ...otherErrors, confirmPassword: '' };
+        });
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          const confirmPasswordError = err.errors.find(
+            (e) => e.path[0] === 'confirmPassword',
+          );
+          setErrors((prev) => ({
+            ...prev,
+            confirmPassword: confirmPasswordError
+              ? confirmPasswordError.message
+              : '',
+          }));
+        }
+      }
+    };
+
+    if (formData.password) {
+      validateConfirmPassword();
+    }
+  }, [formData.password, formData.confirmPassword]);
+
   // Update form validity whenever formData changes
   useEffect(() => {
     const validateForm = async () => {
@@ -285,23 +320,25 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         />
         {errors.password && <p className="signup-error">{errors.password}</p>}
       </div>
-      <input
-        type="password"
-        name="confirmPassword"
-        placeholder="Confirm Password"
-        value={formData.confirmPassword}
-        onChange={handleChange}
-        className={`p-2 rounded border ${
-          formData.password && formData.confirmPassword
-            ? passwordMatch
-              ? 'form-input-success'
-              : 'form-input-error'
-            : ''
-        }`}
-      />
-      {errors.confirmPassword && (
-        <p className="signup-error">{errors.confirmPassword}</p>
-      )}
+      <div className="signup-input-container">
+        <input
+          type="password"
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          className={`signup-input ${
+            formData.confirmPassword
+              ? passwordMatch
+                ? 'form-input-success'
+                : 'form-input-error'
+              : ''
+          }`}
+        />
+        {errors.confirmPassword && (
+          <p className="signup-error">{errors.confirmPassword}</p>
+        )}
+      </div>
       <div className="signup-input-container">
         <ImageUpload
           useURL={useURL}

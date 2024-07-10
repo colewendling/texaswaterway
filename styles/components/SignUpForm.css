@@ -3,7 +3,7 @@
 }
 
 .signup-title {
-  @apply font-inter font-semibold  text-2xl sm:text-3xl leading-[32px] text-center text-black py-4;
+  @apply font-inter font-semibold  text-2xl sm:text-2xl leading-[32px] text-center text-black py-4;
 }
 
 .signup-input-dual-container {
@@ -15,7 +15,7 @@
 }
 
 .signup-input {
-  @apply border p-2 rounded w-full;
+  @apply border p-2 rounded w-full border-black/50 focus:outline-none  focus:border-blue-400 focus:bg-blue-50 text-slate-800;
 }
 
 .signup-error {
