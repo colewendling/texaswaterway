@@ -15,7 +15,7 @@
 }
 
 .signup-input {
-  @apply border p-2 rounded w-full border-black/50 focus:outline-none  focus:border-blue-400 focus:bg-blue-50 text-slate-800;
+  @apply border p-2 rounded w-full border-black/50 focus:outline-none  focus:border-blue-400 focus:bg-blue-50 placeholder-gray-600;
 }
 
 .signup-error {
