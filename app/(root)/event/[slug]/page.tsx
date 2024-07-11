@@ -2,7 +2,6 @@ import { formatDate } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
 import { EVENT_BY_SLUG_QUERY } from '@/sanity/lib/queries/eventQueries';
 import { PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries/playlistQueries';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
@@ -52,11 +51,9 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
               href={`/user/${post.user?.username}`}
               className="event-user-container"
             >
-              <Image
+              <img
                 src={post.user.image}
                 alt="avatar"
-                width={64}
-                height={64}
                 className="event-user-avatar"
               />
               <div>

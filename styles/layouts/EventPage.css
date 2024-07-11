@@ -43,7 +43,7 @@
 }
 
 .event-user-avatar {
-  @apply rounded-full drop-shadow-lg shadow-black/50;
+  @apply rounded-full hover:scale-110 transition-transform duration-300 object-cover size-14 sm:size-16 overflow-hidden shadow-md border-[1px] border-black shadow-black/50;
 }
 
 .tag-tri {
