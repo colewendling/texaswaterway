@@ -15,8 +15,8 @@ const Footer = () => {
         </div>
 
         {/* Contact Info */}
-        <div className="footer-contact">
-          <h3 className="footer-title">Contact</h3>
+        <div className="footer-section">
+          <h3 className="footer-title">Developer</h3>
           <span>cole wendling</span>
           <a href="mailto:cole@wendling.io" className="footer-link">
             <Mail className="footer-icon" />
@@ -28,10 +28,13 @@ const Footer = () => {
         </div>
 
         {/* Links */}
-        <div className="footer-links">
+        <div className="footer-section">
           <h3 className="footer-title">Links</h3>
           <div className="footer-links-row">
-            <a href="https://github.com/colewendling" className="footer-link-circle">
+            <a
+              href="https://github.com/colewendling"
+              className="footer-link-circle"
+            >
               <Github className="footer-link-icon" />
             </a>
             <a
@@ -50,8 +53,8 @@ const Footer = () => {
         </div>
 
         {/* Newsletter */}
-        <div className="footer-newsletter">
-          <h3 className="footer-title">Newsletter</h3>
+        <div className="footer-section">
+          <h3 className="footer-title">Connect</h3>
           <a href="mailto:cole@wendling.io" className="footer-newsletter-link">
             <Mail className="footer-icon" />
             Contact Me
@@ -59,8 +62,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Footer Bottom */}
-      <div className="footer-bottom">
+      <div className="footer-copyright">
         Texas Waterway &copy; 2024 - All Rights Reserved
       </div>
     </footer>
