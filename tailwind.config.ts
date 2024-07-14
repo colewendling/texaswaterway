@@ -38,13 +38,13 @@ const config: Config = {
         },
         boatSailing: {
           '0%': { transform: 'translateX(0)' },
-          '50%': { transform: 'translateX(var(--right-boundary))' }, 
-          '100%': { transform: 'translateX(0)' }, 
+          '50%': { transform: 'translateX(var(--right-boundary))' },
+          '100%': { transform: 'translateX(0)' },
         },
       },
       animation: {
-        slideInLeft: 'slideInLeft 1.5s ease-out',
-        slideInRight: 'slideInRight 1.5s ease-out',
+        slideInLeft: 'slideInLeft 1.5s ease-out forwards',
+        slideInRight: 'slideInRight 1.5s ease-out 1.5s forwards',
         boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
       },
     },
