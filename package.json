@@ -35,6 +35,7 @@
     "@sanity/vision": "3",
     "@tailwindcss/typography": "^0.5.15",
     "@uiw/react-md-editor": "^4.0.4",
+    "@vercel/speed-insights": "^1.1.0",
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

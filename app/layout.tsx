@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import 'easymde/dist/easymde.min.css';
 import { Toaster } from '@/components/ui/toaster';
 import '@/styles/globals.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = localFont({
   src: [
@@ -53,6 +54,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} font-sans`}>
         {children}
+        <SpeedInsights />
         <Toaster />
       </body>
     </html>
