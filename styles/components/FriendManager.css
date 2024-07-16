@@ -27,7 +27,7 @@
 }
 
 .friend-manager-search-results {
-  @apply mt-4;
+  @apply mt-4 w-full;
 }
 
 .friend-manager-button-add {
