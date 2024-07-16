@@ -30,6 +30,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [useURL, setUseURL] = useState(true);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -48,6 +49,11 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           ? value === formData.confirmPassword
           : value === formData.password,
       );
+    }
+
+    if (name === 'confirmPassword') {
+      setIsTyping(true); // Mark as typing
+      setTimeout(() => setIsTyping(false), 3000);
     }
   };
 
@@ -129,7 +135,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
       // Automatically log the user in
       const loginResult = await signIn('credentials', {
         redirect: false,
-        identifier: formData.email,
+        identifier: formData.email.toLowerCase(),
         password: formData.password,
       });
 
@@ -335,7 +341,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
               : ''
           }`}
         />
-        {errors.confirmPassword && (
+        {!isTyping && errors.confirmPassword && (
           <p className="signup-error">{errors.confirmPassword}</p>
         )}
       </div>
