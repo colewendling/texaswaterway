@@ -27,6 +27,15 @@ export async function createUser({
   }
 
   try {
+    // Format name: capitalize each word
+    const capitalize = (str: string) =>
+      str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    const formattedName = name.split(' ').map(capitalize).join(' ');
+
+    // Lowercase email and username
+    const formattedEmail = email.toLowerCase();
+    const formattedUsername = username.toLowerCase();
+
     // Generate random user ID
     const id = Math.floor(10000000 + Math.random() * 90000000);
 
@@ -37,9 +46,9 @@ export async function createUser({
     const newUser = await writeClient.create({
       _type: 'user',
       id,
-      name,
-      username,
-      email,
+      name: formattedName,
+      username: formattedUsername,
+      email: formattedEmail,
       password: hashedPassword,
       image,
       bio,
