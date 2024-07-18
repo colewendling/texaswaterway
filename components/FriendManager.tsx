@@ -97,7 +97,7 @@ const FriendManager = ({
         .filter((user) => user._id !== userId) // Exclude the current user
         .map((user) => ({
           ...user,
-          isFriend: currentUser.friends.some(
+          isFriend: currentUser.friends?.some(
             (friend) => friend._ref === user._id,
           ),
           hasSentRequest: currentSentRequests.some(
