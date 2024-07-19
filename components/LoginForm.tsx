@@ -17,7 +17,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
 
     const result = await signIn('credentials', {
       redirect: false,
-      identifier: formData.identifier,
+      identifier: formData.identifier.toLowerCase(),
       password: formData.password,
     });
 
