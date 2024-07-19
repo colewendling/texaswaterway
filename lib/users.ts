@@ -1,5 +1,13 @@
 export const users = [
   {
+    name: 'Le Bebe',
+    username: 'lebebe',
+    email: 'totsuwa.sikora@gmail.com',
+    bio: 'I am LeBebe, destroyer of words, destroyer of pantries.',
+    image:
+      'https://res.cloudinary.com/dunymn6b8/image/upload/v1733402725/users/IMG_4382_ttxec2.jpg',
+  },
+  {
     name: 'Anya Sikora',
     username: 'queen',
     email: 'anya@gmail.com',
