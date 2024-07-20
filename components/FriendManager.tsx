@@ -237,7 +237,7 @@ const FriendManager = ({
                         className="friend-manager-user-avatar-container"
                       >
                         <img
-                          src={user.image || '/default-avatar.png'}
+                          src={user.image || '/fallback/default-avatar.png'}
                           alt={user.username}
                           className="friend-manager-user-avatar"
                         />
@@ -287,7 +287,7 @@ const FriendManager = ({
                     className="friend-manager-user-avatar-container"
                   >
                     <img
-                      src={request.from.image || '/default-avatar.png'}
+                      src={request.from.image || '/fallback/default-avatar.png'}
                       alt={request.from.username}
                       className="friend-manager-user-avatar"
                     />
@@ -330,7 +330,7 @@ const FriendManager = ({
                     className="friend-manager-user-avatar-container"
                   >
                     <img
-                      src={request.to.image || '/default-avatar.png'}
+                      src={request.to.image || '/fallback/default-avatar.png'}
                       alt={request.to.username}
                       className="friend-manager-user-avatar"
                     />
@@ -371,7 +371,7 @@ const FriendManager = ({
                     className="friend-manager-user-avatar-container"
                   >
                     <img
-                      src={friend.image || '/default-avatar.png'}
+                      src={friend.image || '/fallback/default-avatar.png'}
                       alt={friend.username}
                       className="friend-manager-user-avatar"
                     />

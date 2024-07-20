@@ -101,7 +101,7 @@ const FriendList = ({
               className="friend-list-item"
             >
               <img
-                src={friend.image || '/default-avatar.png'}
+                src={friend.image || '/fallback/default-avatar.png'}
                 alt={friend.username}
                 className="friend-list-avatar"
               />
