@@ -299,7 +299,7 @@ const FriendManager = ({
                 <div className="friend-manager-pending-buttons">
                   <button
                     onClick={() =>
-                      handleAcceptRequest(userId, request._id, request.from._id)
+                      handleAcceptRequest(request.from._id, userId, request._id)
                     }
                     className="friend-manager-button-accept"
                   >
