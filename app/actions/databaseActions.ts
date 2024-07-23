@@ -168,29 +168,34 @@ export const seedDatabase = async () => {
     // Assign 3-12 random friends to each user
     const friendAssignmentPromises = createdUsers.map(async (user) => {
       const numberOfFriends = Math.floor(Math.random() * 10) + 3; // Random number between 3 and 12
-      const friends: { _type: string; _ref: string; _key: string }[] = [];
+      const friends = [];
 
       while (friends.length < numberOfFriends) {
         const randomFriendId =
           userIds[Math.floor(Math.random() * userIds.length)];
 
-        // Ensure no duplicate friends and no self-referencing
-        if (
-          randomFriendId !== user._id &&
-          !friends.find((f) => f._ref === randomFriendId)
-        ) {
-          friends.push({
-            _type: 'reference',
-            _ref: randomFriendId,
-            _key: `${randomFriendId}-${Date.now()}-${Math.random()}`, // Generate a unique key
-          });
+        // Ensure the user is not added as their own friend and avoid duplicates
+        if (randomFriendId !== user._id && !friends.includes(randomFriendId)) {
+          // Check if a friend request already exists between these two users
+          const friendRequestExists = await client.fetch(
+            `*[_type == "friendRequest" && 
+              ((from._ref == $userId && to._ref == $friendId) || 
+              (from._ref == $friendId && to._ref == $userId))
+            ][0]`,
+            { userId: user._id, friendId: randomFriendId },
+          );
+
+          // Only add as friend if there is no existing friend request
+          if (!friendRequestExists) {
+            friends.push(randomFriendId);
+          }
         }
       }
 
       return writeClient
         .patch(user._id)
         .set({
-          friends,
+          friends: friends.map((id) => ({ _type: 'reference', _ref: id })),
         })
         .commit();
     });
@@ -201,7 +206,7 @@ export const seedDatabase = async () => {
     results.user = createdUsers.length;
     results.event = createdEvents.length;
     results.playlist = createdPlaylists.length;
-    results.friendRequest = createdFriendRequests.filter(Boolean).length;
+    results.friendRequest = createdFriendRequests.length;
 
     return {
       status: 'SUCCESS',
