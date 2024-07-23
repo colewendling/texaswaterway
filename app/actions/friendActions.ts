@@ -4,6 +4,27 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { writeClient } from '@/sanity/lib/write-client';
 
+// Helper function to check if two users are already friends
+async function areAlreadyFriends(userId: string, otherUserId: string) {
+  const user = await writeClient.fetch(
+    `*[_type == "user" && _id == $userId][0]{friends}`,
+    { userId },
+  );
+
+  if (!user || !user.friends) return false;
+
+  return user.friends.some((f: { _ref: string }) => f._ref === otherUserId);
+}
+
+// Helper function to check if a friend request already exists in either direction
+async function doesRequestExist(fromUserId: string, toUserId: string) {
+  const existingRequests = await writeClient.fetch(
+    `*[_type == "friendRequest" && ((from._ref == $fromUserId && to._ref == $toUserId) || (from._ref == $toUserId && to._ref == $fromUserId))]`,
+    { fromUserId, toUserId },
+  );
+  return existingRequests && existingRequests.length > 0;
+}
+
 // Server Action to create a friend request
 export const createFriendRequest = async (
   fromUserId: string,
@@ -13,6 +34,16 @@ export const createFriendRequest = async (
 
   if (!session) {
     throw new Error('Not signed in');
+  }
+
+  // Check if already friends
+  if (await areAlreadyFriends(fromUserId, toUserId)) {
+    return { status: 'ERROR', error: 'Users are already friends.' };
+  }
+
+  // Check if a request already exists in either direction
+  if (await doesRequestExist(fromUserId, toUserId)) {
+    return { status: 'ERROR', error: 'A friend request already exists.' };
   }
 
   try {
@@ -40,6 +71,13 @@ export const acceptFriendRequest = async (
 
   if (!session) {
     throw new Error('Not signed in');
+  }
+
+  // Double-check that they're not already friends
+  if (await areAlreadyFriends(fromUserId, toUserId)) {
+    // If they are already friends, just delete the request
+    await writeClient.delete(requestId);
+    return { status: 'SUCCESS', message: 'Already friends, request removed.' };
   }
 
   try {
