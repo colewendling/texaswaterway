@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { UserPlus, Ban } from 'lucide-react';
 import {
   createFriendRequest,
@@ -31,7 +31,10 @@ const FriendButton = ({
   setRequestId: React.Dispatch<React.SetStateAction<string>>;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSendRequest = async (fromUserId: string, toUserId: string) => {
+    setIsLoading(true);
     try {
       const result = await createFriendRequest(fromUserId, toUserId);
       if (result.status === 'SUCCESS') {
@@ -43,35 +46,42 @@ const FriendButton = ({
       }
     } catch (error) {
       console.error('Error sending friend request:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleCancelRequest = async (requestId: string) => {
-    if (!requestId) {
-      console.error('No requestId found for cancellation.');
-      return;
-    }
-
+    setIsLoading(true);
     try {
-      const result = await deleteFriendRequest(requestId); // Use requestId
+      const result = await deleteFriendRequest(requestId);
       if (result.status === 'SUCCESS') {
         alert('Friend request canceled.');
-        setHasPendingRequest(false); // Update state optimistically
+        setHasPendingRequest(false);
+      } else {
+        alert(result.error || 'Error canceling friend request.');
       }
     } catch (error) {
       console.error('Error canceling friend request:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleRemoveFriend = async (sessionId: string, userId: string) => {
+    setIsLoading(true);
     try {
       const result = await removeFriend(sessionId, userId);
       if (result.status === 'SUCCESS') {
         alert('Friend removed successfully!');
         window.location.reload();
+      } else {
+        alert(result.error || 'Error removing friend.');
       }
     } catch (error) {
       console.error('Error removing friend:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -102,27 +112,33 @@ const FriendButton = ({
             handleSendRequest(sessionId, userId);
           }}
           className="friend-button-add"
+          disabled={isLoading}
         >
-          + Add Friend
+          {isLoading ? 'Sending...' : '+ Add Friend'}
         </button>
       )}
       {!isOwnProfile && !isFriend && hasPendingRequest && (
         <button
           onClick={() => handleCancelRequest(requestId)}
           className="friend-button-cancel"
+          disabled={isLoading}
         >
-          <span>
-            <Ban size={15} />
-          </span>
-          Cancel Request
+          {isLoading ? (
+            'Canceling...'
+          ) : (
+            <>
+              <Ban size={15} /> Cancel Request
+            </>
+          )}
         </button>
       )}
       {!isOwnProfile && isFriend && (
         <button
           onClick={() => handleRemoveFriend(sessionId, userId)}
           className="friend-button-remove"
+          disabled={isLoading}
         >
-          - Remove as Friend
+          {isLoading ? 'Removing...' : '- Remove as Friend'}
         </button>
       )}
     </>
