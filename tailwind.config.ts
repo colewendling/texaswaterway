@@ -28,6 +28,11 @@ const config: Config = {
         inter: ['var(--inter)'],
       },
       keyframes: {
+        boatSailing: {
+          '0%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(var(--right-boundary))' },
+          '100%': { transform: 'translateX(0)' },
+        },
         slideInLeft: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
@@ -36,16 +41,16 @@ const config: Config = {
           '0%': { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
         },
-        boatSailing: {
-          '0%': { transform: 'translateX(0)' },
-          '50%': { transform: 'translateX(var(--right-boundary))' },
-          '100%': { transform: 'translateX(0)' },
+        spin: {
+          from: { transform: 'rotate(0deg)' },
+          to: { transform: 'rotate(360deg)' },
         },
       },
       animation: {
+        boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
         slideInLeft: 'slideInLeft 1.5s ease-out forwards',
         slideInRight: 'slideInRight 1.5s ease-out 1.5s forwards',
-        boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
+        spin: 'spin 2s linear infinite',
       },
     },
   },

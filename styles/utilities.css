@@ -169,6 +169,10 @@
   @apply w-2 h-2 bg-slate-400 rounded-full animate-pulse;
 }
 
+.loader {
+  @apply size-4 animate-spin;
+}
+
 .loading-dot:nth-child(1) {
   animation-delay: 0s;
 }
