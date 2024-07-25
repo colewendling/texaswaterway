@@ -1,7 +1,7 @@
 export const events = [
   {
     title: 'Sunset Parade',
-    user: 'queen',
+    user: 'marilyn',
     views: 15,
     description:
       'Join the royal paddle parade at sunset for a stunning view of Lake Bridgeport!',
