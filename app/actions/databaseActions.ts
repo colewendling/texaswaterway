@@ -90,7 +90,8 @@ export const seedDatabase = async () => {
       });
     });
 
-    const createdUsers = await Promise.all(userPromises);
+    let createdUsers = await Promise.all(userPromises);
+    createdUsers = createdUsers.filter(Boolean); // remove nulls
 
     // Seed events
     const eventPromises = events.map(async (event) => {
@@ -98,7 +99,10 @@ export const seedDatabase = async () => {
         `*[_type == "user" && username == $username][0]._id`,
         { username: event.user },
       );
-      if (!userRef) return null;
+      if (!userRef) {
+        console.error(`User reference not found for username: ${event.user}`);
+        return null;
+      }
 
       // Generate a slug from the event title
       const slug = event.title
@@ -115,7 +119,8 @@ export const seedDatabase = async () => {
       });
     });
 
-    const createdEvents = await Promise.all(eventPromises);
+    let createdEvents = await Promise.all(eventPromises);
+    createdEvents = createdEvents.filter(Boolean);
 
     // Create a "Featured Events" playlist with 5 random events
     const createdPlaylists = [];
@@ -144,24 +149,45 @@ export const seedDatabase = async () => {
       console.log('Not enough events to create the Featured Events playlist.');
     }
 
-    // Create 20 random friend requests
-    const userIds = createdUsers.map((user) => user._id).filter(Boolean);
-    const friendRequestPromises = Array.from({ length: 20 }).map(async () => {
+    const userIds = createdUsers.map((user) => user._id);
+
+    // Create 30 random friend requests without duplicates
+    const usedPairs = new Set();
+    const friendRequestPromises = [];
+
+    for (let i = 0; i < 30; i++) {
       const fromIndex = Math.floor(Math.random() * userIds.length);
       let toIndex = Math.floor(Math.random() * userIds.length);
 
-      // Ensure the "from" and "to" users are different
-      while (toIndex === fromIndex) {
+      while (toIndex === fromIndex && userIds.length > 1) {
         toIndex = Math.floor(Math.random() * userIds.length);
       }
 
-      return writeClient.create({
-        _type: 'friendRequest',
-        from: { _type: 'reference', _ref: userIds[fromIndex] },
-        to: { _type: 'reference', _ref: userIds[toIndex] },
-        status: 'pending',
-      });
-    });
+      // Ensure we have at least 2 distinct users
+      if (userIds.length < 2) break;
+
+      const fromId = userIds[fromIndex];
+      const toId = userIds[toIndex];
+
+      // Create a consistent pair key for both orderings
+      const pairKey = fromId < toId ? `${fromId}-${toId}` : `${toId}-${fromId}`;
+
+      // Only create if we haven't created this pair before
+      if (!usedPairs.has(pairKey)) {
+        usedPairs.add(pairKey);
+        friendRequestPromises.push(
+          writeClient.create({
+            _type: 'friendRequest',
+            from: { _type: 'reference', _ref: fromId },
+            to: { _type: 'reference', _ref: toId },
+            status: 'pending',
+          }),
+        );
+      } else {
+        // If the pair already exists, decrement i so we try again
+        i--;
+      }
+    }
 
     const createdFriendRequests = await Promise.all(friendRequestPromises);
 
@@ -170,7 +196,11 @@ export const seedDatabase = async () => {
       const numberOfFriends = Math.floor(Math.random() * 10) + 3; // Random number between 3 and 12
       const friends = [];
 
-      while (friends.length < numberOfFriends) {
+      let attempts = 0;
+      const maxAttempts = 100;
+
+      while (friends.length < numberOfFriends && attempts < maxAttempts) {
+        attempts++;
         const randomFriendId =
           userIds[Math.floor(Math.random() * userIds.length)];
 
@@ -195,7 +225,11 @@ export const seedDatabase = async () => {
       return writeClient
         .patch(user._id)
         .set({
-          friends: friends.map((id) => ({ _type: 'reference', _ref: id })),
+          friends: friends.map((id) => ({
+            _type: 'reference',
+            _ref: id, // Use the string `id` here
+            _key: `${id}-${Date.now()}-${Math.random()}`, // Add the unique key
+          })),
         })
         .commit();
     });
@@ -206,7 +240,7 @@ export const seedDatabase = async () => {
     results.user = createdUsers.length;
     results.event = createdEvents.length;
     results.playlist = createdPlaylists.length;
-    results.friendRequest = createdFriendRequests.length;
+    results.friendRequest = createdFriendRequests.filter(Boolean).length;
 
     return {
       status: 'SUCCESS',
