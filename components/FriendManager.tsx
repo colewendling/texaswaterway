@@ -17,7 +17,7 @@ import {
   SEARCH_USERS_QUERY,
   USER_FRIENDS_BY_USER_ID_QUERY,
 } from '@/sanity/lib/queries/userQueries';
-import { Check, Minus } from 'lucide-react';
+import { Check, Minus, Loader } from 'lucide-react';
 
 const FriendManager = ({
   isOpen,
@@ -39,8 +39,12 @@ const FriendManager = ({
   const [friends, setFriends] = useState<
     { _id: string; username: string; image?: string }[]
   >([]);
-  const [hasSearched, setHasSearched] = useState(false); // Tracks if search was triggered
-  const [isLoading, setIsLoading] = useState(false); // Tracks loading state
+  const [hasSearched, setHasSearched] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [buttonLoadingId, setButtonLoadingId] = useState<string | null>(null);
+  const [loadingAction, setLoadingAction] = useState<
+    'accept' | 'reject' | null
+  >(null);
 
   // Fetch pending friend requests
   const fetchPendingRequests = useCallback(async () => {
@@ -109,12 +113,13 @@ const FriendManager = ({
     } catch (error) {
       console.error('Error searching users:', error);
     } finally {
-      setIsLoading(false); // End loading
+      setIsLoading(false);
     }
   };
 
   // Send a friend request
   const handleSendRequest = async (toUserId: string) => {
+    setButtonLoadingId(toUserId);
     try {
       const result = await createFriendRequest(userId, toUserId);
       if (result.status === 'SUCCESS') {
@@ -122,9 +127,13 @@ const FriendManager = ({
         setSearchResults([]);
         setSearchTerm('');
         fetchPendingRequests();
+      } else {
+        alert(result.error || 'Error sending friend request.');
       }
     } catch (error) {
       console.error('Error sending friend request:', error);
+    } finally {
+      setButtonLoadingId(null);
     }
   };
 
@@ -134,6 +143,8 @@ const FriendManager = ({
     userId: string,
     requestId: string,
   ) => {
+    setButtonLoadingId(requestId);
+    setLoadingAction('accept');
     try {
       const result = await acceptFriendRequest(fromUserId, userId, requestId);
       if (result.status === 'SUCCESS') {
@@ -154,45 +165,62 @@ const FriendManager = ({
           ]);
         }
 
-        fetchPendingRequests(); // Refresh pending requests
-        fetchFriends(); // Refresh friends list to ensure consistency
+        await fetchPendingRequests(); // Refresh pending requests
+        await fetchFriends(); // Refresh friends list to ensure consistency
+        await handleSearch(); // Refresh search results
+        setPendingCount((prevCount) => prevCount - 1);
+      } else {
+        alert(result.error || 'Error accepting friend request.');
       }
     } catch (error) {
       console.error('Error accepting friend request:', error);
+    } finally {
+      setButtonLoadingId(null);
+      setLoadingAction(null); // Reset the action
     }
   };
 
   // Reject a friend request
   const handleRejectRequest = async (requestId: string) => {
+    setButtonLoadingId(requestId);
+    setLoadingAction('reject'); // Indicate the action is 'reject'
     try {
       const result = await deleteFriendRequest(requestId);
       if (result.status === 'SUCCESS') {
         alert('Friend request rejected!');
-        fetchPendingRequests(); // Refresh pending requests
-        handleSearch(); // Refresh search results
+        await fetchPendingRequests(); // Refresh pending requests
+        await handleSearch(); // Refresh search results
         setPendingCount(pendingCount - 1); // Update pending request count
+      } else {
+        alert(result.error || 'Error rejecting friend request.');
       }
     } catch (error) {
       console.error('Error rejecting friend request:', error);
+    } finally {
+      setButtonLoadingId(null);
+      setLoadingAction(null); // Reset the action
     }
   };
 
   const handleRemoveFriend = async (friendId: string) => {
+    setButtonLoadingId(friendId);
     try {
       const result = await removeFriend(userId, friendId);
       if (result.status === 'SUCCESS') {
         alert('Friend removed successfully!');
-
         // Fetch updated friends list
         fetchFriends();
-
         // Optional: Optimistic Update
         setFriends((prevFriends) =>
           prevFriends.filter((friend) => friend._id !== friendId),
         );
+      } else {
+        alert(result.error || 'Error removing friend.');
       }
     } catch (error) {
       console.error('Error removing friend:', error);
+    } finally {
+      setButtonLoadingId(null);
     }
   };
 
@@ -215,8 +243,9 @@ const FriendManager = ({
           <button
             onClick={handleSearch}
             className="friend-manager-button-search"
+            disabled={isLoading}
           >
-            Search
+            {isLoading ? 'Searching...' : 'Search'}
           </button>
 
           {/* Search Results Section */}
@@ -251,13 +280,21 @@ const FriendManager = ({
                       <button
                         onClick={() => handleSendRequest(user._id)}
                         className="friend-manager-button-add"
+                        disabled={buttonLoadingId === user._id}
                       >
-                        + Add Friend
+                        {buttonLoadingId === user._id
+                          ? 'Sending...'
+                          : '+ Add Friend'}
                       </button>
                     )}
                     {isRequestSent && (
                       <span className="friend-manager-results-sent">
                         Request Sent
+                      </span>
+                    )}
+                    {user.isFriend && (
+                      <span className="friend-manager-results-sent">
+                        Friends
                       </span>
                     )}
                   </div>
@@ -302,14 +339,26 @@ const FriendManager = ({
                       handleAcceptRequest(request.from._id, userId, request._id)
                     }
                     className="friend-manager-button-accept"
+                    disabled={buttonLoadingId === request._id}
                   >
-                    <Check className="friend-manager-button-icon" />
+                    {buttonLoadingId === request._id &&
+                    loadingAction === 'accept' ? (
+                      <Loader className="loader" />
+                    ) : (
+                      <Check className="friend-manager-button-icon" />
+                    )}
                   </button>
                   <button
                     onClick={() => handleRejectRequest(request._id)}
                     className="friend-manager-button-reject"
+                    disabled={buttonLoadingId === request._id}
                   >
-                    <Minus className="friend-manager-button-icon" />
+                    {buttonLoadingId === request._id &&
+                    loadingAction === 'reject' ? (
+                      <Loader className="loader" />
+                    ) : (
+                      <Minus className="friend-manager-button-icon" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -344,12 +393,17 @@ const FriendManager = ({
                         `Are you sure you want to cancel the friend request to ${request.to.username}?`,
                       )
                     ) {
-                      handleRejectRequest(request._id); // Cancel the request
+                      handleRejectRequest(request._id);
                     }
                   }}
                   className="friend-manager-button-cancel"
+                  disabled={buttonLoadingId === request._id}
                 >
-                  Cancel
+                  {buttonLoadingId === request._id ? (
+                    <Loader className="loader" />
+                  ) : (
+                    'Cancel'
+                  )}
                 </button>
               </div>
             ))
@@ -391,8 +445,13 @@ const FriendManager = ({
                     }
                   }}
                   className="friend-manager-button-remove"
+                  disabled={buttonLoadingId === friend._id}
                 >
-                  Remove
+                  {buttonLoadingId === friend._id ? (
+                    <Loader className="loader" />
+                  ) : (
+                    'Remove'
+                  )}
                 </button>
               </div>
             ))
