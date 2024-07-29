@@ -1,3 +1,6 @@
+'use client';
+
+import { Loader } from 'lucide-react';
 import { signIn } from 'next-auth/react';
 import React, { useState } from 'react';
 
@@ -7,6 +10,7 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
     password: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -14,18 +18,26 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    const result = await signIn('credentials', {
-      redirect: false,
-      identifier: formData.identifier.toLowerCase(),
-      password: formData.password,
-    });
+    try {
+      const result = await signIn('credentials', {
+        redirect: false,
+        identifier: formData.identifier.toLowerCase(),
+        password: formData.password,
+      });
 
-    if (result?.error) {
-      setErrorMessage(result.error);
-    } else {
-      console.log('Signed in successfully');
-      onClose();
+      if (result?.error) {
+        setErrorMessage(result.error);
+      } else {
+        console.log('Signed in successfully');
+        onClose();
+      }
+    } catch (error) {
+      console.error('Error signing in:', error);
+      setErrorMessage('An unexpected error occurred.');
+    } finally {
+      setIsLoading(false); // End loading
     }
   };
 
@@ -49,8 +61,8 @@ const LoginForm = ({ onClose }: { onClose: () => void }) => {
         className="login-form-input"
       />
       {errorMessage && <p className="login-form-error">{errorMessage}</p>}
-      <button type="submit" className="login-form-button">
-        Login
+      <button type="submit" className="login-form-button" disabled={isLoading}>
+        {isLoading ? <Loader className="loader" /> : 'Login'}
       </button>
     </form>
   );
