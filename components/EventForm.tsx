@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
-import { Trash } from 'lucide-react';
+import { Trash, Loader } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
 import { useActionState } from 'react';
 import { z } from 'zod';
@@ -347,14 +347,24 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         )}
         <button
           type="submit"
-          disabled={!isFormValid}
+          disabled={!isFormValid || isPending}
           className={`event-form-button-submit ${
             isFormValid
               ? 'event-form-button-submit-valid'
               : 'event-form-button-submit-disabled'
           }`}
         >
-          {isEditMode ? <>Save</> : <>Submit</>}
+          {isEditMode ? (
+            isPending ? (
+              <Loader className="loader" />
+            ) : (
+              'Save'
+            )
+          ) : isPending ? (
+            <Loader className="loader" />
+          ) : (
+            'Submit'
+          )}
         </button>
       </div>
     </form>
