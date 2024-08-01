@@ -199,11 +199,18 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
     if (confirm('Are you sure you want to delete this event?')) {
       try {
         await deleteEvent(existingEvent._id);
-        alert('Event deleted successfully');
+        toast({
+          title: 'Success',
+          description: 'Event deleted successfully',
+        });
         router.push(`/user/${session?.user?.username}`);
         router.refresh();
       } catch (error) {
-        alert('Failed to delete the event.');
+        toast({
+          title: 'Error',
+          description: 'Failed to delete the event.',
+          variant: 'destructive',
+        });
       }
     }
   };
