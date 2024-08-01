@@ -10,6 +10,8 @@ import ImageUpload from './ImageUpload';
 import { z } from 'zod';
 import { Textarea } from './ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
+import { toast } from '@/hooks/use-toast';
+import { Loader } from 'lucide-react';
 
 const UserForm = ({ onClose }: { onClose: () => void }) => {
   const { data: session, update } = useSession();
@@ -24,8 +26,16 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [isFormValid, setIsFormValid] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
+  const previewImageSrc = useURL
+    ? formData.image && formData.image.trim() !== ''
+      ? formData.image
+      : '/fallback/default-avatar.png'
+    : imageFile
+      ? URL.createObjectURL(imageFile)
+      : '/fallback/default-avatar.png';
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -94,6 +104,7 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const imageValue = useURL
         ? formData.image
@@ -105,13 +116,20 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
       await userFormSchema.parseAsync(updatedFormData);
 
       if (!existingUser?._id) {
-        alert('User ID is missing. Unable to update profile.');
+        toast({
+          title: 'Error',
+          description: 'User ID is missing. Unable to update profile.',
+          variant: 'destructive',
+        });
         return;
       }
       const result = await updateUser(existingUser._id, updatedFormData);
 
       if (result.success) {
-        alert('Profile updated successfully!');
+        toast({
+          title: 'Success',
+          description: 'Profile updated successfully!',
+        });
 
         // Update the session with the new image
         await update({
@@ -126,7 +144,11 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
         router.push(`/user/${existingUser?.username}`);
         router.refresh();
       } else {
-        alert('Failed to update profile');
+        toast({
+          title: 'Error',
+          description: 'Failed to update profile',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -135,6 +157,8 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
       } else {
         console.error('Unexpected error:', error);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -147,23 +171,29 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
       try {
         const result = await deleteUser(existingUser._id);
         if (result.success) {
-          alert('Account deleted successfully!');
+          toast({
+            title: 'Success',
+            description: 'Account deleted successfully!',
+          });
           signOut({ callbackUrl: '/' });
         } else {
-          alert(`Failed to delete account: ${result.error || 'Unknown error'}`);
+          toast({
+            title: 'Error',
+            description: 'Failed to delete account.',
+            variant: 'destructive',
+          });
         }
       } catch (error) {
         console.error('Error deleting user:', error);
-        alert('An unexpected error occurred while deleting your account.');
+        toast({
+          title: 'Error',
+          description:
+            'An unexpected error occurred while deleting your account.',
+          variant: 'destructive',
+        });
       }
     }
   };
-
-  const previewImageSrc = useURL
-    ? formData.image
-    : imageFile
-      ? URL.createObjectURL(imageFile)
-      : '/fallback/default-avatar.png';
 
   return (
     <form onSubmit={handleSubmit} className="user-form">
@@ -180,9 +210,12 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
         ) : (
           <div className="user-form-avatar-container">
             <img
-              src={previewImageSrc}
+              src={previewImageSrc || '/fallback/default-avatar.png'}
               alt="Profile"
               className="user-form-avatar"
+              onError={(e) => {
+                e.currentTarget.src = '/fallback/default-avatar.png';
+              }}
             />
           </div>
         )}
@@ -215,27 +248,29 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
             </div>
           </Skeleton>
         ) : (
-          <>
-            <Textarea
-              id="bio"
-              name="bio"
-              defaultValue={formData.bio || ''}
-              required
-              placeholder="Event Description"
-              onBlur={onBlurHandler}
-              onChange={handleChange}
-              className={`user-form-textarea ${
-                touched.bio
-                  ? formData.bio
-                    ? errors.bio
-                      ? 'form-input-error'
-                      : 'form-input-success'
-                    : 'form-input-error'
-                  : ''
-              }`}
-            />
+          <div className="user-form-bio">
+            <>
+              <Textarea
+                id="bio"
+                name="bio"
+                defaultValue={formData.bio || ''}
+                required
+                placeholder="Event Description"
+                onBlur={onBlurHandler}
+                onChange={handleChange}
+                className={`user-form-textarea ${
+                  touched.bio
+                    ? formData.bio
+                      ? errors.bio
+                        ? 'form-input-error'
+                        : 'form-input-success'
+                      : 'form-input-error'
+                    : ''
+                }`}
+              />
+            </>
             {errors.bio && <p className="event-form-error">{errors.bio}</p>}
-          </>
+          </div>
         )}
       </div>
       <div className="user-form-buttons">
@@ -248,12 +283,12 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
         </button>
         <button
           type="submit"
-          disabled={!isFormValid}
+          disabled={!isFormValid || isLoading}
           className={`user-form-button ${
             isFormValid ? 'user-form-button-valid' : 'user-form-button-disabled'
           }`}
         >
-          Save
+          {isLoading ? <Loader className="loader" /> : 'Save'}
         </button>
       </div>
     </form>
