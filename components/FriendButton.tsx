@@ -7,6 +7,7 @@ import {
   deleteFriendRequest,
   removeFriend,
 } from '@/app/actions/friendActions';
+import { toast } from '@/hooks/use-toast';
 
 const FriendButton = ({
   userId,
@@ -38,7 +39,10 @@ const FriendButton = ({
     try {
       const result = await createFriendRequest(fromUserId, toUserId);
       if (result.status === 'SUCCESS') {
-        alert('Friend request sent successfully!');
+        toast({
+          title: 'Success',
+          description: 'Friend request sent successfully!',
+        });
         setHasPendingRequest(true);
         if (result.friendRequest) {
           setRequestId(result.friendRequest._id);
@@ -56,10 +60,17 @@ const FriendButton = ({
     try {
       const result = await deleteFriendRequest(requestId);
       if (result.status === 'SUCCESS') {
-        alert('Friend request canceled.');
+        toast({
+          title: 'Success',
+          description: 'Friend request canceled.',
+        });
         setHasPendingRequest(false);
       } else {
-        alert(result.error || 'Error canceling friend request.');
+        toast({
+          title: 'Error',
+          description: 'Error canceling friend request.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       console.error('Error canceling friend request:', error);
@@ -73,10 +84,17 @@ const FriendButton = ({
     try {
       const result = await removeFriend(sessionId, userId);
       if (result.status === 'SUCCESS') {
-        alert('Friend removed successfully!');
+        toast({
+          title: 'Success',
+          description: 'Friend removed successfully!',
+        });
         window.location.reload();
       } else {
-        alert(result.error || 'Error removing friend.');
+        toast({
+          title: 'Error',
+          description: 'Error removing friend.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       console.error('Error removing friend:', error);

@@ -18,6 +18,7 @@ import {
   USER_FRIENDS_BY_USER_ID_QUERY,
 } from '@/sanity/lib/queries/userQueries';
 import { Check, Minus, Loader } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 const FriendManager = ({
   isOpen,
@@ -123,12 +124,19 @@ const FriendManager = ({
     try {
       const result = await createFriendRequest(userId, toUserId);
       if (result.status === 'SUCCESS') {
-        alert('Friend request sent successfully!');
+        toast({
+          title: 'Success',
+          description: 'Friend request sent successfully!',
+        });
         setSearchResults([]);
         setSearchTerm('');
         fetchPendingRequests();
       } else {
-        alert(result.error || 'Error sending friend request.');
+        toast({
+          title: 'Error',
+          description: 'Error sending friend request.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       console.error('Error sending friend request:', error);
@@ -148,8 +156,10 @@ const FriendManager = ({
     try {
       const result = await acceptFriendRequest(fromUserId, userId, requestId);
       if (result.status === 'SUCCESS') {
-        alert('Friend request accepted!');
-
+        toast({
+          title: 'Success',
+          description: 'Friend request accepted!',
+        });
         // Optimistic Update: Add the new friend to the friends list
         const newFriend = pendingRequests.find(
           (request) => request.from._id === fromUserId,
@@ -170,7 +180,11 @@ const FriendManager = ({
         await handleSearch(); // Refresh search results
         setPendingCount((prevCount) => prevCount - 1);
       } else {
-        alert(result.error || 'Error accepting friend request.');
+        toast({
+          title: 'Error',
+          description: 'Error accepting friend request.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       console.error('Error accepting friend request:', error);
@@ -181,21 +195,41 @@ const FriendManager = ({
   };
 
   // Reject a friend request
-  const handleRejectRequest = async (requestId: string) => {
+  const handleRejectRequest = async (
+    requestId: string,
+    isIncoming: boolean,
+  ) => {
     setButtonLoadingId(requestId);
     setLoadingAction('reject'); // Indicate the action is 'reject'
     try {
       const result = await deleteFriendRequest(requestId);
       if (result.status === 'SUCCESS') {
-        alert('Friend request rejected!');
+        toast({
+          title: 'Success',
+          description: isIncoming
+            ? 'Friend request rejected!'
+            : 'Outgoing friend request canceled!',
+        });
         await fetchPendingRequests(); // Refresh pending requests
         await handleSearch(); // Refresh search results
-        setPendingCount(pendingCount - 1); // Update pending request count
+
+        if (isIncoming) {
+          setPendingCount(pendingCount - 1); // Update pending request count
+        }
       } else {
-        alert(result.error || 'Error rejecting friend request.');
+        toast({
+          title: 'Error',
+          description: isIncoming
+            ? 'Error rejecting friend request.'
+            : 'Error canceling outgoing request.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
-      console.error('Error rejecting friend request:', error);
+      console.error(
+        `Error ${isIncoming ? 'rejecting' : 'canceling'} friend request:`,
+        error,
+      );
     } finally {
       setButtonLoadingId(null);
       setLoadingAction(null); // Reset the action
@@ -207,7 +241,11 @@ const FriendManager = ({
     try {
       const result = await removeFriend(userId, friendId);
       if (result.status === 'SUCCESS') {
-        alert('Friend removed successfully!');
+        toast({
+          title: 'Success',
+          description: 'Friend removed successfully!',
+        });
+
         // Fetch updated friends list
         fetchFriends();
         // Optional: Optimistic Update
@@ -215,7 +253,11 @@ const FriendManager = ({
           prevFriends.filter((friend) => friend._id !== friendId),
         );
       } else {
-        alert(result.error || 'Error removing friend.');
+        toast({
+          title: 'Error',
+          description: 'Error removing friend.',
+          variant: 'destructive',
+        });
       }
     } catch (error) {
       console.error('Error removing friend:', error);
@@ -349,7 +391,7 @@ const FriendManager = ({
                     )}
                   </button>
                   <button
-                    onClick={() => handleRejectRequest(request._id)}
+                    onClick={() => handleRejectRequest(request._id, true)}
                     className="friend-manager-button-reject"
                     disabled={buttonLoadingId === request._id}
                   >
@@ -393,7 +435,7 @@ const FriendManager = ({
                         `Are you sure you want to cancel the friend request to ${request.to.username}?`,
                       )
                     ) {
-                      handleRejectRequest(request._id);
+                      handleRejectRequest(request._id, false);
                     }
                   }}
                   className="friend-manager-button-cancel"
