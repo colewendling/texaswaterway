@@ -13,7 +13,7 @@ const EditButton = ({ editMode }: { editMode: boolean }) => {
     } else {
       newSearchParams.set('edit', 'true');
     }
-    router.replace(`?${newSearchParams.toString()}`);
+    router.replace(`?${newSearchParams.toString()}`, { scroll: false });
   };
 
   return (
