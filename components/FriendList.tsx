@@ -46,26 +46,48 @@ const FriendList = ({
     }
   }, [isOwnProfile, userId]);
 
-  // Check if there is a pending request from session user to profile user
   useEffect(() => {
-    if (!isOwnProfile) {
-      const fetchSentRequests = async () => {
+    if (!isOwnProfile && sessionId) {
+      const fetchRequests = async () => {
         try {
+          // 1. Check outgoing (session user -> profile user)
           const sentRequests = await client.fetch(SENT_FRIEND_REQUESTS_QUERY, {
             userId: sessionId,
           });
-          const request = sentRequests.find(
+          const outgoingRequest = sentRequests.find(
             (req: { to: { _id: string } }) => req.to._id === userId,
           );
 
-          setHasPendingRequest(!!request);
-          setRequestId(request?._id || ''); // Set the requestId
+          if (outgoingRequest) {
+            setHasPendingRequest(true);
+            setRequestId(outgoingRequest._id);
+          } else {
+            // 2. Check incoming (profile user -> session user)
+            const pendingRequests = await client.fetch(
+              PENDING_FRIEND_REQUESTS_QUERY,
+              {
+                userId: sessionId,
+              },
+            );
+            const incomingRequest = pendingRequests.find(
+              (req: { from: { _id: string } }) => req.from._id === userId,
+            );
+
+            if (incomingRequest) {
+              // If there's an incoming request, we have a pending request without a requestId
+              setHasPendingRequest(true);
+              setRequestId(''); // No requestId since the session user didn't send it
+            } else {
+              setHasPendingRequest(false);
+              setRequestId('');
+            }
+          }
         } catch (error) {
-          console.error('Error fetching sent friend requests:', error);
+          console.error('Error fetching requests:', error);
         }
       };
 
-      fetchSentRequests();
+      fetchRequests();
     }
   }, [isOwnProfile, sessionId, userId]);
 

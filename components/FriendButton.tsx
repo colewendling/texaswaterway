@@ -135,7 +135,7 @@ const FriendButton = ({
           {isLoading ? 'Sending...' : '+ Add Friend'}
         </button>
       )}
-      {!isOwnProfile && !isFriend && hasPendingRequest && (
+      {!isOwnProfile && !isFriend && hasPendingRequest && requestId && (
         <button
           onClick={() => handleCancelRequest(requestId)}
           className="friend-button-cancel"
@@ -148,6 +148,11 @@ const FriendButton = ({
               <Ban size={15} /> Cancel Request
             </>
           )}
+        </button>
+      )}
+      {!isOwnProfile && !isFriend && hasPendingRequest && !requestId && (
+        <button className="friend-button-pending" disabled>
+          <span className="friend-button-pending">Pending</span>
         </button>
       )}
       {!isOwnProfile && isFriend && (

@@ -151,6 +151,7 @@ const FriendManager = ({
     userId: string,
     requestId: string,
   ) => {
+    setIsLoading(true);
     setButtonLoadingId(requestId);
     setLoadingAction('accept');
     try {
@@ -189,6 +190,7 @@ const FriendManager = ({
     } catch (error) {
       console.error('Error accepting friend request:', error);
     } finally {
+      setIsLoading(false);
       setButtonLoadingId(null);
       setLoadingAction(null); // Reset the action
     }
@@ -201,6 +203,7 @@ const FriendManager = ({
   ) => {
     setButtonLoadingId(requestId);
     setLoadingAction('reject'); // Indicate the action is 'reject'
+    setIsLoading(true);
     try {
       const result = await deleteFriendRequest(requestId);
       if (result.status === 'SUCCESS') {
@@ -231,6 +234,7 @@ const FriendManager = ({
         error,
       );
     } finally {
+      setIsLoading(false);
       setButtonLoadingId(null);
       setLoadingAction(null); // Reset the action
     }
@@ -299,6 +303,9 @@ const FriendManager = ({
                 const isRequestSent = sentRequests.some(
                   (request) => request.to._id === user._id,
                 );
+                const isRequestReceived = pendingRequests.some(
+                  (request) => request.from._id === user._id,
+                );
 
                 return (
                   <div key={user._id} className="friend-manager-user-container">
@@ -318,7 +325,7 @@ const FriendManager = ({
                       </span>
                     </div>
                     {/* Add Send Friend Request Button */}
-                    {!user.isFriend && !isRequestSent && (
+                    {!user.isFriend && !isRequestReceived && !isRequestSent && (
                       <button
                         onClick={() => handleSendRequest(user._id)}
                         className="friend-manager-button-add"
@@ -337,6 +344,11 @@ const FriendManager = ({
                     {user.isFriend && (
                       <span className="friend-manager-results-sent">
                         Friends
+                      </span>
+                    )}
+                    {!user.isFriend && isRequestReceived && (
+                      <span className="friend-manager-results-sent">
+                        Pending
                       </span>
                     )}
                   </div>
@@ -381,7 +393,7 @@ const FriendManager = ({
                       handleAcceptRequest(request.from._id, userId, request._id)
                     }
                     className="friend-manager-button-accept"
-                    disabled={buttonLoadingId === request._id}
+                    disabled={buttonLoadingId === request._id || isLoading}
                   >
                     {buttonLoadingId === request._id &&
                     loadingAction === 'accept' ? (
@@ -393,7 +405,7 @@ const FriendManager = ({
                   <button
                     onClick={() => handleRejectRequest(request._id, true)}
                     className="friend-manager-button-reject"
-                    disabled={buttonLoadingId === request._id}
+                    disabled={buttonLoadingId === request._id || isLoading}
                   >
                     {buttonLoadingId === request._id &&
                     loadingAction === 'reject' ? (
