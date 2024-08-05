@@ -32,7 +32,7 @@ const Modal = ({
         <button onClick={onClose} className="modal-button-close">
           ✕
         </button>
-        {children}
+        <div className="modal-content">{children}</div>
       </div>
     </div>,
     document.body,
