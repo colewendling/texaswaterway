@@ -22,6 +22,10 @@
   @apply size-4;
 }
 
+.friend-button-pending {
+  @apply text-gray-200/60 text-sm cursor-default;
+}
+
 .friend-button-notify {
   @apply bg-red-500 hover:bg-red-600;
 }

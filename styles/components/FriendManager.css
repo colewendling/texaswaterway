@@ -11,7 +11,7 @@
 }
 
 .friend-manager-label {
-  @apply font-semibold text-[16px] py-2;
+  @apply font-semibold text-[16px] pt-2 pb-4;
 }
 
 .friend-manager-search {
@@ -79,7 +79,7 @@
 }
 
 .friend-manager-user-item {
-  @apply flex items-center;
+  @apply flex items-center gap-2;
 }
 
 .friend-manager-user-avatar-container {
