@@ -162,12 +162,14 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.FormEvent) => {
     if (
       confirm(
         'Are you sure you want to delete your account? This action cannot be undone.',
       )
     ) {
+      e.preventDefault();
+      setIsLoading(true);
       try {
         const result = await deleteUser(existingUser._id);
         if (result.success) {
@@ -191,6 +193,8 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
             'An unexpected error occurred while deleting your account.',
           variant: 'destructive',
         });
+      } finally {
+        setIsLoading(false);
       }
     }
   };
@@ -276,10 +280,11 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
       <div className="user-form-buttons">
         <button
           type="button"
+          disabled={isLoading}
           className="user-form-button-delete"
           onClick={handleDelete}
         >
-          Delete Account
+          {isLoading ? <Loader className="loader" /> : 'Delete Account'}
         </button>
         <button
           type="submit"
