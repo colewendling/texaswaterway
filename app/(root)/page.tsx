@@ -1,18 +1,39 @@
 import EventCard, { EventCardType } from '@/components/EventCard';
 import SearchForm from '../../components/SearchForm';
-import { EVENTS_QUERY } from '@/sanity/lib/queries/eventQueries';
+import {
+  PAGINATED_EVENTS_QUERY,
+  EVENT_COUNT_QUERY,
+} from '@/sanity/lib/queries/eventQueries';
 import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 import HeroText from '@/components/HeroText';
+import Pagination from '@/components/Pagnation';
+import React from 'react';
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ query?: string }>;
+  searchParams: Promise<{ query?: string; page?: string }>;
 }) {
-  const query = (await searchParams).query;
-  const params = { search: query || null };
+  const { query: searchQuery, page: pageParam } = await searchParams;
 
-  const { data: posts } = await sanityFetch({ query: EVENTS_QUERY, params });
+  const page = Number(pageParam) || 1;
+  const pageSize = 12;
+  const start = (page - 1) * pageSize;
+  const end = start + pageSize - 1;
+
+  const countParams = { search: searchQuery || null };
+  const { data: totalCount } = await sanityFetch({
+    query: EVENT_COUNT_QUERY,
+    params: countParams,
+  });
+
+  const params = { search: searchQuery || null, start, end };
+  const { data: posts } = await sanityFetch({
+    query: PAGINATED_EVENTS_QUERY,
+    params,
+  });
+
+  const totalPages = Math.ceil(totalCount / pageSize);
 
   return (
     <>
@@ -38,11 +59,11 @@ export default async function Home({
           insights.
         </p>
         <HeroText />
-        <SearchForm query={query} />
+        <SearchForm query={searchQuery} />
       </section>
       <section className="section_container">
         <p className="text-30-semibold">
-          {query ? `Search results for "${query}"` : 'All Events'}
+          {searchQuery ? `Search results for "${searchQuery}"` : 'All Events'}
         </p>
         <ul className="home-event-container  card-grid">
           {posts?.length > 0 ? (
@@ -53,6 +74,13 @@ export default async function Home({
             <p className="no-results">No events found</p>
           )}
         </ul>
+      </section>
+      <section className="section_container">
+        <Pagination
+          totalPages={totalPages}
+          currentPage={page}
+          query={searchQuery}
+        />
       </section>
       <SanityLive />
     </>

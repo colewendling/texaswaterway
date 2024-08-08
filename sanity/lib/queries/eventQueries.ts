@@ -84,3 +84,33 @@ export const EVENT_BY_SLUG_QUERY = `
     pitch
   }
 `;
+
+export const EVENT_COUNT_QUERY = defineQuery(`
+  count(
+    *[_type == 'event' && defined(slug.current) && 
+      (!defined($search) || title match $search || category match $search || user->name match $search)
+    ]
+  )
+`);
+
+export const PAGINATED_EVENTS_QUERY = defineQuery(`
+  *[_type == 'event' && defined(slug.current) && 
+    (!defined($search) || title match $search || category match $search || user->name match $search)
+  ] | order(_createdAt desc) [$start..$end] {
+    _id, 
+    title, 
+    slug,
+    _createdAt,
+    user -> {
+      _id, 
+      name,
+      username, 
+      image, 
+      bio
+    }, 
+    views, 
+    description,
+    category,
+    image
+}
+`);

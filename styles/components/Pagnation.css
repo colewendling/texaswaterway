@@ -1,0 +1,11 @@
+.pagination-container {
+  @apply flex space-x-2 mt-4 justify-center;
+}
+
+.pagination-button {
+  @apply px-4 py-2 rounded border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer;
+}
+
+.pagination-button-active {
+  @apply bg-blue-600 text-white border-blue-600 hover:bg-blue-700;
+}
