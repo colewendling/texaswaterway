@@ -23,6 +23,10 @@ const config: Config = {
         secondary: '#E46C4E',
         background: '#fff8e6',
         water: '#D2DBED',
+        gold: {
+          DEFAULT: '#FFC000',
+          light: '#FFFAE5',
+        },
       },
       fontFamily: {
         inter: ['var(--inter)'],

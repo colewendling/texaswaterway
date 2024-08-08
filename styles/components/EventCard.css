@@ -1,5 +1,13 @@
 .event-card {
-  @apply bg-white border-[5px] border-black py-6 px-5 rounded-[22px] shadow-xl hover:border-secondary  hover:shadow-2xl hover:bg-red-50 hover:scale-105 transition-transform duration-300 relative;
+  @apply border-[5px] py-6 px-5 rounded-[22px] shadow-xl hover:shadow-2xl hover:bg-red-50 hover:scale-105 transition-transform duration-300 relative;
+}
+
+.event-card-default {
+  @apply event-card border-black bg-white hover:border-secondary hover:bg-red-50;
+}
+
+.event-card-featured {
+  @apply event-card border-gold/50 bg-gold-light hover:border-gold/80 hover:bg-gold/10;
 }
 
 .event-card-edit-button {
@@ -85,4 +93,22 @@
 
 .event-card-skeleton {
   @apply w-full h-96 rounded-[22px] bg-zinc-400;
+}
+
+.event-card-featured-badge {
+  @apply absolute top-0 right-0 bg-gold-light border-[3px] border-gold rounded-full p-2 flex items-center justify-center translate-x-1/2 -translate-y-1/2 shadow-md shadow-black/50 cursor-pointer;
+}
+
+.event-card-featured-badge-icon {
+  @apply text-gold w-4 h-4;
+}
+
+.event-card-featured-badge::after {
+  content: attr(data-tooltip);
+  @apply absolute -top-6 -left-14 -translate-x-1/2 text-gold border-[2px] border-gold bg-gold-light text-sm rounded-full px-2 py-1 opacity-0 transition-opacity duration-200 pointer-events-none z-10;
+  white-space: nowrap;
+}
+
+.event-card-featured-badge:hover::after {
+  @apply opacity-100;
 }

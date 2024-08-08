@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import EventForm from './EventForm';
 import { cn, formatDate } from '@/lib/utils';
-import { EyeIcon, Edit } from 'lucide-react';
+import { EyeIcon, Edit, ThumbsUp } from 'lucide-react';
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,13 +15,17 @@ import { EVENT_PITCH_BY_EVENT_ID_QUERY } from '@/sanity/lib/queries/eventQueries
 
 export type EventCardType = Omit<Event, 'user'> & { user?: User };
 
+interface EventCardProps {
+  post: EventCardType;
+  editMode?: boolean;
+  featuredEventIds?: string[];
+}
+
 const EventCard = ({
   post,
   editMode,
-}: {
-  post: EventCardType;
-  editMode?: boolean;
-}) => {
+  featuredEventIds = [],
+}: EventCardProps) => {
   const {
     _createdAt,
     views,
@@ -36,6 +40,16 @@ const EventCard = ({
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [pitch, setPitch] = useState<string | null>(null);
+  const [isFeatured, setIsFeatured] = useState(false);
+
+  // Determine if this event is featured
+  useEffect(() => {
+    if (featuredEventIds.includes(_id)) {
+      setIsFeatured(true);
+    } else {
+      setIsFeatured(false);
+    }
+  }, [_id, featuredEventIds]);
 
   const handleEditClick = async () => {
     setModalOpen(true);
@@ -52,7 +66,10 @@ const EventCard = ({
   };
 
   return (
-    <li className="event-card group">
+    // <li className="event-card-default group">
+    <li
+      className={`group ${isFeatured ? 'event-card-featured' : 'event-card-default'}`}
+    >
       {editMode && (
         <button
           onClick={handleEditClick}
@@ -61,6 +78,15 @@ const EventCard = ({
         >
           <Edit className="event-card-edit-icon" />
         </button>
+      )}
+      {isFeatured && (
+        <Link
+          href={`/event/${slug?.current}`}
+          className="event-card-featured-badge"
+          data-tooltip="Featured Event"
+        >
+          <ThumbsUp className="event-card-featured-badge-icon" />
+        </Link>
       )}
       <Link href={`/event/${slug?.current}`}>
         <div className="event-card-top">
