@@ -26,6 +26,10 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   const parsedContent = md.render(post?.pitch || '');
 
+  // Extract featured event IDs
+  const featuredEventIds =
+    editorPosts?.map((event: EventCardType) => event._id) || [];
+
   return (
     <div className="event-page">
       <section className="event-hero-container">
@@ -79,7 +83,11 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
             <p className="text-30-semibold">Featured Events</p>
             <ul className="event-playlist card-grid-sm">
               {editorPosts.map((post: EventCardType, i: number) => (
-                <EventCard key={i} post={post} />
+                <EventCard
+                  key={i}
+                  post={post}
+                  featuredEventIds={featuredEventIds}
+                />
               ))}
             </ul>
           </div>
