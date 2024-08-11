@@ -59,11 +59,11 @@
 }
 
 .event-card-avatar-container {
-  @apply relative w-12 h-12 rounded-full overflow-hidden shadow-md shadow-black/50;
+  @apply relative w-12 h-12 rounded-full overflow-hidden shadow-md shadow-black/50 hover:scale-105;
 }
 
 .event-card-avatar {
-  @apply rounded-full hover:scale-110 transition-transform duration-300 object-cover w-12 h-12 overflow-hidden shadow-md border-[1px] border-black;
+  @apply rounded-full transition-transform duration-300 object-cover w-12 h-12 overflow-hidden shadow-md;
 }
 
 .event-card-description {

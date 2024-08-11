@@ -19,7 +19,7 @@
 }
 
 .friend-list-avatar {
-  @apply w-16 h-16 rounded-full object-cover mb-2;
+  @apply w-16 h-16 rounded-full object-cover mb-2 cursor-pointer hover:scale-105 shadow-md shadow-black/50;
 }
 
 @media (max-width: 1024px) {

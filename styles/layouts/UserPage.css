@@ -27,7 +27,7 @@
 }
 
 .profile-bio {
-  @apply font-normal text-sm text-white mt-1 text-center;
+  @apply font-normal py-3 text-lg text-white mt-1 text-center;
 }
 
 .profile-friendlist {
