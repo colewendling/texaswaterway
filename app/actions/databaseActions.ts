@@ -3,8 +3,8 @@
 import { writeClient } from '@/sanity/lib/write-client';
 import bcrypt from 'bcrypt';
 import { client } from '@/sanity/lib/client';
-import { events } from '@/lib/events';
-import { users } from '@/lib/users';
+import { events } from '@/lib/data/events';
+import { users } from '@/lib/data/users';
 
 // Server Action to clear Sanity Database
 export const clearDatabase = async () => {
