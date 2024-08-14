@@ -13,3 +13,15 @@
 .home-event-container {
   @apply mt-7;
 }
+
+.home-header-container {
+  @apply flex w-full items-center justify-between mb-4;
+}
+
+.home-header-text {
+  @apply font-semibold text-[28px] text-black cursor-default;
+}
+
+.home-header-button {
+  @apply font-semibold text-[28px] text-black cursor-pointer underline-offset-2 hover:text-primary hover:underline;
+}

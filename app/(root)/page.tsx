@@ -75,9 +75,14 @@ export default async function Home({
         <SearchForm query={searchQuery} />
       </section>
       <section className="section_container">
-        <p className="text-30-semibold">
-          {searchQuery ? `Search results for "${searchQuery}"` : 'All Events'}
-        </p>
+        <div className="home-header-container">
+          <p className="home-header-text">
+            {searchQuery ? `Search results for "${searchQuery}"` : 'All Events'}
+          </p>
+          <a href="/map" className="home-header-button">
+            Map
+          </a>
+        </div>
         <ul className="home-event-container  card-grid">
           {posts?.length > 0 ? (
             posts.map((post: EventCardType) => (
