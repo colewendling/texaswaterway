@@ -43,5 +43,5 @@
 }
 
 .profile-events-title {
-  @apply text-[30px] font-bold text-black;
+  @apply text-[28px] font-semibold text-black;
 }
