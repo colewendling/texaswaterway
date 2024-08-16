@@ -9,7 +9,7 @@ export default function Layout({
     <main className="font-inter">
       <SessionProvider>
         <Navbar />
-        {children}
+        <div className="layout-content">{children}</div>
         <Footer />
       </SessionProvider>
     </main>

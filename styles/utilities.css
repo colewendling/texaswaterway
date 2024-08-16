@@ -184,3 +184,7 @@
 .loading-dot:nth-child(3) {
   animation-delay: 0.4s;
 }
+
+.layout-content {
+  @apply bg-background min-h-[calc(100vh-200px)];
+}
