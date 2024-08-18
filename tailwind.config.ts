@@ -27,6 +27,22 @@ const config: Config = {
           DEFAULT: '#FFC000',
           light: '#FFFAE5',
         },
+        toast: {
+          success: {
+            bg: '#1e1314',
+            font: '#ABF9DE',
+            outline: 'rgba(19,189,129,0.4)',
+            loader: '#15F0A5',
+            close: '#4bbe95',
+          },
+          destructive: {
+            bg: '#241616',
+            font: '#FFDFDD',
+            outline: 'rgba(241,74,60,0.4)',
+            loader: '#F77A6F',
+            close: '#C78A85',
+          },
+        },
       },
       fontFamily: {
         inter: ['var(--inter)'],
@@ -36,6 +52,10 @@ const config: Config = {
           '0%': { transform: 'translateX(0)' },
           '50%': { transform: 'translateX(var(--right-boundary))' },
           '100%': { transform: 'translateX(0)' },
+        },
+        loader: {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
         },
         slideInLeft: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },
@@ -52,6 +72,7 @@ const config: Config = {
       },
       animation: {
         boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
+        loader: 'loader 6s linear forwards',
         slideInLeft: 'slideInLeft 1.5s ease-out forwards',
         slideInRight: 'slideInRight 1.5s ease-out 1.5s forwards',
         spin: 'spin 2s linear infinite',
