@@ -1,7 +1,9 @@
 import { lakes } from '@/lib/data/lakes';
 
-export default function LakePage({ params }: { params: { lake: string } }) {
-  const lake = lakes.find((l) => l.id === params.lake);
+const LakePage = async ({ params }: { params: Promise<{ lake: string }> }) => {
+  const { lake: lakeId } = await params;
+
+  const lake = lakes.find((l) => l.id === lakeId);
 
   if (!lake) {
     return (
@@ -20,4 +22,6 @@ export default function LakePage({ params }: { params: { lake: string } }) {
       </pre>
     </div>
   );
-}
+};
+
+export default LakePage;
