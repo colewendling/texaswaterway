@@ -7,7 +7,7 @@
 }
 
 .navbar-logo {
-  @apply size-12 sm:size-20;
+  @apply size-12 sm:size-20 hover:scale-105;
 }
 
 .navbar-logo-text {
