@@ -1,5 +1,5 @@
 .event-card {
-  @apply border-[5px] py-6 px-5 rounded-[22px] shadow-xl hover:shadow-2xl hover:bg-red-50 hover:scale-105 transition-transform duration-300 relative;
+  @apply border-[4px] py-6 px-5 rounded-[22px] shadow-xl hover:shadow-2xl hover:bg-red-50 hover:scale-105 transition-transform duration-300 relative;
 }
 
 .event-card-default {
@@ -47,7 +47,7 @@
 }
 
 .event-card-header-container {
-  @apply flex-1;
+  @apply flex-1 max-w-[70%];
 }
 
 .event-card-name {
@@ -80,15 +80,15 @@
 }
 
 .event-card-category {
-  @apply font-medium text-[16px] text-black hover:text-primary;
+  @apply font-semibold text-[14px] text-black hover:text-primary;
 }
 
 .event-card-button {
-  @apply flex items-center gap-2 py-2 px-5 rounded-full border-2 text-white bg-black hover:bg-slate-800 border-black;
+  @apply flex items-center gap-2 py-2 px-3 rounded-full text-white bg-black  hover:bg-primary;
 }
 
 .event-card-button-text {
-  @apply font-medium text-[16px];
+  @apply font-semibold text-[14px];
 }
 
 .event-card-skeleton {
