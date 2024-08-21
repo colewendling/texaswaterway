@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import MDEditor from '@uiw/react-md-editor';
-import { Trash, Loader } from 'lucide-react';
+import { Trash, Loader, ChevronDown } from 'lucide-react';
 import { formSchema } from '@/lib/validation';
 import { useActionState } from 'react';
 import { z } from 'zod';
@@ -20,6 +20,7 @@ import { uploadImageToCloudinary } from '@/lib/utils';
 import { handleBlur } from '@/lib/utils';
 import ImageUpload from './ImageUpload';
 import { useSession } from 'next-auth/react';
+import { categories } from '@/lib/data/categories';
 
 const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   const { data: session } = useSession();
@@ -83,7 +84,9 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   }, [formData, useURL, imageFile]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -93,7 +96,9 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   };
 
   const onBlurHandler = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.FocusEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     handleBlur({
       e,
@@ -273,19 +278,18 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           <p className="event-form-error">{errors.description}</p>
         )}
       </div>
-      <div>
+      <div className="event-form-dropdown-container">
         <label htmlFor="category" className="event-form-label">
           Category
         </label>
-        <Input
+        <select
           id="category"
           name="category"
-          defaultValue={existingEvent?.category || formData.category}
+          value={formData.category}
           required
-          placeholder="Event Category (Fishing, Trade, Meetup...)"
           onBlur={onBlurHandler}
           onChange={handleChange}
-          className={`event-form-input ${
+          className={`event-form-dropdown ${
             touched.category
               ? formData.category
                 ? errors.category
@@ -294,7 +298,17 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
                 : 'form-input-error'
               : ''
           }`}
-        />
+        >
+          <option value="" disabled>
+            Select a category
+          </option>
+          {categories.map((category) => (
+            <option key={category.id} value={category.name}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="event-form-dropdown-icon" />
         {errors.category && (
           <p className="event-form-error">{errors.category}</p>
         )}

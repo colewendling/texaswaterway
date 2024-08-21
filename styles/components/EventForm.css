@@ -46,3 +46,15 @@
 .event-form-delete-icon {
   @apply w-5 h-5;
 }
+
+.event-form-dropdown-container {
+  @apply flex flex-col relative;
+}
+
+.event-form-dropdown {
+  @apply border-[1px] bg-white border-black px-5 py-3 text-sm text-black font-semibold rounded-md mt-3 placeholder:text-black appearance-none cursor-pointer;
+}
+
+.event-form-dropdown-icon {
+  @apply absolute right-6 top-10 inset-y-0 my-auto pointer-events-none text-black;
+}
