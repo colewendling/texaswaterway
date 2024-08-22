@@ -65,8 +65,29 @@ const EventCard = ({
     }
   };
 
+  const getCategoryColor = (category: string | undefined): string => {
+    if (!category) return 'black-500'; // Return fallback if category is missing
+
+    const key = category.trim().toLowerCase().replace(/\s+/g, ''); // Normalize key
+
+    const categoryColors = {
+      boating: 'bg-blue-500',
+      boyscouts: 'bg-purple-500',
+      cleanup: 'bg-green-500',
+      community: 'bg-purple-500',
+      default: 'bg-gray-300',
+      fishing: 'bg-blue-500',
+      hiking: 'bg-pink-500',
+      kayaking: 'bg-purple-500',
+      marketplace: 'bg-purple-500',
+      party: 'bg-pink-500',
+      wildlife: 'bg-green-500',
+    };
+
+    return categoryColors[key] || 'bg-black-500';
+  };
+
   return (
-    // <li className="event-card-default group">
     <li
       className={`group ${isFeatured ? 'event-card-featured' : 'event-card-default'}`}
     >
@@ -123,8 +144,15 @@ const EventCard = ({
         <img src={image} alt="placeholder" className="event-card-image" />
       </Link>
       <div className="event-card-bottom">
-        <Link href={`/?query=${category?.toLowerCase()}`}>
-          <p className="event-card-category">{category}</p>
+        <Link
+          href={`/?query=${category?.toLowerCase()}`}
+          className="flex items-center gap-2"
+        >
+          <span
+            className={`w-3 h-3 rounded-full ${getCategoryColor(category || '')}`}
+            aria-hidden="true"
+          ></span>
+          <p className={`event-card-category`}>{category}</p>
         </Link>
         <a className="event-card-button" href={`/event/${slug?.current}`}>
           <span className="event-card-button-text">Details</span>
