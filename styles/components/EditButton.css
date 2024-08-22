@@ -1,3 +1,3 @@
 .edit-button {
-  @apply text-black text-[28px] font-semibold hover:text-primary hover:underline underline-offset-2;
+  @apply text-black text-[18px] font-semibold hover:text-primary hover:underline underline-offset-2;
 }
