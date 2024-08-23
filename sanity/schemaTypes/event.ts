@@ -33,7 +33,13 @@ export const event = defineType({
       name: 'category',
       type: 'string',
       validation: (Rule) =>
-        Rule.min(1).max(20).required().error('Please enter a category'),
+        Rule.min(1).max(20).required().error('Please select a category'),
+    }),
+    defineField({
+      name: 'lake',
+      type: 'string',
+      validation: (Rule) =>
+        Rule.min(1).max(20).required().error('Please select a lake'),
     }),
     defineField({
       name: 'image',

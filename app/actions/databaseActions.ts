@@ -86,6 +86,7 @@ export const seedDatabase = async () => {
         bio: user.bio,
         password: hashedPassword,
         image: user.image,
+        lake: user.lake,
         friends: [],
       });
     });

@@ -21,6 +21,7 @@ export const PLAYLIST_BY_SLUG_QUERY =
     views,
     description,
     category,
+    lake,
     image,
     pitch
   }

@@ -8,6 +8,7 @@ export const USER_BY_GITHUB_ID_QUERY = defineQuery(`
     username,
     email,
     image,
+    lake,
     bio
 }`);
 
@@ -19,6 +20,7 @@ export const USER_BY_ID_QUERY = defineQuery(`
     username,
     email,
     image,
+    lake,
     bio
 }`);
 
@@ -31,6 +33,7 @@ export const USER_BY_EMAIL_QUERY = `
     email,
     image,
     bio,
+    lake,
     password
   }
 `;
@@ -43,6 +46,7 @@ export const USER_BY_USERNAME_QUERY = `
     username,
     bio,
     image,
+    lake,
     "friends": friends[]->{
       _id,
       username,
@@ -79,6 +83,7 @@ export const USER_BY_IDENTIFIER_QUERY = `
     email,
     image,
     bio,
+    lake,
     password
   }
 `;

@@ -6,6 +6,7 @@ export const events = [
     description:
       'Join the royal paddle parade at sunset for a stunning view of Lake Bridgeport!',
     category: 'Kayaking',
+    lake: 'bridgeport',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmh5NzI0dnQ0ZWR1MXA3ajZ0Y2thYTZ6dzJ0YzNyZnA3YWNhYmcyeSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l1J9BYe5eZccC4Nck/giphy.gif',
     pitch: `
@@ -27,11 +28,12 @@ This is more than a parade; it's a celebration of community and the magic of nat
     views: 8,
     description: 'Find hidden cookie treasures around the lake!',
     category: 'Community',
+    lake: 'travis',
     image: 'https://media.giphy.com/media/xT0xeMA62E1XIlup68/giphy.gif',
     pitch: `
 ## 🍪 Cookie Scavenger Hunt
 
-**Me want cookie!** Help **Cookie Monster** uncover hidden cookies scattered around Lake Bridgeport. This adventure is fun for kids, adults, and anyone who loves a good challenge (or cookies!).
+**Me want cookie!** Help **Cookie Monster** uncover hidden cookies scattered around Lake Travis. This adventure is fun for kids, adults, and anyone who loves a good challenge (or cookies!).
 
 **What to expect:**
 - A *crumb trail* of clues to guide you to each cookie treasure. 🍪
@@ -48,12 +50,13 @@ Don’t miss out—join the hunt and let’s cookie-fy the day!
     description:
       'Help Tom Thumb clean up the lake shore and uncover hidden treasures.',
     category: 'Cleanup',
+    lake: 'fork',
     image:
       'https://ktb.org/wp-content/themes/salient-child/images/easyblog_articles/294/b2ap3_medium_DMWTTO_Vinton_GAC-2017.jpg',
     pitch: `
 ## 🧹 Tom’s Mini Adventure Cleanup
 
-Help **Tom Thumb** restore the beauty of Lake Bridgeport’s shoreline while embarking on a mini treasure hunt!
+Help **Tom Thumb** restore the beauty of Lake Fork’s shoreline while embarking on a mini treasure hunt!
 
 **Highlights:**
 - Uncover cool, tiny treasures (and some not-so-tiny ones). 🪙
@@ -69,6 +72,7 @@ Join us in making the environment shine brighter!
     views: 10,
     description: 'Learn to build your own small boat with Bob the Builder.',
     category: 'Boating',
+    lake: 'whitney',
     image: 'https://media.giphy.com/media/QoJb5HULoYqVOXZDKp/giphy.gif',
     pitch: `
 ## 🛠️ Build-a-Boat Workshop
@@ -88,13 +92,14 @@ Whether you’re an experienced builder or a total beginner, this is your chance
     user: 'lovely',
     views: 12,
     description:
-      'Take a peaceful hike around Lake Bridgeport’s scenic trails and learn about foraging.',
+      'Take a peaceful hike around Lake Hubbard’s scenic trails and learn about foraging.',
     category: 'Hiking',
+    lake: 'hubbard',
     image: 'https://media.giphy.com/media/5nkQmGl85Uaa5rbMh1/giphy.gif',
     pitch: `
 ## 🌳 Lovely Hiking Adventure
 
-Reconnect with nature on a scenic hike guided by **Lucy Lovely**. Explore the natural beauty of Lake Bridgeport while enjoying some friendly company.
+Reconnect with nature on a scenic hike guided by **Lucy Lovely**. Explore the natural beauty of Lake Hubbard while enjoying some friendly company.
 
 **What to bring:**
 - Comfortable shoes. 👟
@@ -111,6 +116,7 @@ We’ll be taking a 2-hour trek with plenty of opportunities to capture breathta
     description:
       'Join Ron Weasley for a night of spotting spiders and other wildlife.',
     category: 'Wildlife',
+    lake: 'buchanan',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWhtbnVyY25hNTRjdjJjYjZ6MHB6MTE2ZGY3YThzN29rNmE3ODZ1YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AeArmRvuKBnBkYV7DQ/giphy.gif',
     pitch: `
@@ -132,6 +138,7 @@ Prepare to be amazed—or terrified!—but either way, you’ll leave with some 
     views: 25,
     description: 'Join George Washington for a historical fishing lesson.',
     category: 'Fishing',
+    lake: 'bridgeport',
     image:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Washington_Crossing_the_Delaware_by_Emanuel_Leutze%2C_MMA-NYC%2C_1851.jpg/2560px-Washington_Crossing_the_Delaware_by_Emanuel_Leutze%2C_MMA-NYC%2C_1851.jpg',
     pitch: `
@@ -154,6 +161,7 @@ Sign up now and make history on Lake Bridgeport!
     description:
       'Gather by the lake for a serene evening of poetry and reflection with Emily Dickinson.',
     category: 'Community',
+    lake: 'bridgeport',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTJ4cmM4aXd2eXR1bzE1d2Mxa3M2N2ZsYjY5dWY2c3BxdW85cTVmMiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/qX9bd4TKHaghWAf6XG/giphy-downsized-large.gif',
     pitch: `
@@ -175,12 +183,13 @@ Join us for an evening of beauty, reflection, and creativity.
     views: 18,
     description: 'Discover the magical side of kayaking with Luna Lovegood.',
     category: 'Kayaking',
+    lake: 'travis',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExamltYTAxMzE2aHRhbm9zd3hiNmU4N296YmtiOHhhcWo5YXgxZ3ltdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6MbbcFfp6DGDUiPK/giphy.gif',
     pitch: `
 ## 🦋 Luna’s Mystical Kayak Journey
 
-Join **Luna Lovegood** for a whimsical kayaking adventure across Lake Bridgeport. Expect the unexpected as we paddle through enchanting coves and uncover magical secrets.
+Join **Luna Lovegood** for a whimsical kayaking adventure across Lake Travis. Expect the unexpected as we paddle through enchanting coves and uncover magical secrets.
 
 **What’s included:**
 - A guided kayak tour with Luna’s mystical commentary.
@@ -196,6 +205,7 @@ Don’t forget your sense of wonder and a pair of enchanted paddles. Let’s mak
     views: 25,
     description: 'Experience the luxury of Draco’s exclusive yacht party.',
     category: 'Party',
+    lake: 'bridgeport',
     image: 'https://media.giphy.com/media/26n6R5HOYPbekK0YE/giphy.gif',
     pitch: `
 ## 🛥️ Malfoy’s Yacht Bash
@@ -216,6 +226,7 @@ Dress to impress—this is *the* party of the year!
     views: 22,
     description: 'A glamorous gathering by the lake at sunset.',
     category: 'Community',
+    lake: 'bridgeport',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWhjd3I1ZTJxaWZmN2wxbDk1cGVzOW14a2Y5MzZqaDA3NGQwdTBxZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/OaHZ86Rus3f2pCk4PB/giphy.gif',
     pitch: `
@@ -237,6 +248,7 @@ Put on your best outfit and join us for an unforgettable evening of elegance.
     views: 16,
     description: 'A mathematical take on the stars with Leonhard Euler.',
     category: 'Community',
+    lake: 'bridgeport',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWhnZmcxNjMwb3NiZHp5NGZja2pxdHRuNG12ZjUzODB1MnozbzN3eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l1Et7Qw1XjvunS0Io/giphy.gif',
     pitch: `
@@ -258,6 +270,7 @@ Bring a blanket, and let’s explore the stars together!
     views: 21,
     description: 'Discover the meaning behind your dreams with Sigmund Freud.',
     category: 'Community',
+    lake: 'bridgeport',
     image: 'https://media.giphy.com/media/10h8d7DM6tOTK/giphy.gif',
     pitch: `
 ## 💭 Freud’s Lakeside Dreams Workshop
@@ -278,6 +291,7 @@ Let’s unravel the mysteries of the mind—one dream at a time.
     views: 19,
     description: 'Relax and rejuvenate with Freud’s mindful meditation.',
     category: 'Community',
+    lake: 'bridgeport',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExNmgzeXhob20xNDhiaW9jNGpuYTlrMTFlemh0YW94czRwbml2YmZ1diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LklfTtQHkcVCSWTqbg/giphy.gif',
     pitch: `
@@ -299,6 +313,7 @@ Let go of stress and embrace tranquility by the water.
     views: 24,
     description: 'Challenge yourself on a hike with Friedrich Nietzsche.',
     category: 'Hiking',
+    lake: 'bridgeport',
     image: 'https://media.giphy.com/media/5nkQmGl85Uaa5rbMh1/giphy.gif',
     pitch: `
 ## 🏔️ Nietzsche’s Hike to the Summit
@@ -319,6 +334,7 @@ Remember, *what doesn’t kill us makes us stronger*!
     views: 28,
     description: 'Fish and listen to Hemingway’s tales by the water.',
     category: 'Fishing',
+    lake: 'bridgeport',
     image: 'https://media.giphy.com/media/YqhzToDViGNg8YX32u/giphy.gif',
     pitch: `
 ## 🎣 Hemingway’s Fishing Tales
@@ -340,6 +356,7 @@ Join us for a day of fishing, stories, and good company by the lake.
     description:
       'Spend a peaceful day journaling in nature with Emily Dickinson.',
     category: 'Community',
+    lake: 'bridgeport',
     image:
       'https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXoydmU0MHd1eHlwNXlwaWlvMDZnaWxvcGlsNnl2azAyMWZ1eTI3ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/pq43wn7VrdPjO/giphy.gif',
     pitch: `
@@ -362,6 +379,7 @@ Capture the beauty of nature in words and unwind by the lake.
     description:
       'Join Emily Dickinson for an overnight Boy Scout camping trip.',
     category: 'Boy Scouts',
+    lake: 'bridgeport',
     image:
       'https://blog.scoutingmagazine.org/wp-content/uploads/sites/2/2024/07/Scouts-BSA-combined-troop-scaled.jpg',
     pitch: `
@@ -383,12 +401,13 @@ A unique overnight experience that blends the poetic with the practical!
     views: 18,
     description: 'Help George Washington clean the lake for a better tomorrow.',
     category: 'Cleanup',
+    lake: 'rayburn',
     image:
       'https://ktb.org/wp-content/themes/salient-child/images/easyblog_articles/294/b2ap3_medium_DMWTTO_Vinton_GAC-2017.jpg',
     pitch: `
 ## 🗑️ George’s Patriotic Cleanup
 
-Let’s keep Lake Bridgeport beautiful with **George Washington**.
+Let’s keep the Sam Rayburn Reservoir beautiful with **George Washington**.
 
 **What to Expect:**
 - Fun and engaging cleanup activities.
@@ -404,6 +423,7 @@ Together, we can make our community shine!
     views: 20,
     description: 'Explore the beauty of nature with Lucy Lovely.',
     category: 'Wildlife',
+    lake: 'hubbard',
     image:
       'https://cdn.prod.website-files.com/64ad227a3e66387fc5d89320/660cb16111500e8ebcdde1d2_Community-Events-1.png',
     pitch: `

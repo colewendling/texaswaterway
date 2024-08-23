@@ -12,6 +12,7 @@ export async function createUser({
   email,
   password,
   bio,
+  lake,
   image,
 }: {
   name: string;
@@ -19,6 +20,7 @@ export async function createUser({
   email: string;
   password: string;
   bio?: string;
+  lake?: string;
   image?: string;
 }): Promise<{ success: boolean; user?: any; error?: string }> {
   // Validate required fields
@@ -52,6 +54,7 @@ export async function createUser({
       password: hashedPassword,
       image,
       bio,
+      lake,
     });
 
     // Return success response

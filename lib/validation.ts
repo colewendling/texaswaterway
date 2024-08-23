@@ -4,6 +4,7 @@ export const formSchema = z.object({
   title: z.string().min(3).max(100),
   description: z.string().min(20).max(500),
   category: z.string().min(3).max(20),
+  lake: z.string().min(3),
   image: z.union([
     z
       .string()
@@ -68,6 +69,7 @@ export const signUpSchema = z
       .string()
       .max(200, 'Bio must be no more than 200 characters long')
       .optional(),
+    lake: z.string().min(3, 'Please select a lake'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -99,4 +101,5 @@ export const userFormSchema = z.object({
     .string()
     .max(200, 'Bio must be no more than 200 characters long')
     .optional(),
+  lake: z.string().min(3, 'Please select a lake'),
 });

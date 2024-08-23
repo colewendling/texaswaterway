@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Modal from './Modal';
 import EventForm from './EventForm';
-import { cn, formatDate } from '@/lib/utils';
+import { cn, formatDate, getLakeNameById } from '@/lib/utils';
 import { EyeIcon, Edit, ThumbsUp } from 'lucide-react';
 import React from 'react';
 import Link from 'next/link';
@@ -32,6 +32,7 @@ const EventCard = ({
     user,
     title,
     category,
+    lake,
     _id,
     image,
     description,
@@ -139,21 +140,29 @@ const EventCard = ({
           </div>
         </Link>
       </div>
+      <Link
+        href={`/?query=${lake?.toLowerCase()}`}
+        className="flex items-center gap-2"
+      >
+        <p className={`event-card-lake`}>{lake ? getLakeNameById(lake) : ''}</p>
+      </Link>
       <Link href={`/event/${slug?.current}`}>
         <p className="event-card-description">{description}</p>
         <img src={image} alt="placeholder" className="event-card-image" />
       </Link>
       <div className="event-card-bottom">
-        <Link
-          href={`/?query=${category?.toLowerCase()}`}
-          className="flex items-center gap-2"
-        >
-          <span
-            className={`w-3 h-3 rounded-full ${getCategoryColor(category || '')}`}
-            aria-hidden="true"
-          ></span>
-          <p className={`event-card-category`}>{category}</p>
-        </Link>
+        <div>
+          <Link
+            href={`/?query=${category?.toLowerCase()}`}
+            className="flex items-center gap-2"
+          >
+            <span
+              className={`w-3 h-3 rounded-full ${getCategoryColor(category || '')}`}
+              aria-hidden="true"
+            ></span>
+            <p className={`event-card-category`}>{category}</p>
+          </Link>
+        </div>
         <a className="event-card-button" href={`/event/${slug?.current}`}>
           <span className="event-card-button-text">Details</span>
         </a>

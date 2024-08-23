@@ -2,12 +2,12 @@
   @apply flex flex-col;
 }
 
-.event-hero-container {
-  @apply w-full bg-gradient-to-b from-primary to-slate-800   flex justify-center items-center flex-col pt-10 px-6 pb-40 min-h-[230px] md:min-h-[400px] relative;
+.event-date-tag {
+  @apply bg-white px-6 py-3 font-inter font-bold rounded-sm uppercase relative tag-tri;
 }
 
-.event-tag {
-  @apply bg-white px-6 py-3 font-inter font-bold rounded-sm uppercase relative tag-tri;
+.event-lake-tag {
+  @apply bg-blue-200 px-6 py-2 font-semibold rounded-full shadow-lg shadow-black/50 text-blue-600 border border-blue-400 mt-4;
 }
 
 .event-heading {

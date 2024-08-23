@@ -39,6 +39,11 @@ export const user = defineType({
       type: 'url',
     }),
     defineField({
+      name: 'lake',
+      title: 'Lake',
+      type: 'string',
+    }),
+    defineField({
       name: 'bio',
       title: 'Bio',
       type: 'text',

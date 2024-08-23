@@ -977,6 +977,13 @@
         },
         "optional": true
       },
+      "lake": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "image": {
         "type": "objectAttribute",
         "value": {
@@ -1094,6 +1101,13 @@
         "optional": true
       },
       "image": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "lake": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

@@ -1,7 +1,15 @@
 import { defineQuery } from 'next-sanity';
 
 export const EVENTS_QUERY = defineQuery(
-  `*[_type == 'event' && defined(slug.current) && !defined($search) || title match $search || category match $search || user->name match $search ] | order(_createdAt desc) {
+  `*[_type == 'event' && defined(slug.current) && (
+  !defined($search) || 
+  title match $search || 
+  category match $search || 
+  user->name match $search ] || 
+  lake match $search ||
+  lake.name match $search
+  )
+] | order(_createdAt desc) {
     _id, 
     title, 
     slug,
@@ -16,6 +24,7 @@ export const EVENTS_QUERY = defineQuery(
     views, 
     description,
     category,
+    lake,
     image
 }`,
 );
@@ -32,6 +41,7 @@ export const EVENT_BY_ID_QUERY = defineQuery(`
     views, 
     description,
     category,
+    lake,
     image,
     pitch
 // }`);
@@ -58,6 +68,7 @@ export const EVENTS_BY_USER_ID_QUERY = defineQuery(
     views, 
     description,
     category,
+    lake,
     image
 }`,
 );
@@ -80,6 +91,7 @@ export const EVENT_BY_SLUG_QUERY = `
     views, 
     description,
     category,
+    lake,
     image,
     pitch
   }
@@ -88,14 +100,20 @@ export const EVENT_BY_SLUG_QUERY = `
 export const EVENT_COUNT_QUERY = defineQuery(`
   count(
     *[_type == 'event' && defined(slug.current) && 
-      (!defined($search) || title match $search || category match $search || user->name match $search)
+      (!defined($search) || title match $search || category match $search || lake match $search || user->name match $search)
     ]
   )
 `);
 
 export const PAGINATED_EVENTS_QUERY = defineQuery(`
-  *[_type == 'event' && defined(slug.current) && 
-    (!defined($search) || title match $search || category match $search || user->name match $search)
+  *[_type == 'event' && defined(slug.current) && (
+  !defined($search) ||
+   title match $search || 
+   category match $search || 
+   user->name match $search ||
+   lake match $search ||
+   lake.name match $search
+   )
   ] | order(_createdAt desc) [$start..$end] {
     _id, 
     title, 
@@ -111,6 +129,7 @@ export const PAGINATED_EVENTS_QUERY = defineQuery(`
     views, 
     description,
     category,
+    lake,
     image
 }
 `);

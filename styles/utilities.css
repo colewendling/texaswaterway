@@ -96,7 +96,7 @@
 }
 
 .hero-art {
-  @apply absolute bottom-0 pointer-events-none h-auto w-[120px] md:w-[200px] lg:w-[250px] xl:w-[360px] 2xl:w-[400px] z-20 select-none;
+  @apply absolute bottom-0 pointer-events-none h-auto w-[170px] md:w-[250px] lg:w-[300px] xl:w-[360px] 2xl:w-[400px] z-20 select-none;
 }
 
 .hero-art-left {
@@ -107,16 +107,16 @@
   @apply hero-art right-0;
 }
 
-.event-hero-art {
-  @apply absolute bottom-0 pointer-events-none h-auto w-[170px] md:w-[250px] lg:w-[300px] xl:w-[360px] 2xl:w-[400px] z-20 select-none;
+.home-hero-art {
+  @apply absolute bottom-0 pointer-events-none h-auto w-[120px] md:w-[200px] lg:w-[250px] xl:w-[360px] 2xl:w-[400px] z-20 select-none;
 }
 
-.event-hero-art-left {
-  @apply event-hero-art left-0;
+.home-hero-art-left {
+  @apply home-hero-art left-0;
 }
 
-.event-hero-art-right {
-  @apply event-hero-art right-0;
+.home-hero-art-right {
+  @apply home-hero-art right-0;
 }
 
 .water-rectangle {
@@ -187,4 +187,8 @@
 
 .layout-content {
   @apply bg-background min-h-[calc(100vh-200px)];
+}
+
+.hero-container {
+  @apply w-full bg-gradient-to-b from-primary to-slate-800   flex justify-center items-center flex-col pt-10 px-6 pb-40 min-h-[230px] md:min-h-[400px] relative;
 }

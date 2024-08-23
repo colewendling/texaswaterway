@@ -1,19 +1,19 @@
-.hero-container {
+.hero-text-container {
   @apply text-3xl flex flex-col items-center justify-center text-center py-4 px-4 gap-3;
 }
 
-.hero-heading {
+.hero-text-heading {
   @apply font-light leading-tight text-black;
 }
 
-.hero-highlight {
+.hero-text-highlight {
   @apply bg-[#E46C4E] text-white px-3 py-1;
 }
 
-.hero-subheading {
+.hero-text-subheading {
   @apply font-extrabold leading-tight mt-2;
 }
 
-.hero-subheading-white {
-  @apply hero-subheading text-white;
+.hero-text-subheading-white {
+  @apply hero-text-subheading text-white;
 }

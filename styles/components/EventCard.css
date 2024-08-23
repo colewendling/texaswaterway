@@ -83,6 +83,10 @@
   @apply font-semibold text-[14px] text-black hover:text-primary;
 }
 
+.event-card-lake {
+  @apply font-semibold text-[14px] text-blue-400 rounded-full mt-1;
+}
+
 .event-card-button {
   @apply flex items-center gap-2 py-2 px-3 rounded-full text-white bg-black  hover:bg-primary;
 }

@@ -2,10 +2,22 @@ import Map from '@/components/Map';
 
 const MapPage = async () => {
   return (
-    <div>
-      <h1 className="text-center text-xl font-bold p-4">Texas Lakes Map</h1>
+    <>
+      <section className="hero-container">
+        <h1 className="heading">Texas Lakes Map</h1>
+        <img
+          src="/art/events-left.png"
+          alt="Events Left"
+          className="hero-art-left"
+        />
+        <img
+          src="/art/events-right.png"
+          alt="Events Left"
+          className="hero-art-right"
+        />
+      </section>
       <Map />
-    </div>
+    </>
   );
 };
 

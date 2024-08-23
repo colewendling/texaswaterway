@@ -9,18 +9,36 @@ import { sanityFetch, SanityLive } from '@/sanity/lib/live';
 import HeroText from '@/components/HeroText';
 import Pagination from '@/components/Pagnation';
 import React from 'react';
+import { lakes } from '@/lib/data/lakes';
+import { getLakeNameById } from '@/lib/utils';
 
 export default async function Home({
   searchParams,
 }: {
   searchParams: Promise<{ query?: string; page?: string }>;
 }) {
-  const { query: searchQuery, page: pageParam } = await searchParams;
+  const { query: initialSearchQuery, page: pageParam } = await searchParams;
+  let searchQuery = initialSearchQuery;
 
   const page = Number(pageParam) || 1;
   const pageSize = 12;
   const start = (page - 1) * pageSize;
   const end = start + pageSize - 1;
+
+  let lakeId: string | undefined = undefined;
+
+  // Check if the searchQuery includes any lake name
+  if (searchQuery) {
+    const lowerCaseQuery = searchQuery.toLowerCase();
+    for (const lake of lakes) {
+      if (lowerCaseQuery.includes(lake.name.toLowerCase())) {
+        lakeId = lake.id;
+        console.log(JSON.stringify(lakeId));
+        searchQuery = lake.id; // Update searchQuery to lakeId
+        break; // Stop after finding the first matching lake
+      }
+    }
+  }
 
   // Fetch total count of events for pagination
   const countParams = { search: searchQuery || null };
@@ -54,12 +72,12 @@ export default async function Home({
         <img
           src="/art/plants-left.png"
           alt="Plants Left"
-          className="hero-art-left"
+          className="home-hero-art-left"
         />
         <img
           src="/art/plants-right.png"
           alt="Plants Right"
-          className="hero-art-right"
+          className="home-hero-art-right"
         />
         <div className="water-rectangle"></div>
         <img src="/art/boat.png" alt="Boat" className="hero-boat" />
@@ -77,7 +95,11 @@ export default async function Home({
       <section className="section_container">
         <div className="home-header-container">
           <p className="home-header-text">
-            {searchQuery ? `Search results for "${searchQuery}"` : 'All Events'}
+            {searchQuery
+              ? lakeId
+                ? `Search results for "${getLakeNameById(lakeId)}"`
+                : `Search results for "${searchQuery}"`
+              : 'All Events'}
           </p>
           <a href="/map" className="home-header-button">
             Map

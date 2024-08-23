@@ -1,4 +1,4 @@
-import { formatDate } from '@/lib/utils';
+import { formatDate, getLakeNameById } from '@/lib/utils';
 import { client } from '@/sanity/lib/client';
 import { EVENT_BY_SLUG_QUERY } from '@/sanity/lib/queries/eventQueries';
 import { PLAYLIST_BY_SLUG_QUERY } from '@/sanity/lib/queries/playlistQueries';
@@ -32,19 +32,20 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
 
   return (
     <div className="event-page">
-      <section className="event-hero-container">
-        <p className="event-tag">{formatDate(post?._createdAt)}</p>
+      <section className="hero-container">
+        <p className="event-date-tag">{formatDate(post?._createdAt)}</p>
         <h1 className="event-heading">{post.title}</h1>
         <p className="event-subheading">{post.description}</p>
+        <p className="event-lake-tag">{getLakeNameById(post.lake)}</p>
         <img
           src="/art/events-left.png"
           alt="Events Left"
-          className="event-hero-art-left"
+          className="hero-art-left"
         />
         <img
           src="/art/events-right.png"
           alt="Events Left"
-          className="event-hero-art-right"
+          className="hero-art-right"
         />
       </section>
       <section className="section_container">

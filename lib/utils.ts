@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
+import { lakes } from './data/lakes';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -86,4 +87,9 @@ export const handleBlur = async ({
       }));
     }
   }
+};
+
+export const getLakeNameById = (id: string): string | undefined => {
+  const lake = lakes.find((l) => l.id === id);
+  return lake?.name; // Return the name or undefined if not found
 };

@@ -180,6 +180,7 @@ export type Event = {
   views?: number;
   description?: string;
   category?: string;
+  lake?: string;
   image?: string;
   pitch?: string;
 };
@@ -202,6 +203,7 @@ export type User = {
   email?: string;
   password?: string;
   image?: string;
+  lake?: string;
   bio?: string;
   friends?: Array<{
     _ref: string;
