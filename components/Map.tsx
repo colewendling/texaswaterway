@@ -33,7 +33,7 @@ function Map() {
   return (
     <TooltipProvider delayDuration={0}>
       <div className="flex justify-center items-center h-screen relative">
-        <svg width="500" height="500" className="border border-black">
+        <svg width="500" height="500" className="">
           {/* Render Texas border with padding */}
           <g transform="translate(10, 10)">
             <path d={pathGenerator(texasBorder)} fill="none" stroke="black" />

@@ -1,9 +1,8 @@
+import LakePageContent from '@/components/LakePageContent';
 import { lakes } from '@/lib/data/lakes';
 
-const LakePage = async ({ params }: { params: Promise<{ lake: string }> }) => {
-  const { lake: lakeId } = await params;
-
-  const lake = lakes.find((l) => l.id === lakeId);
+const LakePage = async ({ params }: { params: { lake: string } }) => {
+  const lake = lakes.find((l) => l.id === params.lake);
 
   if (!lake) {
     return (
@@ -15,12 +14,22 @@ const LakePage = async ({ params }: { params: Promise<{ lake: string }> }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-4xl font-bold mb-4">{lake.name}</h1>
-      <pre className="bg-gray-800 text-white p-4 rounded w-full max-w-xl overflow-auto">
-        {JSON.stringify(lake, null, 2)}
-      </pre>
-    </div>
+    <>
+      <section className="hero-container">
+        <h1 className="heading">{lake.name}</h1>
+        <img
+          src="/art/events-left.png"
+          alt="Events Left"
+          className="hero-art-left"
+        />
+        <img
+          src="/art/events-right.png"
+          alt="Events Right"
+          className="hero-art-right"
+        />
+      </section>
+      <LakePageContent lake={lake} />
+    </>
   );
 };
 
