@@ -54,21 +54,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div className="image-upload">
-      <label htmlFor="image" className="image-upload-label">
-        <span className="image-upload-circle-container">
-          <span>Upload Image</span>
-          <span
-            className={`image-upload-circle ${
-              imageFile
-                ? 'image-upload-circle-valid'
-                : 'image-upload-circle-null'
-            }`}
-          ></span>
-        </span>
-      </label>
       <div className="image-upload-toggle-button-container">
         <ToggleButton
-          label="Image Upload:"
+          label="Upload Method:"
           value={useURL}
           onToggle={handleToggle}
           optionOne="Upload"

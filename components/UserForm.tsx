@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect } from 'react';
 import { updateUser, deleteUser, getUserById } from '@/app/actions/userActions';
 import { signOut, useSession } from 'next-auth/react';
@@ -11,12 +10,14 @@ import { z } from 'zod';
 import { Textarea } from './ui/textarea';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/hooks/use-toast';
-import { Loader } from 'lucide-react';
+import { ChevronDown, Loader } from 'lucide-react';
+import { lakes } from '@/lib/data/lakes';
 
 const UserForm = ({ onClose }: { onClose: () => void }) => {
   const { data: session, update } = useSession();
   const [formData, setFormData] = useState({
     image: '',
+    lake: '',
     bio: '',
   });
 
@@ -47,6 +48,7 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
           setExistingUser(user);
           setFormData({
             image: user?.image || '',
+            lake: user?.lake || '',
             bio: user?.bio || '',
           });
         } catch (error) {
@@ -81,7 +83,9 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
   }, [formData, useURL, imageFile, isLoading]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -91,7 +95,9 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
   };
 
   const onBlurHandler = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.FocusEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     handleBlur({
       e,
@@ -239,10 +245,54 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
         existing={existingUser}
         buttonCentered={true}
       />
-      <div className="user-form-bottom">
-        <label htmlFor="description" className="user-form-label">
-          Bio
-        </label>
+      <div>
+        <p className="user-form-label">Lake</p>
+        {isLoading ? (
+          <Skeleton className="user-form-dropdown-skeleton">
+            <div className="loading-dots">
+              <div className="loading-dot"></div>
+              <div className="loading-dot"></div>
+              <div className="loading-dot"></div>
+            </div>
+          </Skeleton>
+        ) : (
+          <div className="user-form-input-container">
+            <div className="user-form-dropdown-container">
+              <select
+                id="lake"
+                name="lake"
+                value={formData.lake}
+                required
+                onBlur={onBlurHandler}
+                onChange={handleChange}
+                className={`user-form-dropdown ${
+                  touched.lake
+                    ? formData.lake
+                      ? errors.lake
+                        ? 'form-input-error'
+                        : 'form-input-success'
+                      : 'form-input-error'
+                    : ''
+                }`}
+              >
+                <option value="" disabled>
+                  Select a lake
+                </option>
+                {lakes.map((lake) => (
+                  <option key={lake.name} value={lake.id}>
+                    {lake.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="user-form-dropdown-icon" />
+              {errors.lake && <p className="user-form-error">{errors.lake}</p>}
+            </div>
+            {errors.lake && <p className="user-form-error">{errors.lake}</p>}
+          </div>
+        )}
+      </div>
+      <div className="user-form-input-container">
+        <p className="user-form-label">Bio</p>
         {isLoading ? (
           <Skeleton className="user-form-textarea-skeleton">
             <div className="loading-dots">
@@ -273,7 +323,7 @@ const UserForm = ({ onClose }: { onClose: () => void }) => {
                 }`}
               />
             </>
-            {errors.bio && <p className="event-form-error">{errors.bio}</p>}
+            {errors.bio && <p className="user-form-error">{errors.bio}</p>}
           </div>
         )}
       </div>

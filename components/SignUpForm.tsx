@@ -11,6 +11,8 @@ import { signIn } from 'next-auth/react';
 import { handleBlur, uploadImageToCloudinary } from '@/lib/utils';
 import { createUser } from '@/app/actions/userActions';
 import ImageUpload from './ImageUpload';
+import { ChevronDown } from 'lucide-react';
+import { lakes } from '@/lib/data/lakes';
 
 const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
     lastName: '',
     username: '',
     email: '',
+    lake: '',
     password: '',
     confirmPassword: '',
     image: '',
@@ -33,7 +36,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   const [isTyping, setIsTyping] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     const { name, value } = e.target;
 
@@ -58,7 +63,9 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
   };
 
   const onBlurHandler = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.FocusEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
   ) => {
     handleBlur({
       e,
@@ -109,6 +116,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         lastName: formData.lastName,
         username: formData.username,
         email: formData.email,
+        lake: formData.lake,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
         bio: formData.bio,
@@ -122,6 +130,7 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
         name: fullName,
         username: formData.username,
         email: formData.email,
+        lake: formData.lake,
         password: formData.password,
         bio: formData.bio,
         image: imageValue,
@@ -305,6 +314,36 @@ const SignUpForm = ({ onClose }: { onClose: () => void }) => {
           }`}
         />
         {errors.email && <p className="signup-error">{errors.email}</p>}
+      </div>
+      <div className="signup-dropdown-container">
+        <select
+          id="lake"
+          name="lake"
+          value={formData.lake}
+          required
+          onBlur={onBlurHandler}
+          onChange={handleChange}
+          className={`signup-dropdown ${
+            touched.lake
+              ? formData.lake
+                ? errors.lake
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
+              : ''
+          }`}
+        >
+          <option value="" disabled>
+            Select a lake
+          </option>
+          {lakes.map((lake) => (
+            <option key={lake.name} value={lake.id}>
+              {lake.name}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="signup-dropdown-icon" />
+        {errors.lake && <p className="signup-error">{errors.lake}</p>}
       </div>
       <div className="signup-input-container">
         <input

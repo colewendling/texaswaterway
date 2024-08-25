@@ -21,6 +21,7 @@ import { handleBlur } from '@/lib/utils';
 import ImageUpload from './ImageUpload';
 import { useSession } from 'next-auth/react';
 import { categories } from '@/lib/data/categories';
+import { lakes } from '@/lib/data/lakes';
 
 const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
   const { data: session } = useSession();
@@ -38,6 +39,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
     title: existingEvent?.title || '',
     description: existingEvent?.description || '',
     category: existingEvent?.category || '',
+    lake: existingEvent?.lake || '',
     image: existingEvent?.image || '',
     pitch: existingEvent?.pitch || '',
   });
@@ -141,6 +143,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
         title: formData.get('title') as string,
         description: formData.get('description') as string,
         category: formData.get('category') as string,
+        lake: formData.get('lake') as string,
         image: imageUrl,
         pitch,
       };
@@ -300,7 +303,7 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           }`}
         >
           <option value="" disabled>
-            Select a category
+            Select a Category
           </option>
           {categories.map((category) => (
             <option key={category.id} value={category.name}>
@@ -313,22 +316,57 @@ const EventForm = ({ existingEvent }: { existingEvent?: any }) => {
           <p className="event-form-error">{errors.category}</p>
         )}
       </div>
-
-      <ImageUpload
-        useURL={useURL}
-        setUseURL={setUseURL}
-        setImageFile={setImageFile}
-        setFormData={setFormData}
-        setErrors={setErrors}
-        imageFile={imageFile}
-        formData={formData}
-        errors={errors}
-        touched={touched}
-        handleChange={handleChange}
-        onBlurHandler={onBlurHandler}
-        existing={existingEvent}
-        buttonCentered={false}
-      />
+      <div className="event-form-dropdown-container">
+        <label htmlFor="lake" className="event-form-label">
+          Lake
+        </label>
+        <select
+          id="lake"
+          name="lake"
+          value={formData.lake}
+          required
+          onBlur={onBlurHandler}
+          onChange={handleChange}
+          className={`event-form-dropdown ${
+            touched.lake
+              ? formData.lake
+                ? errors.lake
+                  ? 'form-input-error'
+                  : 'form-input-success'
+                : 'form-input-error'
+              : ''
+          }`}
+        >
+          <option value="" disabled>
+            Select a Lake
+          </option>
+          {lakes.map((lake) => (
+            <option key={lake.name} value={lake.id}>
+              {lake.name}
+            </option>
+          ))}
+        </select>
+        <ChevronDown className="event-form-dropdown-icon" />
+        {errors.lake && <p className="event-form-error">{errors.lake}</p>}
+      </div>
+      <div>
+        <label className="event-form-label">Image Upload</label>
+        <ImageUpload
+          useURL={useURL}
+          setUseURL={setUseURL}
+          setImageFile={setImageFile}
+          setFormData={setFormData}
+          setErrors={setErrors}
+          imageFile={imageFile}
+          formData={formData}
+          errors={errors}
+          touched={touched}
+          handleChange={handleChange}
+          onBlurHandler={onBlurHandler}
+          existing={existingEvent}
+          buttonCentered={false}
+        />
+      </div>
       <div data-color-mode="light">
         <label htmlFor="pitch" className="event-form-label">
           Event Pitch

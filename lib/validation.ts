@@ -97,9 +97,9 @@ export const userFormSchema = z.object({
         'Uploaded file must be an image',
       ),
   ]),
+  lake: z.string().min(3, 'Please select a lake'),
   bio: z
     .string()
     .max(200, 'Bio must be no more than 200 characters long')
     .optional(),
-  lake: z.string().min(3, 'Please select a lake'),
 });

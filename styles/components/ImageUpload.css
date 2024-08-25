@@ -6,26 +6,6 @@
   @apply py-3 flex gap-3;
 }
 
-.image-upload-label {
-  @apply font-bold text-[18px] text-black uppercase pb-3;
-}
-
-.image-upload-circle-container {
-  @apply flex items-center gap-2;
-}
-
-.image-upload-circle {
-  @apply w-3 h-3 rounded-full;
-}
-
-.image-upload-circle-valid {
-  @apply bg-green-500;
-}
-
-.image-upload-circle-null {
-  @apply bg-gray-400;
-}
-
 .image-upload-button-container {
   @apply flex flex-col gap-2 justify-center;
 }
@@ -67,7 +47,7 @@
 }
 
 .image-upload-input {
-  @apply border-[1px] w-full bg-white border-black px-4 py-1.5 text-[16px] text-black font-semibold rounded-full  placeholder:text-black;
+  @apply border w-full bg-white border-black px-4 py-1.5 text-[16px] text-gray-600 font-normal rounded-full  placeholder:text-gray-600;
 }
 
 .image-upload-error {
