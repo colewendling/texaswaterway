@@ -53,6 +53,10 @@ const config: Config = {
           '50%': { transform: 'translateX(var(--right-boundary))' },
           '100%': { transform: 'translateX(0)' },
         },
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
         loader: {
           '0%': { width: '0%' },
           '100%': { width: '100%' },
@@ -72,6 +76,7 @@ const config: Config = {
       },
       animation: {
         boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
+        float: 'float 2s ease-in-out infinite',
         loader: 'loader 6s linear forwards',
         slideInLeft: 'slideInLeft 1.5s ease-out forwards',
         slideInRight: 'slideInRight 1.5s ease-out 1.5s forwards',

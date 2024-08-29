@@ -1,17 +1,42 @@
-export const lakes = [
+export type OpportunityLevel = 'poor' | 'fair' | 'good' | 'excellent';
+
+export interface Lake {
+  id: string;
+  name: string;
+  coordinates: [number, number]; // [longitude, latitude]
+  fish: string[];
+  size: number; // in acres
+  anglingOpportunities: Record<string, OpportunityLevel>; // New field
+}
+
+export const lakes: Lake[] = [
   {
     id: 'bridgeport',
     name: 'Lake Bridgeport',
     coordinates: [-97.805, 33.2098], // [longitude, latitude]
     fish: [
+      'Smallmouth Bass',
       'Largemouth Bass',
+      'Spotted Bass',
       'Channel Catfish',
       'Crappie',
       'Redear Sunfish',
       'Longear Sunfish',
       'White Bass',
+      'Striped Bass',
     ],
     size: 6.0, // Approx. 3,800 acres
+    anglingOpportunities: {
+      'Smallmouth Bass': 'good',
+      'Largemouth Bass': 'good',
+      'Spotted Bass': 'good',
+      'Channel Catfish': 'good',
+      'Crappie': 'excellent',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+      'White Bass': 'excellent',
+      'Striped Bass': 'excellent',
+    },
   },
   {
     id: 'travis',
@@ -21,11 +46,21 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
+      'Striped Bass',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 29.6, // Approx. 18,930 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'good',
+      'Crappie': 'poor',
+      'White Bass': 'good',
+      'Striped Bass': 'fair',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
   {
     id: 'fork',
@@ -33,13 +68,21 @@ export const lakes = [
     coordinates: [-95.5574, 32.7927],
     fish: [
       'Largemouth Bass',
+      'White Bass',
       'Channel Catfish',
       'Crappie',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 34.4, // Approx. 22,000 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'excellent',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'good',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+      'White Bass': 'fair',
+    },
   },
   {
     id: 'rayburn',
@@ -49,10 +92,19 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
       'Redear Sunfish',
       'Longear Sunfish',
     ],
     size: 178.1, // Approx. 114,000 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'excellent',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'excellent',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+      'White Bass': 'fair',
+    },
   },
   {
     id: 'toledo-bend',
@@ -65,8 +117,18 @@ export const lakes = [
       'Redear Sunfish',
       'Longear Sunfish',
       'White Bass',
+      'Striped Bass',
     ],
     size: 289.1, // Approx. 185,000 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'excellent',
+      'Channel Catfish': 'good',
+      'Crappie': 'good',
+      'Redear Sunfish': 'excellent',
+      'Longear Sunfish': 'excellent',
+      'White Bass': 'fair',
+      'Striped Bass': 'poor',
+    },
   },
   {
     id: 'whitney',
@@ -75,11 +137,24 @@ export const lakes = [
     fish: [
       'Largemouth Bass',
       'Channel Catfish',
+      'Blue Catfish',
+      'Flathead Catfish',
       'Crappie',
+      'White Bass',
       'Redear Sunfish',
       'Longear Sunfish',
     ],
     size: 28.6, // Approx. 18,300 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'good',
+      'Blue Catfish': 'good',
+      'Flathead Catfish': 'fair',
+      'Crappie': 'fair',
+      'White Bass': 'good',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
   {
     id: 'amisted',
@@ -87,13 +162,21 @@ export const lakes = [
     coordinates: [-101.1183, 29.4562],
     fish: [
       'Largemouth Bass',
+      'Smallmouth Bass',
       'Channel Catfish',
-      'Crappie',
-      'Redear Sunfish',
-      'Longear Sunfish',
+      'Blue Catfish',
       'White Bass',
+      'Striped Bass',
     ],
     size: 186.9, // Approx. 119,600 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'excellent',
+      'Smallmouth Bass': 'fair',
+      'Channel Catfish': 'good',
+      'Blue Catfish': 'good',
+      'White Bass': 'good',
+      'Striped Bass': 'good',
+    },
   },
   {
     id: 'canyon',
@@ -101,13 +184,27 @@ export const lakes = [
     coordinates: [-98.2625, 29.8732],
     fish: [
       'Largemouth Bass',
+      'Smallmouth Bass',
       'Channel Catfish',
       'Crappie',
       'Redear Sunfish',
       'Longear Sunfish',
       'White Bass',
+      'Striped Bass',
+      'Redear Sunfish',
+      'Longear Sunfish',
     ],
     size: 6.1, // Approx. 3,900 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Smallmouth Bass': 'fair',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'poor',
+      'White Bass': 'excellent',
+      'Striped Bass': 'excellent',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
   {
     id: 'hubbard',
@@ -119,8 +216,17 @@ export const lakes = [
       'Crappie',
       'Redear Sunfish',
       'Longear Sunfish',
+      'White Bass',
     ],
     size: 114.1, // Approx. 73,000 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'good',
+      'Crappie': 'excellent',
+      'Redear Sunfish': 'fair',
+      'Longear Sunfish': 'fair',
+      'White Bass': 'good',
+    },
   },
   {
     id: 'buchanan',
@@ -130,10 +236,21 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
+      'Striped Bass',
       'Redear Sunfish',
       'Longear Sunfish',
     ],
     size: 72.5, // Approx. 46,400 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'fair',
+      'Redear Sunfish': 'fair',
+      'Longear Sunfish': 'fair',
+      'White Bass': 'excellent',
+      'Striped Bass': 'excellent',
+    },
   },
   // New Lakes Added Below
   {
@@ -144,26 +261,49 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
+      'Striped Bass',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 29.7, // Approx. 19,000 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'good',
+      'Crappie': 'fair',
+      'White Bass': 'excellent',
+      'Striped Bass': 'good',
+      'Redear Sunfish': 'fair',
+      'Longear Sunfish': 'fair',
+    },
   },
   {
     id: 'texoma',
     name: 'Lake Texoma',
     coordinates: [-97.1536, 33.7994],
     fish: [
-      'Striped Bass',
       'Largemouth Bass',
+      'Spotted Bass',
+      'Smallmouth Bass',
+      'Blue Catfish',
       'Channel Catfish',
+      'Flathead Catfish',
       'Crappie',
-      'Redear Sunfish',
-      'Longear Sunfish',
+      'Striped Bass',
       'White Bass',
     ],
     size: 138.9, // Approx. 89,000 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Spotted Bass': 'good',
+      'Smallmouth Bass': 'excellent',
+      'Blue Catfish': 'excellent',
+      'Channel Catfish': 'good',
+      'Flathead Catfish': 'fair',
+      'Crappie': 'good',
+      'Striped Bass': 'excellent',
+      'White Bass': 'good',
+    },
   },
   {
     id: 'livingston',
@@ -173,11 +313,21 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
+      'Striped Bass',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 159.1, // Approx. 101,800 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'poor',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'poor',
+      'White Bass': 'excellent',
+      'Striped Bass': 'fair',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
   {
     id: 'ray-roberts',
@@ -187,11 +337,19 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 30.2, // Approx. 19,300 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'excellent',
+      'Channel Catfish': 'good',
+      'Crappie': 'excellent',
+      'White Bass': 'excellent',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
   {
     id: 'lbj',
@@ -201,10 +359,19 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
       'Redear Sunfish',
       'Longear Sunfish',
     ],
     size: 3.9, // Approx. 2,500 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'good',
+      'Crappie': 'good',
+      'White Bass': 'good',
+      'Redear Sunfish': 'fair',
+      'Longear Sunfish': 'fair',
+    },
   },
   {
     id: 'lewisville',
@@ -212,27 +379,34 @@ export const lakes = [
     coordinates: [-96.9753, 33.1161],
     fish: [
       'Largemouth Bass',
+      'Spotted Bass',
       'Channel Catfish',
       'Crappie',
-      'Redear Sunfish',
-      'Longear Sunfish',
       'White Bass',
+      'Striped Bass',
     ],
     size: 46.1, // Approx. 29,500 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Spotted Bass': 'good',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'excellent',
+      'White Bass': 'excellent',
+      'Striped Bass': 'good',
+    },
   },
   {
     id: 'falcon',
     name: 'Falcon Reservoir',
     coordinates: [-95.3506, 32.4368],
-    fish: [
-      'Largemouth Bass',
-      'Channel Catfish',
-      'Crappie',
-      'Redear Sunfish',
-      'Longear Sunfish',
-      'White Bass',
-    ],
+    fish: ['Largemouth Bass', 'Channel Catfish', 'Crappie', 'White Bass'],
     size: 11.1, // Approx. 7,100 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'excellent',
+      'Channel Catfish': 'excellent',
+      'Crappie': 'poor',
+      'White Bass': 'poor',
+    },
   },
   {
     id: 'granbury',
@@ -242,11 +416,21 @@ export const lakes = [
       'Largemouth Bass',
       'Channel Catfish',
       'Crappie',
+      'White Bass',
+      'Striped Bass',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 11.3, // Approx. 7,250 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'good',
+      'Crappie': 'fair',
+      'White Bass': 'good',
+      'Striped Bass': 'good',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
   {
     id: 'pat-cleburne',
@@ -255,11 +439,23 @@ export const lakes = [
     fish: [
       'Largemouth Bass',
       'Channel Catfish',
+      'Blue Catfish',
+      'Flathead Catfish',
       'Crappie',
+      'White Bass',
       'Redear Sunfish',
       'Longear Sunfish',
-      'White Bass',
     ],
     size: 5.6, // Approx. 3,600 acres
+    anglingOpportunities: {
+      'Largemouth Bass': 'good',
+      'Channel Catfish': 'excellent',
+      'Blue Catfish': 'good',
+      'Flathead Catfish': 'poor',
+      'Crappie': 'poor',
+      'White Bass': 'good',
+      'Redear Sunfish': 'good',
+      'Longear Sunfish': 'good',
+    },
   },
 ];
