@@ -1,36 +1,12 @@
-import LakePageContent from '@/components/LakePageContent';
-import { lakes } from '@/lib/data/lakes';
+import { redirect } from 'next/navigation';
 
-const LakePage = async ({ params }: { params: { lake: string } }) => {
-  const lake = lakes.find((l) => l.id === params.lake);
+interface LakePageProps {
+  params: { lake: string };
+}
 
-  if (!lake) {
-    return (
-      <div className="text-center text-red-500 mt-10">
-        <h1 className="text-2xl font-bold">Lake not found</h1>
-        <p>The requested lake does not exist in our records.</p>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <section className="hero-container">
-        <h1 className="heading">{lake.name}</h1>
-        <img
-          src="/art/events-left.png"
-          alt="Events Left"
-          className="hero-art-left"
-        />
-        <img
-          src="/art/events-right.png"
-          alt="Events Right"
-          className="hero-art-right"
-        />
-      </section>
-      <LakePageContent lake={lake} />
-    </>
-  );
+// Handles /lake/[lake] and redirects to /lake/[lake]/data
+const LakePage: React.FC<LakePageProps> = ({ params }) => {
+  redirect(`/lake/${params.lake}/data`);
 };
 
 export default LakePage;

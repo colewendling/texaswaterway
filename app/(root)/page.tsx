@@ -124,6 +124,7 @@ export default async function Home({
           totalPages={totalPages}
           currentPage={page}
           query={searchQuery}
+          basePath="/"
         />
       </section>
       <SanityLive />

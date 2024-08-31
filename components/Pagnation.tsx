@@ -4,12 +4,14 @@ interface PaginationProps {
   totalPages: number;
   currentPage: number;
   query?: string;
+  basePath: string;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   currentPage,
   query,
+  basePath,
 }) => {
   if (totalPages <= 1) return null;
 
@@ -19,8 +21,10 @@ const Pagination: React.FC<PaginationProps> = ({
         <Link
           key={pageNumber}
           href={{
-            pathname: '/',
-            query: { query: query || undefined, page: pageNumber },
+            pathname: basePath,
+            query: query
+              ? { query: query, page: pageNumber }
+              : { page: pageNumber },
           }}
         >
           <button
