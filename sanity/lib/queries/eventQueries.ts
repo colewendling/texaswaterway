@@ -133,3 +133,30 @@ export const PAGINATED_EVENTS_QUERY = defineQuery(`
     image
 }
 `);
+
+export const EVENT_COUNT_BY_LAKE_QUERY = defineQuery(
+  `count(
+    *[_type == 'event' && defined(slug.current) && lake == $lakeId]
+  )`,
+);
+
+export const PAGINATED_EVENTS_BY_LAKE_QUERY = defineQuery(
+  `*[_type == 'event' && defined(slug.current) && lake == $lakeId] | order(_createdAt desc)[$start..$end] {
+    _id, 
+    title, 
+    slug,
+    _createdAt,
+    user -> {
+      _id, 
+      name,
+      username, 
+      image, 
+      bio
+    }, 
+    views, 
+    description,
+    category,
+    lake,
+    image
+  }`,
+);
