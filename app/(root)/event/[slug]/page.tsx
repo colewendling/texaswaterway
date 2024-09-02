@@ -36,7 +36,9 @@ const Page = async ({ params }: { params: Promise<{ slug: string }> }) => {
         <p className="event-date-tag">{formatDate(post?._createdAt)}</p>
         <h1 className="event-heading">{post.title}</h1>
         <p className="event-subheading">{post.description}</p>
-        <p className="event-lake-tag">{getLakeNameById(post.lake)}</p>
+        <Link href={`/lake/${post.lake}/data`}>
+          <p className="event-lake-tag">{getLakeNameById(post.lake)}</p>
+        </Link>
         <img
           src="/art/events-left.png"
           alt="Events Left"

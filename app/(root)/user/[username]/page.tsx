@@ -10,6 +10,7 @@ import { EventCardSkeleton } from '@/components/EventCard';
 import EditButton from '@/components/EditButton';
 import FriendList from '@/components/FriendList';
 import { getLakeNameById } from '@/lib/utils';
+import Link from 'next/link';
 
 export const experimental_ppr = true;
 
@@ -51,7 +52,9 @@ const Page = async ({
             />
           </div>
           <p className="profile-username">@{user?.username}</p>
-          <p className="profile-lake">{getLakeNameById(user?.lake)}</p>
+          <Link href={`/lake/${user?.lake}/data`}>
+            <p className="profile-lake">{getLakeNameById(user?.lake)}</p>
+          </Link>
           <p className="profile-bio">{user?.bio}</p>
           <div className="profile-friendlist">
             <FriendList
