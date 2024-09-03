@@ -72,6 +72,7 @@ export const authOptions = {
             username: profile.login,
             email: profile.email,
             image: profile.avatar_url,
+            lake: 'bridgeport',
             bio: profile.bio || '',
           });
         }
@@ -119,6 +120,7 @@ export const authOptions = {
       if (user) {
         session.user.image = user.image;
         session.user.username = user.username || session.user.username;
+        session.user.lake = user.lake;
       }
 
       Object.assign(session, { id: token.id });
