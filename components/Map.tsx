@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useState } from 'react';
 import * as d3 from 'd3-geo';
 import { lakes } from '@/lib/data/lakes';
@@ -99,11 +98,16 @@ function Map() {
 
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="flex justify-center items-center h-screen relative">
+      <div className="flex justify-center items-center h-screen relative max-h-[550px]">
         <svg width="500" height="500" className="">
           {/* Render Texas border with padding */}
           <g transform="translate(10, 10)">
-            <path d={pathGenerator(texasBorder)} fill="none" stroke="black" />
+            <path
+              d={pathGenerator(texasBorder)}
+              fill="white"
+              stroke="black"
+              strokeWidth={2}
+            />
             {/* Render lakes */}
             {lakes.map((lake) => {
               const [x, y] = projection(lake.coordinates) || [0, 0]; // Protect against undefined projection
