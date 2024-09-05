@@ -1,9 +1,8 @@
 'use client';
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { BadgePlus, LogOut, Github, Settings } from 'lucide-react';
+import { BadgePlus, LogOut, Github, Settings, Gauge } from 'lucide-react';
 import Modal from '@/components/Modal';
 import SignUpForm from '@/components/SignUpForm';
 import LoginForm from '@/components/LoginForm';
@@ -37,6 +36,20 @@ const Navbar = () => {
           {status === 'loading' ? (
             <>
               {/* Skeleton for Create Button */}
+              <Skeleton className="navbar-button-lake-skeleton">
+                <div className="loading-dots">
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                </div>
+              </Skeleton>
+              <Skeleton className="navbar-button-map-skeleton">
+                <div className="loading-dots">
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                  <div className="loading-dot"></div>
+                </div>
+              </Skeleton>
               <Skeleton className="navbar-button-create-skeleton">
                 <div className="loading-dots">
                   <div className="loading-dot"></div>
@@ -44,8 +57,6 @@ const Navbar = () => {
                   <div className="loading-dot"></div>
                 </div>
               </Skeleton>
-
-              {/* Skeleton for Avatar */}
               <Skeleton className="navbar-avatar-skeleton">
                 <div className="loading-dots">
                   <div className="loading-dot"></div>
@@ -61,6 +72,21 @@ const Navbar = () => {
             </>
           ) : session && session?.user ? (
             <>
+              <Link
+                className="navbar-button-lake"
+                href={`/lake/${session?.user.lake}/data`}
+              >
+                <Gauge className="navbar-button-icon" />
+                <span className="navbar-button-text">Lake</span>
+              </Link>
+              <Link className="navbar-button-map" href="/map">
+                <img
+                  src={'/icons/texas.svg'}
+                  alt={'Map Icon'}
+                  className="navbar-avatar w-6 h-6"
+                />
+                <span className="navbar-button-text">Map</span>
+              </Link>
               <Link className="navbar-button-create" href="/event/create">
                 <BadgePlus className="navbar-button-icon" />
                 <span className="navbar-button-text">Create</span>
