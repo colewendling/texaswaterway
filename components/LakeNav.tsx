@@ -1,15 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {
-  Calendar,
-  Fish,
-  Grid2x2Check,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { Calendar, Fish, Grid2x2Check } from 'lucide-react';
 
 interface LakeNavProps {
   lakeId: string;
@@ -17,68 +11,44 @@ interface LakeNavProps {
 
 const LakeNav: React.FC<LakeNavProps> = ({ lakeId }) => {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const isActive = (path: string) => pathname === path;
 
-  const toggleNav = () => setIsCollapsed(!isCollapsed);
-
   return (
-    <div
-      className={`border-r border-gray-300 bg-slate-700 text-white pt-2 ${
-        isCollapsed ? 'w-[20]' : 'w-40'
-      }`}
-    >
-      <div className="sticky top-2 bg-slate-700 z-10">
-        {/* Chevron Toggle */}
-        <div
-          className="flex items-center justify-end px-2 cursor-pointer"
-          onClick={toggleNav}
-        >
-          {isCollapsed ? (
-            <ChevronRight className="text-white size-6" />
-          ) : (
-            <ChevronLeft className="text-white size-6 " />
-          )}
-        </div>
+    <nav className="w-full bg-slate-700 text-white flex justify-center space-x-4 py-2">
+      {/* Data */}
+      <Link
+        href={`/lake/${lakeId}/data`}
+        className={`flex items-center space-x-1 px-4 py-2 rounded-md hover:bg-slate-600 ${
+          isActive(`/lake/${lakeId}/data`) ? 'font-bold text-primary' : ''
+        }`}
+      >
+        <Grid2x2Check size={20} />
+        <span>Data</span>
+      </Link>
 
-        {/* Navigation Links */}
-        {!isCollapsed && (
-          <ul className="space-y-4 p-4">
-            <li
-              className={`flex items-center ${
-                isActive(`/lake/${lakeId}/data`)
-                  ? 'font-bold text-primary'
-                  : 'text-white'
-              }`}
-            >
-              <Grid2x2Check className="mr-2" size={20} />
-              <Link href={`/lake/${lakeId}/data`}>Data</Link>
-            </li>
-            <li
-              className={`flex items-center ${
-                isActive(`/lake/${lakeId}/events`)
-                  ? 'font-bold text-primary'
-                  : 'text-white'
-              }`}
-            >
-              <Calendar className="mr-2" size={20} />
-              <Link href={`/lake/${lakeId}/events`}>Events</Link>
-            </li>
-            <li
-              className={`flex items-center ${
-                isActive(`/lake/${lakeId}/fish`)
-                  ? 'font-bold text-primary'
-                  : 'text-white'
-              }`}
-            >
-              <Fish className="mr-2" size={20} />
-              <Link href={`/lake/${lakeId}/fish`}>Fish</Link>
-            </li>
-          </ul>
-        )}
-      </div>
-    </div>
+      {/* Events */}
+      <Link
+        href={`/lake/${lakeId}/events`}
+        className={`flex items-center space-x-1 px-4 py-2 rounded-md hover:bg-slate-600 ${
+          isActive(`/lake/${lakeId}/events`) ? 'font-bold text-primary' : ''
+        }`}
+      >
+        <Calendar size={20} />
+        <span>Events</span>
+      </Link>
+
+      {/* Fish */}
+      <Link
+        href={`/lake/${lakeId}/fish`}
+        className={`flex items-center space-x-1 px-4 py-2 rounded-md hover:bg-slate-600 ${
+          isActive(`/lake/${lakeId}/fish`) ? 'font-bold text-primary' : ''
+        }`}
+      >
+        <Fish size={20} />
+        <span>Fish</span>
+      </Link>
+    </nav>
   );
 };
 
