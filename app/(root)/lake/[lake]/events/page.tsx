@@ -71,6 +71,9 @@ const LakeEventsPage: React.FC<LakeEventsPageProps> = async ({
         <meta name="description" content={`Upcoming events at ${lake.name}.`} />
       </Head>
       <section className="p-8">
+        <h2 className="text-3xl font-bold">
+          Events for {lake.name}
+        </h2>
         <ul className="home-event-container  grid md:grid-cols-2 sm:grid-cols-2 gap-6">
           {events?.length > 0 ? (
             events.map((post: EventCardType) => (

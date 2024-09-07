@@ -17,7 +17,7 @@ const LakeLayout = async ({ children, params }: LakeLayoutProps) => {
   }
 
   return (
-    <div className="">
+    <div className="min-h-screen">
       <section className="hero-container">
         <h1 className="heading">{lakeData?.name}</h1>
         <img
@@ -31,11 +31,13 @@ const LakeLayout = async ({ children, params }: LakeLayoutProps) => {
           className="hero-art-right"
         />
       </section>
-      <div className="flex flex-row">
-        <LakeNav lakeId={lakeData?.id} />
-        <main className="flex flex-col w-full items-center justify-center min-h-[600px]">
-          {children}
-        </main>
+
+      {/* LakeNav Navigation */}
+      <LakeNav lakeId={lakeData?.id || ''} />
+
+      {/* Content */}
+      <div className="flex flex-col w-full flex-grow min-h-screen items-center justify-center px-8">
+        {children}
       </div>
     </div>
   );

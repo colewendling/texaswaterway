@@ -4,11 +4,20 @@ import React, { useState } from 'react';
 import { clearDatabase, seedDatabase } from '@/app/actions/databaseActions';
 import { redirect } from 'next/navigation';
 
+import { fetchAndSaveLakeData } from '@/app/actions/lakeDataActions';
+import { lakes } from '@/lib/data/lakes';
+
 const DevelopmentPage = () => {
-  const [loading, setLoading] = useState<{ clear: boolean; seed: boolean }>({
+  const [loading, setLoading] = useState<{
+    clear: boolean;
+    seed: boolean;
+    lakeData: boolean;
+  }>({
     clear: false,
     seed: false,
+    lakeData: false,
   });
+  const [selectedLake, setSelectedLake] = useState<string>(lakes[0].id);
   const [message, setMessage] = useState('');
   const [results, setResults] = useState<Record<string, number> | null>(null);
 
@@ -25,7 +34,7 @@ const DevelopmentPage = () => {
       return;
     }
 
-    setLoading({ clear: true, seed: false });
+    setLoading({ clear: true, seed: false, lakeData: false });
     setMessage('');
     setResults(null);
 
@@ -43,7 +52,7 @@ const DevelopmentPage = () => {
       console.error('Error clearing database:', error);
       setMessage('An error occurred.');
     } finally {
-      setLoading({ clear: false, seed: false });
+      setLoading({ clear: false, seed: false, lakeData: false });
     }
   };
 
@@ -56,7 +65,7 @@ const DevelopmentPage = () => {
       return;
     }
 
-    setLoading({ clear: false, seed: true });
+    setLoading({ clear: false, seed: true, lakeData: false });
     setMessage('');
     setResults(null);
 
@@ -74,7 +83,22 @@ const DevelopmentPage = () => {
       console.error('Error seeding database:', error);
       setMessage('An error occurred.');
     } finally {
-      setLoading({ clear: false, seed: false });
+      setLoading({ clear: false, seed: false, lakeData: false });
+    }
+  };
+
+  const handleFetchLakeData = async () => {
+    setLoading({ clear: false, seed: false, lakeData: true });
+    setMessage('');
+
+    try {
+      await fetchAndSaveLakeData(selectedLake);
+      setMessage(`Data for ${selectedLake} saved successfully!`);
+    } catch (error) {
+      console.error('Error fetching lake data:', error);
+      setMessage(`Failed to fetch or save data for ${selectedLake}.`);
+    } finally {
+      setLoading({ clear: false, seed: false, lakeData: false });
     }
   };
 
@@ -86,7 +110,7 @@ const DevelopmentPage = () => {
       <div className="flex flex-col space-y-4">
         <button
           onClick={handleClearDatabase}
-          disabled={loading.clear || loading.seed}
+          disabled={loading.clear || loading.seed || loading.lakeData}
           className={`px-6 py-3 text-white font-medium rounded-md transition ${
             loading.clear
               ? 'bg-gray-400 cursor-not-allowed'
@@ -97,7 +121,7 @@ const DevelopmentPage = () => {
         </button>
         <button
           onClick={handleSeedDatabase}
-          disabled={loading.seed || loading.clear}
+          disabled={loading.seed || loading.clear || loading.lakeData}
           className={`px-6 py-3 text-white font-medium rounded-md transition ${
             loading.seed
               ? 'bg-gray-400 cursor-not-allowed'
@@ -105,6 +129,39 @@ const DevelopmentPage = () => {
           }`}
         >
           {loading.seed ? 'Seeding...' : 'Seed Database'}
+        </button>
+        {/* Dropdown for selecting a lake */}
+        <div className="flex flex-col items-center">
+          <label
+            htmlFor="lake-select"
+            className="text-lg font-medium text-gray-700 mb-2"
+          >
+            Select Lake:
+          </label>
+          <select
+            id="lake-select"
+            value={selectedLake}
+            onChange={(e) => setSelectedLake(e.target.value)}
+            className="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-blue-300"
+          >
+            {lakes.map((lake) => (
+              <option key={lake.id} value={lake.id}>
+                {lake.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        {/* Button to fetch lake data */}
+        <button
+          onClick={handleFetchLakeData}
+          disabled={loading.lakeData || loading.clear || loading.seed}
+          className={`px-6 py-3 text-white font-medium rounded-md transition ${
+            loading.lakeData
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-500 hover:bg-blue-600'
+          }`}
+        >
+          {loading.lakeData ? 'Fetching...' : 'Fetch Lake Data'}
         </button>
       </div>
       {message && (

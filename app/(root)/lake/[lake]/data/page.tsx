@@ -1,6 +1,8 @@
 import React from 'react';
 import { lakes, Lake } from '@/lib/data/lakes';
 import { notFound } from 'next/navigation';
+import { fetchLakeData } from '@/app/actions/lakeDataActions';
+import LakeDataDashboard from '@/components/LakeDataDashboard';
 
 interface DataPageProps {
   params: { lake: string };
@@ -14,18 +16,12 @@ const LakeDataPage = async ({ params }: DataPageProps) => {
     notFound();
   }
 
+  const lakeFileData = await fetchLakeData(lakeData.id);
+
   return (
-    <div>
-      <h2>Lake Data</h2>
-      <p>
-        <strong>Name:</strong> {lakeData.name}
-      </p>
-      <p>
-        <strong>Size:</strong> {lakeData.size} acres
-      </p>
-      <p>
-        <strong>Coordinates:</strong> {lakeData.coordinates.join(', ')}
-      </p>
+    <div className="w-full h-full min-h-screen px-4 flex flex-col items-center">
+      <h2 className="text-3xl font-bold">{lakeData.name} Dashboard</h2>
+      <LakeDataDashboard lakeData={lakeFileData} />
     </div>
   );
 };
