@@ -61,6 +61,10 @@ const config: Config = {
           '0%': { width: '0%' },
           '100%': { width: '100%' },
         },
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
         slideInLeft: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },
           '100%': { transform: 'translateX(0)', opacity: '1' },
@@ -78,6 +82,7 @@ const config: Config = {
         boatSailing: 'boatSailing var(--boat-duration, 60s) infinite',
         float: 'float 2s ease-in-out infinite',
         loader: 'loader 6s linear forwards',
+        scroll: 'scroll 20s linear infinite',
         slideInLeft: 'slideInLeft 1.5s ease-out forwards',
         slideInRight: 'slideInRight 1.5s ease-out 1.5s forwards',
         spin: 'spin 2s linear infinite',
