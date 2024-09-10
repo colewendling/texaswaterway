@@ -4,9 +4,9 @@ interface LakePageProps {
   params: { lake: string };
 }
 
-// Handles /lake/[lake] and redirects to /lake/[lake]/data
-const LakePage: React.FC<LakePageProps> = ({ params }) => {
+const LakePage = ({ params }: LakePageProps) => {
   redirect(`/lake/${params.lake}/data`);
+  return null; // Optionally, return null as redirect halts further rendering
 };
 
 export default LakePage;

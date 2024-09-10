@@ -2,6 +2,7 @@ import React from 'react';
 import { notFound } from 'next/navigation';
 import LakeNav from '@/components/LakeNav';
 import { lakes, Lake } from '@/lib/data/lakes';
+import LakeDropdown from '@/components/LakeDropdown';
 
 interface LakeLayoutProps {
   children: React.ReactNode;
@@ -20,6 +21,11 @@ const LakeLayout = async ({ children, params }: LakeLayoutProps) => {
     <div className="min-h-screen">
       <section className="hero-container">
         <h1 className="heading">{lakeData?.name}</h1>
+        <h1 className="font-semibold text-2xl">
+          <span className="text-black">Live Data </span>
+          <span className="hero-text-highlight text-white">Dashboard</span>
+        </h1>
+        <LakeDropdown currentLakeId={lakeData?.id || ''} lakes={lakes} />
         <img
           src="/art/lake-left.png"
           alt="Events Left"
@@ -31,11 +37,7 @@ const LakeLayout = async ({ children, params }: LakeLayoutProps) => {
           className="hero-art-right"
         />
       </section>
-
-      {/* LakeNav Navigation */}
       <LakeNav lakeId={lakeData?.id || ''} />
-
-      {/* Content */}
       <div className="flex flex-col w-full flex-grow min-h-screen items-center justify-center px-8">
         {children}
       </div>
