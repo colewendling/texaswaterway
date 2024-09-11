@@ -5,6 +5,7 @@ import { lakes, Lake } from '@/lib/data/lakes';
 import FishCard from '@/components/FishCard';
 import { fishData } from '@/lib/data/fish';
 import AnglingOpportunities from '@/components/AnglingOpportunities';
+import FishingLimits from '@/components/FishingLimits';
 
 interface LakeFishPageProps {
   params: { lake: string };
@@ -42,6 +43,8 @@ const LakeFishPage = async ({ params }: LakeFishPageProps) => {
           return <FishCard key={fish.name} fish={fish} />;
         })}
       </div>
+      {/* Fishing Limits Section */}
+      <FishingLimits />
     </div>
   );
 };
