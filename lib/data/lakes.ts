@@ -85,7 +85,7 @@ export const lakes: Lake[] = [
     },
   },
   {
-    id: 'rayburn',
+    id: 'sam-rayburn',
     name: 'Sam Rayburn Reservoir',
     coordinates: [-94.0627, 31.0686],
     fish: [
@@ -157,7 +157,7 @@ export const lakes: Lake[] = [
     },
   },
   {
-    id: 'amisted',
+    id: 'amistad',
     name: 'Amistad Reservoir',
     coordinates: [-101.1183, 29.4562],
     fish: [
@@ -207,8 +207,8 @@ export const lakes: Lake[] = [
     },
   },
   {
-    id: 'hubbard',
-    name: 'Lake Hubbard',
+    id: 'ray-hubbard',
+    name: 'Lake Ray Hubbard',
     coordinates: [-96.5258, 32.8537],
     fish: [
       'Largemouth Bass',
@@ -252,7 +252,6 @@ export const lakes: Lake[] = [
       'Striped Bass': 'excellent',
     },
   },
-  // New Lakes Added Below
   {
     id: 'possum-kingdom',
     name: 'Possum Kingdom Lake',
@@ -352,8 +351,8 @@ export const lakes: Lake[] = [
     },
   },
   {
-    id: 'lbj',
-    name: 'Lake LBJ',
+    id: 'lyndon-b-johnson',
+    name: 'Lake Lyndon B. Johnson',
     coordinates: [-97.3171, 30.3039],
     fish: [
       'Largemouth Bass',
