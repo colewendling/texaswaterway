@@ -18,6 +18,10 @@ function Map() {
   const MIN_RADIUS = 4;
   const MAX_RADIUS = 8;
 
+  // Define the SVG's viewBox dimensions
+  const SVG_WIDTH = 500;
+  const SVG_HEIGHT = 500;
+
   // Define Tailwind color classes from light to dark
   const colorClasses = [
     'fill-blue-400',
@@ -96,10 +100,23 @@ function Map() {
     maxSize,
   ];
 
+  // Format legend labels with < and > symbols
+  const formattedLegendLabels = [
+    `< ${legendValues[1].toFixed(1)}`,
+    `${legendValues[1].toFixed(1)} - ${legendValues[2].toFixed(1)}`,
+    `${legendValues[2].toFixed(1)} - ${legendValues[3].toFixed(1)}`,
+    `> ${legendValues[3].toFixed(1)}`,
+  ];
+
   return (
     <TooltipProvider delayDuration={0}>
-      <div className="flex justify-center items-center h-screen relative max-h-[550px]">
-        <svg width="500" height="500" className="">
+      <div className="w-full h-[40vh] lg:h-[60vh] relative">
+        <svg
+          viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
+          width="100%"
+          height="100%"
+          preserveAspectRatio="xMidYMid meet"
+        >
           {/* Render Texas border with padding */}
           <g transform="translate(10, 10)">
             <path
@@ -133,6 +150,37 @@ function Map() {
             })}
           </g>
         </svg>
+        {/* Legend */}
+        <div
+          className="absolute md:-bottom-0 md:left-10  -bottom-10 left-0 p-2 rounded  flex flex-col items-center space-y-0.5 md:space-y-2 sm:p-3 sm:space-y-1 bg-white border shadow-lg shadow-black/20"
+          aria-labelledby="lake-size-legend"
+        >
+          <h2 id="lake-size-legend" className="text-xs font-semibold sm:mb-1">
+            Lake Size Legend
+          </h2>
+          {legendValues.map((value, index) => (
+            <div
+              key={index}
+              className="flex items-center space-x-2 sm:space-x-1"
+            >
+              <svg
+                width={getRadius(value) * 2}
+                height={getRadius(value) * 2}
+                aria-hidden="true"
+              >
+                <circle
+                  cx={getRadius(value)}
+                  cy={getRadius(value)}
+                  r={getRadius(value)}
+                  className={`${getColorClass(value)}`}
+                />
+              </svg>
+              <span className="text-xs sm:text-[10px]">
+                {formattedLegendLabels[index]} mi<sup>2</sup>
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </TooltipProvider>
   );

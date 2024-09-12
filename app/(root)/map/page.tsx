@@ -16,7 +16,9 @@ const MapPage = async () => {
           className="hero-art-right"
         />
       </section>
-      <Map />
+      <div className="w-full h-[50vh] md:h-[50vh] lg:h-[70vh] p-4 relative">
+        <Map />
+      </div>
     </>
   );
 };
