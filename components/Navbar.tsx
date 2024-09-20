@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import Link from 'next/link';
-import { BadgePlus, LogOut, Github, Settings, Gauge } from 'lucide-react';
+import { BadgePlus, Github, Settings, Gauge, LogIn, Star } from 'lucide-react';
 import Modal from '@/components/Modal';
 import SignUpForm from '@/components/SignUpForm';
 import LoginForm from '@/components/LoginForm';
@@ -106,6 +106,20 @@ const Navbar = () => {
           ) : (
             <>
               <button
+                className="navbar-button-demo"
+                onClick={() =>
+                  signIn('credentials', {
+                    redirect: true,
+                    callbackUrl: '/',
+                    identifier: 'emily',
+                    password: 'demo1234',
+                  })
+                }
+              >
+                <Star className="navbar-button-icon" />
+                <span className="navbar-button-text">Demo Login</span>
+              </button>
+              <button
                 className="navbar-button-github"
                 onClick={() => signIn('github')}
               >
@@ -116,7 +130,7 @@ const Navbar = () => {
                 className="navbar-button-login"
                 onClick={() => openModalHandler('login')}
               >
-                <LogOut className="navbar-button-icon" />
+                <LogIn className="navbar-button-icon" />
                 <span className="navbar-button-text">Login</span>
               </button>
               <button
