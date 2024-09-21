@@ -38,6 +38,10 @@
   @apply navbar-button text-gray-500 hover:text-green-500 sm:hover:bg-green-50 hover:border-green-300;
 }
 
+.navbar-button-demo {
+  @apply navbar-button  text-green-500 sm:bg-green-50 border-green-300 hover:text-green-600 hover:border-green-500;
+}
+
 .navbar-button-signup {
   @apply navbar-button  text-blue-500 sm:bg-blue-50 border-blue-300 hover:text-blue-600 hover:border-blue-500;
 }
