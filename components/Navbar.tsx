@@ -117,7 +117,8 @@ const Navbar = () => {
                 }
               >
                 <Star className="navbar-button-icon" />
-                <span className="navbar-button-text">Demo Login</span>
+                <span className="hidden sm:inline">Demo Login</span>
+                <span className="inline sm:hidden">Demo</span>
               </button>
               <button
                 className="navbar-button-github"
