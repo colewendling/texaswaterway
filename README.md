@@ -1,5 +1,9 @@
 # TexasWaterway
 
+![Preview](public/meta/social-share.png)
+
+**Live Demo:** [texaswaterway.com](https://texaswaterway.com)
+
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=flat&logo=nextdotjs&logoColor=white)](https://nextjs.org/)  
 [![React](https://img.shields.io/badge/React-18-20232A?style=flat&logo=react)](https://react.dev/)  
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-^3.3-06B6D4?style=flat&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)  
