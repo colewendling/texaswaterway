@@ -46,7 +46,7 @@ const Footer = () => {
             <a href="https://wendling.io/" className="footer-link-circle">
               <Globe className="footer-link-icon" />
             </a>
-            <a href="https://wendling.io/Resume" className="footer-link-circle">
+            <a href="https://wendling.io/resume" className="footer-link-circle">
               <FileText className="footer-link-icon" />
             </a>
           </div>
